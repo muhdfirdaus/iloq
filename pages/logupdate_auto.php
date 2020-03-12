@@ -156,7 +156,7 @@ foreach($files as $file) {
     
     if(isset($data[$sn])){
         if(isset($data[$sn]['r'])){
-            if($data[$sn]['r'] < $fdate){
+            if($status=='P'){
                 $data[$sn][0] = $sn;
                 $data[$sn][3] =   $status;
                 $data[$sn]['r'] =  $fdate;
@@ -196,7 +196,7 @@ foreach($files as $file) {
         $status = preg_replace('/\s+/', '', $arr2[1]);
         
         if(isset($nfc[$sn]['n'])){
-            if($nfc[$sn]['n'] < $fdate){
+            if($status[0]=='P'){
                 $nfc[$sn][0] = $sn;
                 $nfc[$sn][2] =  $status[0];
                 $nfc[$sn]['n'] =  $fdate;

@@ -1,0 +1,18 @@
+^XA
+				^CFP,180,120
+				^FO60,50^FDM007739.1.2.SB.SE_N^FS
+				
+				^CFP,190,230
+				^FO40,280^FDBEY7561^FS
+				^FO38,280^FDBEY7561^FS
+				^FO40,282^FDBEY7561^FS
+				
+				^CFP,180,180
+				^FO40,510^FD02/03/20^FS
+			
+				^CFP,150,140
+				^FO40,720^FDS/W Ver:2.6^FS
+				
+				^XZ        ^FO40,720^FDS/W Ver:2.6^FS
+        
+        ^XZ

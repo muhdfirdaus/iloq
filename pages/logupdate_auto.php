@@ -156,7 +156,7 @@ foreach($files as $file) {
     
     if(isset($data[$sn])){
         if(isset($data[$sn]['r'])){
-            if($status=='P'){
+            if($status=='P' && $data[$sn]['r']<$fdate){
                 $data[$sn][0] = $sn;
                 $data[$sn][3] =   $status;
                 $data[$sn]['r'] =  $fdate;

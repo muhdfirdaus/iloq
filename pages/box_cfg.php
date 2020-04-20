@@ -80,7 +80,7 @@ endif;
                     <div class="form-group">
                       <label for="date">Quantity</label>
                       <div class="input-group col-md-2">
-                        <input type="number" class="form-control pull-right" max='45' value="<?php echo $qty;?>" name="qty" placeholder="Quantity" required>
+                        <input type="number" class="form-control pull-right" max='150' value="<?php echo $qty;?>" name="qty" placeholder="Quantity" required>
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->            
                     <div class="form-group">

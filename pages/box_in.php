@@ -210,22 +210,14 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' not pass NFC Core test yet!.\n';
 					}
 				}
-				// elseif(strpos($model_name,"SKOGEN")!== false){//temporary for skogen  
-				// 	$query=mysqli_query($con,"select lockTest, durTest, rfsTest,lDate,rDate,dDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
-				// 	$row=mysqli_fetch_array($query);
-				// 	if($row['cnt']==0 || ($row['lockTest']!="P"&&$row['durTest']!="P")){
-				// 		$testfailed = 1;
-				// 		$testmsg.=$sn.' on line '.$i.' not pass ANY test yet!.\n';
-				// 	}
-				// 	elseif(($row['lockTest']=="P"&&$row['durTest']!="P")){
-				// 		$testfailed = 1;
-				// 		$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!\n';
-				// 	}
-				// 	elseif(($row['lockTest']!="P"&&$row['durTest']=="P")){
-				// 		$testfailed = 1;
-				// 		$testmsg.=$sn.' on line '.$i.' not pass Lock test yet!\n';
-				// 	}
-				// }
+				elseif(strpos($model_name,"SKOGEN KEY")!== false){//temporary for skogen  
+					$query=mysqli_query($con,"select lockTest,lDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['lockTest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Lock test yet!.\n';
+					}
+				}
 				// elseif(strpos($model_name,"OVAL LOCK INDOOR C5S.10.SB")!== false){//temporary for skogen 
 				// 	$query=mysqli_query($con,"select lockTest, durTest, rfsTest,lDate,rDate,dDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 				// 	$row=mysqli_fetch_array($query);

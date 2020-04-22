@@ -202,6 +202,7 @@ include('product_cfg.php');
 			for($i=1;$i<=$qty;$i++){
 				$rfsissue = 0;
 				$sn= $_POST['sn'.$i];
+				$skiplbl2 = 0;
 				if(strpos($model_name,"CORE")!== false){//temporary for NFC 
 					$query=mysqli_query($con,"select result,fdate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
@@ -211,6 +212,7 @@ include('product_cfg.php');
 					}
 				}
 				elseif(strpos($model_name,"SKOGEN KEY")!== false){//temporary for skogen  
+					$skiplbl2 = 1;
 					$query=mysqli_query($con,"select lockTest,lDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['lockTest']!="P")){
@@ -384,16 +386,18 @@ include('product_cfg.php');
 					return $toReturn;
 				}
 
-				//function to print second label
-				$filename = "lbliloq2.txt";
-				$file = fopen($filename, "r+")or die("ERROR: Cannot open the file .")  ;
-				if($file){
-					fwrite($file, $lblbox2);      
-					fclose($file);
-				} 
+				if($skiplbl2==0){//skip if skiplbl2 is true
+					//function to print second label
+					$filename = "lbliloq2.txt";
+					$file = fopen($filename, "r+")or die("ERROR: Cannot open the file .")  ;
+					if($file){
+						fwrite($file, $lblbox2);      
+						fclose($file);
+					} 
 
-				//print second label
-				copy($filename, "//BTS-iLOQ-1/iloqpizza"); 
+					//print second label
+					copy($filename, "//BTS-iLOQ-1/iloqpizza"); 
+				}
 
 				$printable = pingAddress($ip);
 				if($printable){

@@ -99,7 +99,7 @@
             return $toReturn;
         }
 
-        if(strpos($modelname,"SKOGEN KEY ASSEMBLY")!==true){
+        if($modelname != "SKOGEN KEY ASSEMBLY"){
             //function to print second label
             $filename = "lbliloq2.txt";
             $file = fopen($filename, "r+")or die("ERROR: Cannot open the file .")  ;

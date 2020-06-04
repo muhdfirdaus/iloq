@@ -65,7 +65,7 @@
         ^XZ';
 
         if(strpos($modelname,"SKOGEN")!==false){
-            $swversion = "1.5.10W";
+            $swversion = "1.5.12W";
         }
         else{
             $swversion = "2.6";

@@ -45,7 +45,15 @@
         // $fp = fopen('C:/lblcarton.txt', 'w');
         // fwrite($fp, '
 
-        if($lblcode =="IQ-M005551.10.1.SB" || $lblcode =="IQ-M005551.10.1.SB.SE")
+        if($carton_id =="IQ001294")
+        {
+            $weight = '4.455KG';
+        }
+        elseif($carton_id =="IQ001329")
+        {
+            $weight = '4.44KG';
+        }
+        elseif($lblcode =="IQ-M005551.10.1.SB" || $lblcode =="IQ-M005551.10.1.SB.SE")
         {
             $weight = '12.5KG';
         }
@@ -76,6 +84,14 @@
         elseif( $carton_id =="IQ001228")
         {
             $weight = '1.02KG';
+        }
+        elseif( $carton_id =="IQ001551")
+        {
+            $weight = '10.315KG';
+        }
+        elseif( $carton_id =="IQ001557")
+        {
+            $weight = '7.365KG';
         }
         elseif(strpos($lblcode, 'M010267')!== false && $carton_id !="IQ001157")
         {

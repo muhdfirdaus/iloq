@@ -28,7 +28,7 @@ foreach($files as $file) {
     else{
         $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
     }
-    rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\pcba\Oval_Assy_*.txt");//open all lock file
@@ -59,7 +59,7 @@ foreach($files as $file) {
             $data[$sn]['l'] =  $fdate;
         }
     }
-    rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\skogen_key\*.txt");//open all lock file
@@ -90,7 +90,7 @@ foreach($files as $file) {
             $data[$sn]['l'] =  $fdate;
         }
     }
-    rename($file, 'C:/iLOQ/skogen_key/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/skogen_key/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\pcba\Skogen_Assy_*.txt");//open all lock file
@@ -121,7 +121,7 @@ foreach($files as $file) {
             $data[$sn]['l'] =  $fdate;
         }
     }
-    rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\RFS\*.txt");//open all RFS file 
@@ -151,7 +151,7 @@ foreach($files as $file) {
         $data[$sn]['r'] =  $fdate;
     }
 
-    rename($file, 'C:/iLOQ/RFS/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/RFS/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\RFS_skogen\*.txt");//open all RFS file 
@@ -197,7 +197,7 @@ foreach($files as $file) {
         $data[$sn][3] =  $status;
         $data[$sn]['r'] =  $fdate;
     }
-    rename($file, 'C:/iLOQ/RFS_skogen/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/RFS_skogen/logged/'.basename($file));
 }
 
 
@@ -276,7 +276,7 @@ foreach($data as $newdata){
         $row=mysqli_fetch_array($query);
         if($row['cnt']==0){
             //insert new data
-            mysqli_query($con,"INSERT INTO sn_master(sn,lockTest,durTest,lDate,dDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$durability', '$lDate', '$dDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
+            mysqli_query($con,"INSERT IGNORE INTO sn_master(sn,lockTest,durTest,lDate,dDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$durability', '$lDate', '$dDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
         }
         else{
             //update existing data

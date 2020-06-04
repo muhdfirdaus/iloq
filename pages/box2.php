@@ -104,7 +104,7 @@ endif;
                     <tbody>
                       <?php for ($i=1; $i<=$qty; $i++) {
                           echo '<tr><td class="text-center">'.$i.'</td>
-                          <td class="text-center"><input class="form-control text-center" maxlength="9" required name="sn'.$i.'" id="sn'.$i.'" </td>';
+                          <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="25" required name="sn'.$i.'" id="sn'.$i.'" </td>';
                       }
                       ?>
                     </tbody>

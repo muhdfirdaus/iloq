@@ -238,10 +238,10 @@ foreach($files as $file) {
 }
 
 if(isset($nfc)){
-    foreach($nfc as $data){
-        $sn = $data[0];
-        $result = $data[2];
-        $fdate = $data['n'];
+    foreach($nfc as $data2){
+        $sn = $data2[0];
+        $result = $data2[2];
+        $fdate = $data2['n'];
 
         $query=mysqli_query($con,"select fdate, count(*) as cnt from nfc_test where sn='$sn'")or die(mysqli_error($con));
         $row=mysqli_fetch_array($query);
@@ -282,19 +282,19 @@ foreach($data as $newdata){
             //update existing data
             $dDate2 = preg_replace('/\s+/', '', $row['dDate']);
             if($dDate!="NULL"){
-                if($dDate2=="NULL"||$dDate>$dDate2){
+                if($dDate2=="NULL"||$dDate>$dDate2||is_null($dDate2)){
                     mysqli_query($con,"update sn_master set dDate='$dDate',durTest='$durability',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
                 }
             }
             $lDate2 = preg_replace('/\s+/', '', $row['lDate']);
             if($lDate!="NULL"){
-                if($lDate2=="NULL"||$lDate>$lDate2){
+                if($lDate2=="NULL"||$lDate>$lDate2||is_null($lDate2)){
                     mysqli_query($con,"update sn_master set lDate='$lDate',lockTest='$lock',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
                 }
             }
             $rDate2 = preg_replace('/\s+/', '', $row['rDate']);
             if($rDate!="NULL"){
-                if($rDate2=="NULL"||$rDate>$rDate2){
+                if($rDate2=="NULL"||$rDate>$rDate2||is_null($rDate2)){
                     mysqli_query($con,"update sn_master set rDate='$rDate',rfsTest='$rfs',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
                 }
             }

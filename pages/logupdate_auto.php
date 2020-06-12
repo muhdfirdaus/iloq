@@ -1,5 +1,5 @@
 <head>
-  <meta http-equiv="refresh" content="3600">
+  <meta http-equiv="refresh" content="240"><!-- refresh every 3mins -->
 </head>
 <h1>Don't close this page!</h1>
 <pre>
@@ -34,7 +34,7 @@ foreach($files as $file) {
     else{
         $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
     }
-    rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\pcba\Oval_Assy_*.txt");//open all lock file
@@ -65,7 +65,7 @@ foreach($files as $file) {
             $data[$sn]['l'] =  $fdate;
         }
     }
-    rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\skogen_key\*.txt");//open all lock file
@@ -96,7 +96,7 @@ foreach($files as $file) {
             $data[$sn]['l'] =  $fdate;
         }
     }
-    rename($file, 'C:/iLOQ/skogen_key/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/skogen_key/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\pcba\Skogen_Assy_*.txt");//open all lock file
@@ -127,7 +127,7 @@ foreach($files as $file) {
             $data[$sn]['l'] =  $fdate;
         }
     }
-    rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\RFS\*.txt");//open all RFS file 
@@ -157,7 +157,7 @@ foreach($files as $file) {
         $data[$sn]['r'] =  $fdate;
     }
 
-    rename($file, 'C:/iLOQ/RFS/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/RFS/logged/'.basename($file));
 }
 
 
@@ -204,7 +204,7 @@ foreach($files as $file) {
         $data[$sn][3] =  $status;
         $data[$sn]['r'] =  $fdate;
     }
-    rename($file, 'C:/iLOQ/RFS_skogen/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/RFS_skogen/logged/'.basename($file));
 }
 
 
@@ -245,10 +245,10 @@ foreach($files as $file) {
 }
 
 if(isset($nfc)){
-    foreach($nfc as $data){
-        $sn = $data[0];
-        $result = $data[2];
-        $fdate = $data['n'];
+    foreach($nfc as $data2){
+        $sn = $data2[0];
+        $result = $data2[2];
+        $fdate = $data2['n'];
 
         $query=mysqli_query($con,"select fdate, count(*) as cnt from nfc_test where sn='$sn'")or die(mysqli_error($con));
         $row=mysqli_fetch_array($query);
@@ -283,25 +283,25 @@ foreach($data as $newdata){
         $row=mysqli_fetch_array($query);
         if($row['cnt']==0){
             //insert new data
-            mysqli_query($con,"INSERT INTO sn_master(sn,lockTest,durTest,lDate,dDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$durability', '$lDate', '$dDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
+            mysqli_query($con,"INSERT IGNORE INTO sn_master(sn,lockTest,durTest,lDate,dDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$durability', '$lDate', '$dDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
         }
         else{
             //update existing data
             $dDate2 = preg_replace('/\s+/', '', $row['dDate']);
             if($dDate!="NULL"){
-                if($dDate2=="NULL"||$dDate>$dDate2){
+                if($dDate2=="NULL"||$dDate>$dDate2||is_null($dDate2)){
                     mysqli_query($con,"update sn_master set dDate='$dDate',durTest='$durability',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
                 }
             }
             $lDate2 = preg_replace('/\s+/', '', $row['lDate']);
             if($lDate!="NULL"){
-                if($lDate2=="NULL"||$lDate>$lDate2){
+                if($lDate2=="NULL"||$lDate>$lDate2||is_null($lDate2)){
                     mysqli_query($con,"update sn_master set lDate='$lDate',lockTest='$lock',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
                 }
             }
             $rDate2 = preg_replace('/\s+/', '', $row['rDate']);
             if($rDate!="NULL"){
-                if($rDate2=="NULL"||$rDate>$rDate2){
+                if($rDate2=="NULL"||$rDate>$rDate2||is_null($rDate2)){
                     mysqli_query($con,"update sn_master set rDate='$rDate',rfsTest='$rfs',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
                 }
             }

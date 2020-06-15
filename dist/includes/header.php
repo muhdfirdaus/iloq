@@ -30,7 +30,7 @@ date_default_timezone_set("Asia/Singapore");
                 <ul class="nav navbar-nav">
                   <li class="">
                     <!-- Menu Toggle Button -->
-                    <a href="box.php" class="dropdown-toggle">
+                    <a href="box2.php" class="dropdown-toggle">
                       <i class="glyphicon glyphicon-tasks text-blue"></i>
                       Box
                     </a>
@@ -172,13 +172,13 @@ date_default_timezone_set("Asia/Singapore");
           <div class="form-group">
             <label class="control-label col-lg-2" for="box">Box ID</label>
             <div class="col-lg-7">
-              <input type="text" class="form-control" id="box_id" name="box_id" placeholder="Box ID">  
+              <input autocomplete="off" type="text" class="form-control" id="box_id" name="box_id" placeholder="Box ID">  
             </div>
           </div><hr>
           <div class="form-group">
             <label class="control-label col-lg-2" for="pallet">Pallet ID</label>
             <div class="col-lg-7">
-              <input type="text" class="form-control" id="pallet_id" name="pallet_id" placeholder="Pallet ID">  
+              <input autocomplete="off" type="text" class="form-control" id="pallet_id" name="pallet_id" placeholder="Pallet ID">  
             </div>
           </div>
           <div class="form-group control-label text-red">*Please insert ONE(1) field only</div>
@@ -210,13 +210,13 @@ date_default_timezone_set("Asia/Singapore");
           <div class="form-group">
             <label class="control-label col-lg-2" for="box">Box ID</label>
             <div class="col-lg-7">
-              <input type="text" class="form-control" id="box_id" name="box_id" placeholder="Box ID">  
+              <input autocomplete="off" type="text" class="form-control" id="box_id" name="box_id" placeholder="Box ID">  
             </div>
           </div><hr>
           <div class="form-group">
             <label class="control-label col-lg-2" for="printer_ip">Printer IP</label>
             <div class="col-lg-7">
-              <input type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP" value="<?php echo $ip1; ?>">  
+              <input autocomplete="off" type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP" value="<?php echo $ip1; ?>">  
             </div>
           </div>
           <!-- <div class="form-group control-label text-red">*Please insert ONE(1) field only</div> -->
@@ -248,13 +248,13 @@ date_default_timezone_set("Asia/Singapore");
           <div class="form-group">
             <label class="control-label col-lg-2" for="box">Carton ID</label>
             <div class="col-lg-7">
-              <input type="text" class="form-control" id="carton_id" name="carton_id" placeholder="Carton ID">  
+              <input autocomplete="off" type="text" class="form-control" id="carton_id" name="carton_id" placeholder="Carton ID">  
             </div>
           </div><hr>
           <div class="form-group">
             <label class="control-label col-lg-2" for="printer_ip">Printer IP</label>
             <div class="col-lg-7">
-              <input type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP" value="<?php echo $ip2; ?>">  
+              <input autocomplete="off" type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP" value="<?php echo $ip2; ?>">  
             </div>
           </div>
           <!-- <div class="form-group control-label text-red">*Please insert ONE(1) field only</div> -->
@@ -287,13 +287,13 @@ date_default_timezone_set("Asia/Singapore");
           <div class="form-group">
             <label class="control-label col-lg-2" for="printer_ip">Printer IP (Box)</label>
             <div class="col-lg-7">
-              <input type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP for Box" value="<?php echo $ip1; ?>">  
+              <input autocomplete="off" type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP for Box" value="<?php echo $ip1; ?>">  
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-lg-2" for="printer_ip">Printer IP (Carton)</label>
             <div class="col-lg-7">
-              <input type="text" class="form-control" id="printer_ip2" name="printer_ip2" placeholder="Printer IP for Carton" value="<?php echo $ip2; ?>">  
+              <input autocomplete="off" type="text" class="form-control" id="printer_ip2" name="printer_ip2" placeholder="Printer IP for Carton" value="<?php echo $ip2; ?>">  
             </div>
           </div>
           <div class="modal-footer">

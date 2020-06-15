@@ -71,11 +71,11 @@ endif;
           $row2=mysqli_fetch_array($query2);
           $model=$row2['model'];
           $qty=$row2['qty'];
-          $query=mysqli_query($con,"select * from box_info order by box_id desc limit 1")or die(mysqli_error($con));
+          $query=mysqli_query($con,"select box_id from box_info order by id desc limit 1")or die(mysqli_error($con));
           $row=mysqli_fetch_array($query);
           $box_id=$row['box_id'];
           $run_no =  preg_replace("/[^0-9,.]/", "", $box_id);         
-          $next_box_id = "BEY" . str_pad(($run_no +1), 4, '0', STR_PAD_LEFT);
+          $next_box_id = "BEY" . str_pad(($run_no +1), 5, '0', STR_PAD_LEFT);
           // $next_box_id = "BEY0001" ;?>
           <!-- Main content -->
           <section class="content">

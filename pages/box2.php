@@ -90,12 +90,6 @@ endif;
                   <input type="hidden" name="box_id" id="box_id" value="<?php echo $next_box_id; ?>"></input>
                   <input type="hidden" name="qty" id="qty" value="<?php echo $qty; ?>"></input>
                   <input type="hidden" name="model" id="model" value="<?php echo $model;?>"></input>
-                  <?php 
-                  if(strpos($nModel[$model],"M009249.1")!== false){
-                    //currently for K5 Key no SN need to be scanned
-                  }
-                  else{
-                  ?>
                   <table class="table table-bordered table-striped">
                     <thead>
                       <th class="info text-center">Item</th>
@@ -109,7 +103,6 @@ endif;
                       ?>
                     </tbody>
                   </table>
-                    <?php } ?>
                 </form>
                 <button type="button" id="btn_box" class="btn btn-primary" style="float: right;">Print Label</button>
               </div>

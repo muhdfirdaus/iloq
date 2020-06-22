@@ -104,6 +104,10 @@ include('product_cfg.php');
                 {
                     $weight = '12.5KG';
                 }
+                elseif($lblcode =="IQ-M011795.1-B1" )
+                {
+                    $weight = '8KG';
+                }
                 elseif(strpos($lblcode, 'M007739')!== false)
                 {
                     $weight = '17KG';

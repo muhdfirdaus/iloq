@@ -346,12 +346,21 @@ include('product_cfg.php');
 			for($i=1;$i<=$qty;$i++){
 				$rfsissue = 0;
 				$sn= $_POST['sn'.$i];
-				if(strpos($model_name,"CORE")!== false){//temporary for NFC 
+				if(strpos($model_name,"NFC")!== false){//temporary for NFC 
 					$query=mysqli_query($con,"select result,fdate, count(*) as cnt from nfc_test where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || $row['result']!="P"){
 						$testfailed = 1;
 						$testmsg.=$sn.' on line '.$i.' not pass NFC Core test yet!.\n';
+					}
+				}
+				elseif(strpos($model_name,"D5")!== false){//temporary for D5  
+					$printlbl = 0;
+					$query=mysqli_query($con,"select result,count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['result']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Burn-in test yet!.\n';
 					}
 				}
 				elseif(strpos($model_name,"SKOGEN KEY")!== false){//temporary for skogen  

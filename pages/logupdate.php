@@ -124,6 +124,37 @@ foreach($files as $file) {
     // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
 }
 
+$files = glob("C:\iLOQ\pcba\Core_D5*.txt");//open all lock file
+
+foreach($files as $file) {
+    
+    if (trim(file_get_contents($file)) == true) {
+        $line = file($file);//file in to an array
+        $fdate = date ("YmdHis", filemtime($file));
+        $line1 = $line[4];//fetch serial number
+        $arr1 = explode(":",$line1);
+        $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+        $line3 = $line[10];//fetch test result
+        $arr2 = explode(":",$line3);
+        $status = preg_replace('/\s+/', '', $arr2[1]);
+    
+        if(isset($data[$sn]['l'])){
+            if($data[$sn]['l'] < $fdate){
+                $data[$sn][0] = $sn;
+                $data[$sn][2] =  $status[0];
+                $data[$sn]['l'] =  $fdate;
+            }
+        }
+        else{
+            $data[$sn][0] = $sn;
+            $data[$sn][2] =  $status[0];
+            $data[$sn]['l'] =  $fdate;
+        }
+    }
+    // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
+}
+
 $files = glob("C:\iLOQ\RFS\*.txt");//open all RFS file 
 
 foreach($files as $file) {
@@ -237,6 +268,37 @@ foreach($files as $file) {
     rename($file, 'C:/iLOQ/NFC/logged/'.basename($file));
 }
 
+$files = glob("C:\iLOQ\burn_D5\*.txt");//open D5 burn-in log
+
+foreach($files as $file) {
+    
+    if (trim(file_get_contents($file)) == true) {
+        $line = file($file);//file in to an array
+        $fdate = date ("YmdHis", filemtime($file));
+        $line1 = $line[4];//fetch serial number
+        $arr1 = explode(":",$line1);
+        $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+        $line3 = $line[10];//fetch test result
+        $arr2 = explode(":",$line3);
+        $status = preg_replace('/\s+/', '', $arr2[1]);
+    
+        if(isset($d5burn[$sn]['bdate'])){
+            if($d5burn[$sn]['bdate'] < $fdate){
+                $d5burn[$sn][0] = $sn;
+                $d5burn[$sn]['res'] =  $status[0];
+                $d5burn[$sn]['bdate'] =  $fdate;
+            }
+        }
+        else{
+            $d5burn[$sn][0] = $sn;
+            $d5burn[$sn]['res'] =  $status[0];
+            $d5burn[$sn]['bdate'] =  $fdate;
+        }
+    }
+    // rename($file, 'C:/iLOQ/burn_D5/logged/'.basename($file));
+}
+
 if(isset($nfc)){
     foreach($nfc as $data2){
         $sn = $data2[0];
@@ -254,6 +316,29 @@ if(isset($nfc)){
             if($fdate!="NULL"){
                 if($fdate2=="NULL"||$fdate>$fdate2){
                     mysqli_query($con,"update nfc_test set fdate='$fdate',result='$result' where sn='$sn'")or die(mysqli_error($con));
+                }
+            }
+        }
+    }
+}
+
+if(isset($d5burn)){
+    foreach($d5burn as $d5burn2){
+        $sn = $d5burn2[0];
+        $result = $d5burn2['res'];
+        $fdate = $d5burn2['bdate'];
+
+        $query=mysqli_query($con,"select filetime, count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
+        $row=mysqli_fetch_array($query);
+        if($row['cnt']==0){
+            //insert new data
+            mysqli_query($con,"INSERT INTO d5_burn(sn,result,filetime)VALUES('$sn','$result', '$fdate')")or die(mysqli_error($con));
+        }
+        else{
+            $fdate2 = preg_replace('/\s+/', '', $row['filetime']);
+            if($fdate!="NULL"){
+                if($fdate2=="NULL"||$fdate>$fdate2){
+                    mysqli_query($con,"update d5_burn set filetime='$fdate',result='$result' where sn='$sn'")or die(mysqli_error($con));
                 }
             }
         }

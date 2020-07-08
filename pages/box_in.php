@@ -354,13 +354,33 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' not pass NFC Core test yet!.\n';
 					}
 				}
-				elseif(strpos($model_name,"D5")!== false){//temporary for D5  
+				elseif(strpos($model_no,"IQ-M011795")!== false){//for D5  Core
 					$printlbl = 0;
 					$query=mysqli_query($con,"select result,count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['result']!="P")){
 						$testfailed = 1;
 						$testmsg.=$sn.' on line '.$i.' not pass Burn-in test yet!.\n';
+					}
+				}
+				elseif(strpos($model_no,"IQ-M011793")!== false){//for D5 FG
+					$printlbl = 0;
+					$query=mysqli_query($con,"select result,count(*) as cnt from d5_durability where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['result']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+					}
+
+					if($tempres = checkTempTest($sn,$con)){
+						if($tempres['result']!="P"){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+						}
+					}
+					else{
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
 					}
 				}
 				elseif(strpos($model_name,"SKOGEN KEY")!== false){//temporary for skogen  

@@ -42,106 +42,122 @@ include('product_cfg.php');
 			echo "<script>window.history.back();</script>"; 
 		}
 		else{
-			//check for existing data
-			$existmsg='';
-			$testmsg='';
-			$existed = 0;
-			$testfailed=0;
+
+			$invalidmsg = '';
+			$invalidsn = 0;
 			for($i=1;$i<=$qty;$i++){
-				$sn= $_POST['sn'.$i];
-				$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn='$sn'")or die(mysqli_error($con));
-				$row=mysqli_fetch_array($query);
-				if($row['cnt']!=0){
-					$existed = 1;
-					$existmsg.=$sn.' on line '.$i.' already exist in the system!\n';
+				$sn = $_POST['sn'.$i];
+				if(strlen($sn)>9 && strlen($sn)<20){
+					$invalidsn = 1;
+					$invalidmsg.=$sn.' on line '.$i.' is invalid!\n';
 				}
 			}
-			if($existed){
-				echo '<script type="text/javascript">alert("'.$existmsg.'");</script>';
+			if($invalidsn){
+				echo '<script type="text/javascript">alert("'.$invalidmsg.'");</script>';
 				echo "<script>window.history.back();</script>"; 
 			}
 			else{
-				mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model)
-				VALUES('$box_id','$id', '$qty', '$tmstmp', '$model_no2', '$model_name')")or die(mysqli_error($con));
-				echo "<script type='text/javascript'>alert('Data saved!');</script>";
-				
-				$query=mysqli_query($con,"select ip from printer_cfg where id=1")or die(mysqli_error($con));
-				$row=mysqli_fetch_array($query);
-				$ip=$row['ip'];
-
-				//edit label file
-				$lbldate = date('d/m/y',$tmstmp);
-				$lblbox = '^XA
-
-				^FO60,45^GFA,1625,1625,25,,1FE,3FF,7FF8,7FFC,:IFCW01FF8R01FFC,IFC001FFEP01JF8Q0JFC,7FFC003FFEP0KFEP07KF8,7FFC003FFEO03LF8N01LF8,7FF8003FFEO0MFEN07LF8,3FF8003FFEN03NF8M0MF,3FFI03FFEN07NFCL03MF,0FCI03FFEN0OFEL07LFE018,L03FFEM01PFL0MFC03C,L03FFEM03PF8J01MFC03E,L03FFEM07PFCJ03MF807F,L03FFEM0QFEJ07MF00FF,L03FFEL01JFC007JFJ07JF00300FF8,L03FFEL01JFI01JF8I0JF8J01FFC,L03FFEL03IFCJ07IF8001JFK01FFE,7FF8003FFEL07IF8J03IFC001IFCK03FFE,7FF8003FFEL07FFEL0IFC003IF8K07IF,7FF8003FFEL0IFCL07FFE003IFL03IF,7FF8003FFEL0IFCL07FFE007FFEL01IF8,7FF8003FFEL0IF8L03FFE007FFCL01IF8,7FF8003FFEK01IFM01IF007FF8M0IF8,7FF8003FFEK01IFM01IF00IF8M07FFC,7FF8003FFEK01FFEN0IF80IF8M07FFC,7FF8003FFEK03FFEN0IF80IFN03FFC,7FF8003FFEK03FFCN07FF80IFN03FFC,7FF8003FFEK03FFCN07FF81IFN03FFC,7FF8003FFEK03FFCN07FF81FFEN01FFE,::::::7FF8003FFEK03FFCN07FF81IFN03FFC,7FF8003FFEK03FFCN07FF80IFN03FFC,7FF8003FFEK03FFEN0IF80IFN03FFC,7FF8003FFEK01FFEN0IF00IF8M07FFC,7FF8003FFEK01IFM01IF00IF8M07FFC,7FF8003FFEK01IFM01IF007FFCM0IF8,7FF8003FFEL0IF8L03FFE007FFCL01IF8,7FF8003FFEL0IFCL07FFE003FFEL01IF,7FF8003FFEL0IFEL07FFE003IFL03IF,7FF8003FFEL07IFL0IFC003IF8K07IF,7FF8003FFEL07IF8J03IFC001IFL0IFE,7FF8003FFEL03IFEJ07IF8001FFEK03IFC,7FF8003FFEL01JFI01JF8I0FFEK0JFC,7FF8003NF01JFE00KFJ07FC03807JF8,7FF8003MFE00QFEJ03FC03QF87FF8003MFE007PFCJ03F807QF87FF8003MFC003PF8J01F00RF,7FF8003MF8001PFL0F00RF,7FF8003MF8I0OFEL0601QFE,7FF8003MFJ07NFCN01QFE,7FF8003MFJ03NF8N03QFC,7FF8003LFEK0MFEO07QF8,7FF8003LFEK03LF8O07QF8,7FF8003LFCL0KFEP07QF,g01JFR0QF,gH07CT03NFE,^FS
-				
-				
-				
-				
-				
-					
-				^CFP,50,50
-				^FO450,55^FDwww.iloq.com^FS
-				
-				^CFP,60,50
-				^FO50,130^FD'.$model_name.'^FS
-				
-				^CFP,50,36
-				^FO50,190^FDPN: '.$model_no.'^FS
-				^FO600,190^FDQTY: '.$qty.'^FS
-				
-				^BY2
-				^FO50,240^BCn,40,N^FD'.$model_no .'^FS
-				^FO580,240^BCn,40,N^FD'.$qty.'^FS
-				
-				^FO50,295^FDBOX NO: '.$box_id.'^FS
-				^FO580,295^FDDATE: '.$lbldate.'^FS
-				
-				^BY2
-				^FO50,345^BCn,40,N^FD'.$box_id.'^FS
-				^FO540,345^BCn,40,N^FD'.$lbldate.'^FS
-				
-				^XZ';
-
-				// end of label editting
-
-
-				// function to ping ip address
-				function pingAddress($ip1) {
-					$pingresult = exec("ping -n 2 $ip1", $outcome, $status);
-					if (0 == $status) {//status-alive
-						$toReturn = true;
-					} else {//status-dead
-						$toReturn = false;
+				//check for existing data
+				$existmsg='';
+				$testmsg='';
+				$existed = 0;
+				$testfailed=0;
+				for($i=1;$i<=$qty;$i++){
+					$sn= $_POST['sn'.$i];
+					$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']!=0){
+						$existed = 1;
+						$existmsg.=$sn.' on line '.$i.' already exist in the system!\n';
 					}
-					return $toReturn;
 				}
-				
-				$printable = pingAddress($ip);
-				if($printable){
-					try//attempt to print label
-					{
-						// Number of seconds to wait for a response from remote host
-						$timeout = 2;
-						if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
-							fputs($fp,$lblbox);
-							fclose($fp);				
-							echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
-							echo "<script>window.history.back();</script>"; 
-						}
-						else{
-							echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-							echo "<script>window.history.back();</script>";  
-						} 
-					}
-					catch (Exception $e) 
-					{
-						echo 'Caught exception: ',  $e->getMessage(), "\n";
-					}
+				if($existed){
+					echo '<script type="text/javascript">alert("'.$existmsg.'");</script>';
+					echo "<script>window.history.back();</script>"; 
 				}
 				else{
-					echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-					echo "<script>window.history.back();</script>";  
+					mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model)
+					VALUES('$box_id','$id', '$qty', '$tmstmp', '$model_no2', '$model_name')")or die(mysqli_error($con));
+					echo "<script type='text/javascript'>alert('Data saved!');</script>";
+					
+					$query=mysqli_query($con,"select ip from printer_cfg where id=1")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					$ip=$row['ip'];
+
+					//edit label file
+					$lbldate = date('d/m/y',$tmstmp);
+					$lblbox = '^XA
+
+					^FO60,45^GFA,1625,1625,25,,1FE,3FF,7FF8,7FFC,:IFCW01FF8R01FFC,IFC001FFEP01JF8Q0JFC,7FFC003FFEP0KFEP07KF8,7FFC003FFEO03LF8N01LF8,7FF8003FFEO0MFEN07LF8,3FF8003FFEN03NF8M0MF,3FFI03FFEN07NFCL03MF,0FCI03FFEN0OFEL07LFE018,L03FFEM01PFL0MFC03C,L03FFEM03PF8J01MFC03E,L03FFEM07PFCJ03MF807F,L03FFEM0QFEJ07MF00FF,L03FFEL01JFC007JFJ07JF00300FF8,L03FFEL01JFI01JF8I0JF8J01FFC,L03FFEL03IFCJ07IF8001JFK01FFE,7FF8003FFEL07IF8J03IFC001IFCK03FFE,7FF8003FFEL07FFEL0IFC003IF8K07IF,7FF8003FFEL0IFCL07FFE003IFL03IF,7FF8003FFEL0IFCL07FFE007FFEL01IF8,7FF8003FFEL0IF8L03FFE007FFCL01IF8,7FF8003FFEK01IFM01IF007FF8M0IF8,7FF8003FFEK01IFM01IF00IF8M07FFC,7FF8003FFEK01FFEN0IF80IF8M07FFC,7FF8003FFEK03FFEN0IF80IFN03FFC,7FF8003FFEK03FFCN07FF80IFN03FFC,7FF8003FFEK03FFCN07FF81IFN03FFC,7FF8003FFEK03FFCN07FF81FFEN01FFE,::::::7FF8003FFEK03FFCN07FF81IFN03FFC,7FF8003FFEK03FFCN07FF80IFN03FFC,7FF8003FFEK03FFEN0IF80IFN03FFC,7FF8003FFEK01FFEN0IF00IF8M07FFC,7FF8003FFEK01IFM01IF00IF8M07FFC,7FF8003FFEK01IFM01IF007FFCM0IF8,7FF8003FFEL0IF8L03FFE007FFCL01IF8,7FF8003FFEL0IFCL07FFE003FFEL01IF,7FF8003FFEL0IFEL07FFE003IFL03IF,7FF8003FFEL07IFL0IFC003IF8K07IF,7FF8003FFEL07IF8J03IFC001IFL0IFE,7FF8003FFEL03IFEJ07IF8001FFEK03IFC,7FF8003FFEL01JFI01JF8I0FFEK0JFC,7FF8003NF01JFE00KFJ07FC03807JF8,7FF8003MFE00QFEJ03FC03QF87FF8003MFE007PFCJ03F807QF87FF8003MFC003PF8J01F00RF,7FF8003MF8001PFL0F00RF,7FF8003MF8I0OFEL0601QFE,7FF8003MFJ07NFCN01QFE,7FF8003MFJ03NF8N03QFC,7FF8003LFEK0MFEO07QF8,7FF8003LFEK03LF8O07QF8,7FF8003LFCL0KFEP07QF,g01JFR0QF,gH07CT03NFE,^FS
+					
+					
+					
+					
+					
+						
+					^CFP,50,50
+					^FO450,55^FDwww.iloq.com^FS
+					
+					^CFP,60,50
+					^FO50,130^FD'.$model_name.'^FS
+					
+					^CFP,50,36
+					^FO50,190^FDPN: '.$model_no.'^FS
+					^FO600,190^FDQTY: '.$qty.'^FS
+					
+					^BY2
+					^FO50,240^BCn,40,N^FD'.$model_no .'^FS
+					^FO580,240^BCn,40,N^FD'.$qty.'^FS
+					
+					^FO50,295^FDBOX NO: '.$box_id.'^FS
+					^FO580,295^FDDATE: '.$lbldate.'^FS
+					
+					^BY2
+					^FO50,345^BCn,40,N^FD'.$box_id.'^FS
+					^FO540,345^BCn,40,N^FD'.$lbldate.'^FS
+					
+					^XZ';
+
+					// end of label editting
+
+
+					// function to ping ip address
+					function pingAddress($ip1) {
+						$pingresult = exec("ping -n 2 $ip1", $outcome, $status);
+						if (0 == $status) {//status-alive
+							$toReturn = true;
+						} else {//status-dead
+							$toReturn = false;
+						}
+						return $toReturn;
+					}
+					
+					$printable = pingAddress($ip);
+					if($printable){
+						try//attempt to print label
+						{
+							// Number of seconds to wait for a response from remote host
+							$timeout = 2;
+							if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
+								fputs($fp,$lblbox);
+								fclose($fp);				
+								echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
+								echo "<script>window.history.back();</script>"; 
+							}
+							else{
+								echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+								echo "<script>window.history.back();</script>";  
+							} 
+						}
+						catch (Exception $e) 
+						{
+							echo 'Caught exception: ',  $e->getMessage(), "\n";
+						}
+					}
+					else{
+						echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+						echo "<script>window.history.back();</script>";  
+					}
 				}
 			}
 		}

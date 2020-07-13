@@ -212,7 +212,9 @@ foreach($files as $file) {
     
     if(isset($data[$sn])){
         if(isset($data[$sn]['r'])){
-            if($status=='P' && $data[$sn]['r']<$fdate){
+            //only save data if 'Pass'
+            // if($status=='P' && $data[$sn]['r']<$fdate){ 
+            if($status=='P' ){
                 $data[$sn][0] = $sn;
                 $data[$sn][3] =   $status;
                 $data[$sn]['r'] =  $fdate;

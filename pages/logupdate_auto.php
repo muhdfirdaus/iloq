@@ -218,7 +218,9 @@ foreach($files as $file) {
     
     if(isset($data[$sn])){
         if(isset($data[$sn]['r'])){
-            if($status=='P' && $data[$sn]['r']<$fdate){
+            //only save data if 'Pass'
+            // if($status=='P' && $data[$sn]['r']<$fdate){ 
+            if($status=='P' ){
                 $data[$sn][0] = $sn;
                 $data[$sn][3] =   $status;
                 $data[$sn]['r'] =  $fdate;
@@ -271,7 +273,7 @@ foreach($files as $file) {
         }
     }    
 
-    rename($file, 'C:/iLOQ/NFC/logged/'.basename($file));
+    // rename($file, 'C:/iLOQ/NFC/logged/'.basename($file));
 }
 
 $files = glob("C:\iLOQ\burn_D5\*.txt");//open D5 burn-in log

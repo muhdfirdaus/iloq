@@ -74,8 +74,14 @@ endif;
           $query=mysqli_query($con,"select box_id from box_info order by id desc limit 1")or die(mysqli_error($con));
           $row=mysqli_fetch_array($query);
           $box_id=$row['box_id'];
-          $run_no =  preg_replace("/[^0-9,.]/", "", $box_id);         
-          $next_box_id = "BEY" . str_pad(($run_no +1), 5, '0', STR_PAD_LEFT);
+          $run_no =  preg_replace("/[^0-9,.]/", "", $box_id);          
+          $next_run = ($run_no +1);
+          if(strlen($next_run)>=5){
+            $next_box_id = "BEY" . $next_run;
+          }
+          else{
+            $next_box_id = "BEY" . str_pad($next_run, 5, '0', STR_PAD_LEFT);;
+          }
           // $next_box_id = "BEY0001" ;?>
           <!-- Main content -->
           <section class="content">

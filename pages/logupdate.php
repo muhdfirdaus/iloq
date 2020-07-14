@@ -437,7 +437,7 @@ foreach($data as $newdata){
             }
             $rDate2 = preg_replace('/\s+/', '', $row['rDate']);
             if($rDate!="NULL"){
-                if($rDate2=="NULL"||$rDate>$rDate2||is_null($rDate2)){
+                if(($rDate2=="NULL"||$rDate>$rDate2||is_null($rDate2)) && $rfs=="P" ){
                     mysqli_query($con,"update sn_master set rDate='$rDate',rfsTest='$rfs',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
                 }
             }

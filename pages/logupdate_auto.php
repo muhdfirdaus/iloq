@@ -253,11 +253,20 @@ foreach($files as $file) {
         $fdate = date ("YmdHis", filemtime($file));
         $line1 = $line[4];//fetch serial number
         $arr1 = explode(":",$line1);
-        $sn = preg_replace('/\s+/', '', $arr1[1]);
-        
-        $line3 = $line[10];//fetch test result
-        $arr2 = explode(":",$line3);
-        $status = preg_replace('/\s+/', '', $arr2[1]);
+        if(strpos($arr1[0],"Serial")!== false){
+            $sn = preg_replace('/\s+/', '', $arr1[1]);
+            $line3 = $line[10];//fetch test result
+            $arr2 = explode(":",$line3);
+            $status = preg_replace('/\s+/', '', $arr2[1]);
+        }
+        else{
+            $line1 = $line[5];//fetch serial number
+            $arr1 = explode(":",$line1);         
+            $sn = preg_replace('/\s+/', '', $arr1[1]); 
+            $line3 = $line[11];//fetch test result
+            $arr2 = explode(":",$line3);
+            $status = preg_replace('/\s+/', '', $arr2[1]);  
+        }
         
         if(isset($nfc[$sn]['n'])){
             if($status[0]=='P'){

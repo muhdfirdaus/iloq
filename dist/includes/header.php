@@ -1,8 +1,8 @@
 <?php
 //session_start();
-if(empty($_SESSION['id'])):
-header('Location:../index.php');
-endif;
+// if(empty($_SESSION['id'])):
+// header('Location:../index.php');
+// endif;
 date_default_timezone_set("Asia/Singapore"); 
 ?>
 <?php include('../dist/includes/dbcon.php');
@@ -14,7 +14,7 @@ date_default_timezone_set("Asia/Singapore");
   $row=mysqli_fetch_array($query);
   $ip2=$row['ip'];
 ?>
-
+<meta http-equiv="refresh" content="900;url=logout.php" />
       <header class="main-header">
         <nav class="navbar navbar-static-top">
           <div class="container-fluid">

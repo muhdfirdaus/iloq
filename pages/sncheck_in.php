@@ -5,7 +5,6 @@ include('product_cfg.php');
 	$box_id = $_POST['box_id'];
 	$qty = $_POST['qty'];
 	$no = $_POST['model'];
-	$id = $_SESSION['id'];
 	$tmstmp = time(); 
 
 	$allmodel = get_model($con);

@@ -624,6 +624,7 @@ include('product_cfg.php');
 
 	function checkTempTest($sn,$con){
 		
+		$timeout = "";
         $query=mysqli_query($con,"SELECT tt.id, tt.temperature, ts.sn, tt.time_out, ts.result
         FROM temp_test tt
         JOIN temp_test_sn ts ON tt.id = ts.batch_id

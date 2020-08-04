@@ -49,6 +49,38 @@
         {
             $weight = '4.455KG';
         }
+        elseif($carton_id =="IQ001777")
+        {
+            $weight = '7.40KG';
+        }
+        elseif($carton_id =="IQ001823")
+        {
+            $weight = '5.145KG';
+        }
+        elseif($carton_id =="IQ001794")
+        {
+            $weight = '7.40KG';
+        }
+        elseif($carton_id =="IQ001790")
+        {
+            $weight = '3.565KG';
+        }
+        elseif($carton_id =="IQ001767")
+        {
+            $weight = '5.10KG';
+        }
+        elseif($carton_id =="IQ001766")
+        {
+            $weight = '1.43KG';
+        }
+        elseif($carton_id =="IQ001731")
+        {
+            $weight = '7.43KG';
+        }
+        elseif($carton_id =="IQ001722")
+        {
+            $weight = '5.94KG';
+        }
         elseif($carton_id =="IQ001329")
         {
             $weight = '4.44KG';
@@ -132,6 +164,14 @@
         elseif($carton_id=="IQ001196")
         {
             $weight = "2.8KG";
+        }
+        elseif($carton_id=="IQ001656")
+        {
+            $weight = "7.025KG";
+        }
+        elseif($carton_id=="IQ001657")
+        {
+            $weight = "7.595KG";
         }
         else
         {

@@ -380,7 +380,7 @@ include('product_cfg.php');
 					}
 				}
 				elseif(strpos($model_no,"IQ-M011793")!== false){//for D5 FG
-					$printlbl = 0;
+					$printlbl = 1;
 					$query=mysqli_query($con,"select result,count(*) as cnt from d5_durability where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['result']!="P")){
@@ -588,33 +588,35 @@ include('product_cfg.php');
 					//print second label
 					copy($filename, "//BTS-iLOQ-1/iloqpizza"); 
 
-					$printable = pingAddress($ip);
-					if($printable){
-						try//attempt to print label
-						{
-							// Number of seconds to wait for a response from remote host
-							$timeout = 2;
-							if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
-								fputs($fp,$lblbox);
-								fclose($fp);				
-								echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
-								echo "<script>window.history.back();</script>"; 
-							}
-							else{
-								echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-								echo "<script>window.history.back();</script>";  
-							} 
+					
+				}
+
+				$printable = pingAddress($ip);
+				if($printable){
+					try//attempt to print label
+					{
+						// Number of seconds to wait for a response from remote host
+						$timeout = 2;
+						if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
+							fputs($fp,$lblbox);
+							fclose($fp);				
+							echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
+							echo "<script>window.history.back();</script>"; 
 						}
-						catch (Exception $e) 
-						{
-							echo 'Caught exception: ',  $e->getMessage(), "\n";
-						}
+						else{
+							echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+							echo "<script>window.history.back();</script>";  
+						} 
 					}
-					else{
-						echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-						echo "<script>window.history.back();</script>";  
+					catch (Exception $e) 
+					{
+						echo 'Caught exception: ',  $e->getMessage(), "\n";
 					}
 				}
+				else{
+					echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+					echo "<script>window.history.back();</script>";  
+					}
 			}
 		}
 	}

@@ -104,6 +104,13 @@ date_default_timezone_set("Asia/Singapore");
                       </li>
                     </ul>
                   </li>
+                  <li class="">
+                    <!-- Menu Toggle Button -->
+                    <a href="rma.php" class="dropdown-toggle">
+                      <i class="glyphicon glyphicon-tasks text-red"></i>
+                      Box (RMA)
+                    </a>
+                  </li>
                   <li class="dropdown notifications-menu">
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">

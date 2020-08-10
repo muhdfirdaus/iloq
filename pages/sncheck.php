@@ -94,7 +94,7 @@
       
         <div class="container">
           <!-- Content Header (Page header) -->
-          <?php $query2=mysqli_query($con,"select * from box_config where id=1")or die(mysqli_error($con));
+          <?php $query2=mysqli_query($con,"select * from box_config where id=2")or die(mysqli_error($con));
           $row2=mysqli_fetch_array($query2);
           $model=$row2['model'];
           $qty=$row2['qty'];

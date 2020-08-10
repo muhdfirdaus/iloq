@@ -362,7 +362,16 @@ include('product_cfg.php');
 			for($i=1;$i<=$qty;$i++){
 				$rfsissue = 0;
 				$sn= $_POST['sn'.$i];
+
+				/*
+				Check if need to print label
+				$printlbl
+				0 = no label to be printed
+				1 = one label to be printed
+				2 = two label to be printed
+				*/
 				if(strpos($model_name,"NFC")!== false){//temporary for NFC 
+					$printlbl = 1;
 					$query=mysqli_query($con,"select result,fdate, count(*) as cnt from nfc_test where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || $row['result']!="P"){
@@ -371,7 +380,7 @@ include('product_cfg.php');
 					}
 				}
 				elseif(strpos($model_no,"IQ-M011795")!== false){//for D5  Core
-					$printlbl = 0;
+					$printlbl = 2;
 					$query=mysqli_query($con,"select result,count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['result']!="P")){
@@ -400,7 +409,7 @@ include('product_cfg.php');
 					}
 				}
 				elseif(strpos($model_name,"SKOGEN KEY")!== false){//temporary for skogen  
-					$printlbl = 0;
+					$printlbl = 2;
 					$query=mysqli_query($con,"select lockTest,lDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['lockTest']!="P")){
@@ -425,6 +434,9 @@ include('product_cfg.php');
 				// 	}
 				// }
 				else{
+					if(strpos($model_no,"IQ-M009453")!== false){//for D5 FG
+						$printlbl = 1;
+					}
 					$query=mysqli_query($con,"select lockTest, durTest, rfsTest,lDate,rDate,dDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['lockTest']!="P"&&$row['durTest']!="P"&&$row['rfsTest']!="P")){
@@ -575,8 +587,63 @@ include('product_cfg.php');
 				}
 
 				if($printlbl==1){
+					$printable = pingAddress($ip);
+					if($printable){
+						try//attempt to print label
+						{
+							// Number of seconds to wait for a response from remote host
+							$timeout = 2;
+							if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
+								fputs($fp,$lblbox);
+								fclose($fp);				
+								echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
+								echo "<script>window.history.back();</script>"; 
+							}
+							else{
+								echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+								echo "<script>window.history.back();</script>";  
+							} 
+						}
+						catch (Exception $e) 
+						{
+							echo 'Caught exception: ',  $e->getMessage(), "\n";
+						}
+					}
+					else{
+						echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+						echo "<script>window.history.back();</script>";  
+					}
+				}
 
-					//skip if skiplbl2 is true
+				elseif($printlbl == 2){
+
+					$printable = pingAddress($ip);
+					if($printable){
+						try//attempt to print label
+						{
+							// Number of seconds to wait for a response from remote host
+							$timeout = 2;
+							if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
+								fputs($fp,$lblbox);
+								fclose($fp);				
+								echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
+								echo "<script>window.history.back();</script>"; 
+							}
+							else{
+								echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+								echo "<script>window.history.back();</script>";  
+							} 
+						}
+						catch (Exception $e) 
+						{
+							echo 'Caught exception: ',  $e->getMessage(), "\n";
+						}
+					}
+					else{
+						echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+						echo "<script>window.history.back();</script>";  
+					}
+
 					//function to print second label
 					$filename = "lbliloq2.txt";
 					$file = fopen($filename, "r+")or die("ERROR: Cannot open the file .")  ;
@@ -587,36 +654,11 @@ include('product_cfg.php');
 
 					//print second label
 					copy($filename, "//BTS-iLOQ-1/iloqpizza"); 
-
-					
-				}
-
-				$printable = pingAddress($ip);
-				if($printable){
-					try//attempt to print label
-					{
-						// Number of seconds to wait for a response from remote host
-						$timeout = 2;
-						if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
-							fputs($fp,$lblbox);
-							fclose($fp);				
-							echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
-							echo "<script>window.history.back();</script>"; 
-						}
-						else{
-							echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-							echo "<script>window.history.back();</script>";  
-						} 
-					}
-					catch (Exception $e) 
-					{
-						echo 'Caught exception: ',  $e->getMessage(), "\n";
-					}
 				}
 				else{
-					echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-					echo "<script>window.history.back();</script>";  
-					}
+					echo '<script type="text/javascript">alert("Data Saved!");</script>';
+					echo "<script>window.history.back();</script>"; 
+				}
 			}
 		}
 	}

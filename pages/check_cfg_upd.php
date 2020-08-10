@@ -10,8 +10,8 @@ include('product_cfg.php');
 	$qty =$_POST['qty'];
 	
 	
-	mysqli_query($con,"update box_config set model='$model',qty='$qty' where id=1")or die(mysqli_error($con));
+	mysqli_query($con,"update box_config set model='$model',qty='$qty' where id=2")or die(mysqli_error($con));
 	
 	echo "<script type='text/javascript'>alert('Successfully update box configurations!');</script>";
-	echo "<script>document.location='box_cfg.php'</script>";  
+	echo "<script>document.location='sncheck.php'</script>";  
 ?>

@@ -44,7 +44,7 @@
             </ol>
           </section>
         <?php
-        $query=mysqli_query($con,"select * from box_config where id=1")or die(mysqli_error());
+        $query=mysqli_query($con,"select * from box_config where id=2")or die(mysqli_error());
         $row=mysqli_fetch_array($query);
         $qty = $row['qty'];
         $id = $row['id'];

@@ -30,7 +30,7 @@ date_default_timezone_set("Asia/Singapore");
                 <ul class="nav navbar-nav">
                   <li class="">
                     <!-- Menu Toggle Button -->
-                    <a href="box2.php" class="dropdown-toggle">
+                    <a href="box_start.php" class="dropdown-toggle">
                       <i class="glyphicon glyphicon-tasks text-blue"></i>
                       Box
                     </a>
@@ -128,11 +128,11 @@ date_default_timezone_set("Asia/Singapore");
                                 User profile ( <?php echo $_SESSION['name'];?> )
                               </a>
                           </li><!-- end notification -->
-                          <li><!-- start notification -->
+                          <!--<li> start notification 
                               <a href="box_cfg.php">
                                 <i class="glyphicon glyphicon-th-list text-orange"></i>Box Configuration
                               </a>
-                          </li><!-- end notification -->
+                          </li> -->
                           <li><!-- start notification -->
                               <a href="#printerip" class="dropdown-toggle" data-target="#printerip" data-toggle="modal">
                                 <i class="glyphicon glyphicon-print text-orange"></i>Printer IP

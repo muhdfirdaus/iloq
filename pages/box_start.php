@@ -10,7 +10,7 @@ endif;
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Box (RMA) | <?php include('../dist/includes/title.php');include('product_cfg.php');?></title>
+    <title>Box Start | <?php include('../dist/includes/title.php');?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -57,60 +57,119 @@ endif;
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
   <body class="hold-transition skin-black layout-top-nav" onload="myFunction()">
     <div class="wrapper">
-      <?php include('../dist/includes/header.php');?>
+    <?php 
+    include('product_cfg.php');
+    include('../dist/includes/dbcon.php');
+    include('../dist/includes/header.php');
+    ?>
       <!-- Full Width Column -->
       <div class="content-wrapper">
-      <div class="container">
+      
+        <div class="container">
           <!-- Content Header (Page header) -->
-          <?php $query2=mysqli_query($con,"select * from box_config where id=1")or die(mysqli_error($con));
-          $row2=mysqli_fetch_array($query2);
-          $model=$row2['model'];
-          $qty=$row2['qty'];
-          $query=mysqli_query($con,"select box_id from box_info order by id desc limit 1")or die(mysqli_error($con));
-          $row=mysqli_fetch_array($query);
-          $box_id=$row['box_id'];
-          $run_no =  preg_replace("/[^0-9,.]/", "", $box_id);          
-          $next_run = ($run_no +1);
-          if(strlen($next_run)>=5){
-            $next_box_id = "BEY" . $next_run;
-          }
-          else{
-            $next_box_id = "BEY" . str_pad($next_run, 5, '0', STR_PAD_LEFT);;
-          }
-          // $next_box_id = "BEY0001" ;?>
-          <!-- Main content -->
-          <section class="content">
+          <!-- Existing unfinished box -->
+          <?php 
+          $query=mysqli_query($con,"SELECT DISTINCT id,timestamp,box_id,model_no,qty, line FROM box_info m WHERE m.status=0")or die(mysqli_error($con));
+          if(mysqli_num_rows($query)>0){
+          ?>
+              <section class="content">
+                  <div class="panel panel-default">
+                      <div class="panel-heading"><b>Unfinished Box</b></div>
+                      <div class="panel-body">
+                      
+                      <form id="form_box" class="form-horizontal" method="post" action="#" enctype='multipart/form-data'>
+                      <table class="table table-bordered table-striped" width="50%" align="center">
+                          <tr>
+                              <th class="info text-center">Box ID</th>
+                              <th class="info text-center">Model</th>
+                              <th class="info text-center">Quantity</th>  
+                              <th class="info text-center">Line</th>  
+                              <th class="info text-center">Date Created</th>  
+                              <th class="info text-center">Resume</th>                                
+                          </tr>
+                          <?php 
+                          $c = 1;
+                          while($row = mysqli_fetch_array($query)){?>
+                          <tr>
+                          <?php
+                          $id = $row['id'];
+                          $box_id = $row['box_id'];
+                          $model = $row['model_no'];
+                          $qty = $row['qty'];
+                          $wo = $row['line'];
+                          $timestamp = date('d-M-Y h:i:sa',$row['timestamp']);
+                          echo  "<td >$box_id</td>
+                              <td >$model</td>
+                              <td >$qty</td>
+                              <td >$wo</td>
+                              <td >$timestamp</td>
+                              <td  align='center'><a href='box_scan.php?id=$id'><i class='glyphicon glyphicon-chevron-right text-blue'></i></a></td>";
+                          $c++;                        
+                          ?>
+                          
+                          </tr>
+                          <?php } ?>
+                      </table>
+                      
+                      <br><br>
+
+                      </form>
+
+              
+                      </div><!-- /.panel body -->
+                  </div><!-- /.panel -->
+              </section><!-- /.content -->
+          <?php } ?>
+
+        <!-- Main content -->
+        <section class="content">
             <div class="panel panel-default">
-              <div class="panel-heading">Box (RMA)</div>
-              <div class="panel-body">
-                <form id="form_rma" class="form-horizontal" method="post" action="rma_in.php" enctype='multipart/form-data'>
-                  <p><h3 class="text-red">THIS IS FOR RMA ONLY!</h3></p>
-                  <p>Product: <b><?php $pModel = get_model_name($con); echo $pModel[$model];?></b></p>
-                  <p>Model Number: <b><?php $nModel = get_modelNo2($con); echo $nModel[$model];?></b></p>
-                  <p>Quantity: <b><?php echo $qty;?></b></p>
-                  <p>Box ID: <b><?php echo $next_box_id; ?></b></p><br>
-                  <input type="hidden" name="box_id" id="box_id" value="<?php echo $next_box_id; ?>"></input>
-                  <input type="hidden" name="qty" id="qty" value="<?php echo $qty; ?>"></input>
-                  <input type="hidden" name="model" id="model" value="<?php echo $model;?>"></input>
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                      <th class="info text-center">Item</th>
-                      <th class="info text-center">Serial Number</th>
-                    </thead>
-                    <tbody>
-                      <?php for ($i=1; $i<=$qty; $i++) {
-                          echo '<tr><td class="text-center">'.$i.'</td>
-                          <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="25" required name="sn'.$i.'" id="sn'.$i.'" </td>';
-                      }
-                      ?>
-                    </tbody>
-                  </table>
+                <div class="panel-heading">Box Start</div>
+                <div class="panel-body">
+                
+                <form id="form_box" class="form-horizontal" method="post" action="box_start_in.php" enctype='multipart/form-data'>
+                <table class="table-bordered table-striped" width="50%" align="center">
+                    <tr>
+                        <td>Line : </td>
+                        <td>
+                            <select id="line" name="line" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </td>
+                    </tr>    
+                    <tr>
+                        <td >Model : </td>
+                        <td>
+                            <select name="model" class="form-control">
+                            <?php $modellist = get_modelNo2($con);
+
+                            foreach($modellist as $key=>$value ){
+                            ?>
+                            <option value='<?php echo $key;?>' ><?php echo $value; ?></option>
+                            <?php } ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Quantity : </td>
+                        <td><input type="number" class="form-control pull-right" max='150' value="20" name="qty" placeholder="Quantity" required></td>
+                    </tr>
+                </table>
+                
+                <p class="text-red text-center"><b>**Please make sure information is correct before clicking "Start"</b></p>
+                <br><br>
+
+                <div>
+                    <button id="btn_start" name="btn_start" style="display: block; margin: 0 auto;" class="btn btn-primary">Start</button>
+                </div>
+
                 </form>
-                <button type="button" id="btn_rma" class="btn btn-primary" style="float: right;">Print Label</button>
-              </div>
+                </div>
             </div>
 
-	        </section><!-- /.content -->
+        </section><!-- /.content -->
           
         </div><!-- /.container -->
       </div><!-- /.content-wrapper -->
@@ -179,8 +238,8 @@ endif;
      <script>
       $(function () {
         
-        $("#btn_rma").click(function () {
-          document.getElementById("form_rma").submit();
+        $("#btn_box").click(function () {
+          document.getElementById("form_box").submit();
           // var valid = true;
           // var i;
           // for (i = 1; i < 21; i++) { 

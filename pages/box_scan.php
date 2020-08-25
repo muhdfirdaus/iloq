@@ -10,7 +10,7 @@ endif;
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Box (RMA) | <?php include('../dist/includes/title.php');include('product_cfg.php');?></title>
+    <title>Home | <?php include('../dist/includes/title.php');include('product_cfg.php');?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -60,38 +60,41 @@ endif;
       <?php include('../dist/includes/header.php');?>
       <!-- Full Width Column -->
       <div class="content-wrapper">
-      <div class="container">
+      <?php $query=mysqli_query($con,"select lastUpdate from sn_master order by lastUpdate desc limit 1")or die(mysqli_error($con));
+          $row=mysqli_fetch_array($query);
+          $rawdata=$row['lastUpdate'];
+          $lupd=date('d M Y h:iA',$rawdata);?>
+      <div class="alert alert-success" role="alert">Log data last updated on: <?php echo $lupd;?> &nbsp;<a href="logupdate.php">CLICK TO UPDATE AGAIN</a></div>
+        <div class="container">
           <!-- Content Header (Page header) -->
-          <?php $query2=mysqli_query($con,"select * from box_config where id=1")or die(mysqli_error($con));
+          <?php 
+          $id = $_GET['id'];
+          $query2=mysqli_query($con,"select * from box_info where id=$id")or die(mysqli_error($con));
           $row2=mysqli_fetch_array($query2);
           $model=$row2['model'];
+          $model_no=$row2['model_no'];
           $qty=$row2['qty'];
-          $query=mysqli_query($con,"select box_id from box_info order by id desc limit 1")or die(mysqli_error($con));
+          $box_id=$row2['box_id'];
+          $line=$row2['line'];
+          
+          $query=mysqli_query($con,"select id from model_list where model_name='$model'")or die(mysqli_error($con));
           $row=mysqli_fetch_array($query);
-          $box_id=$row['box_id'];
-          $run_no =  preg_replace("/[^0-9,.]/", "", $box_id);          
-          $next_run = ($run_no +1);
-          if(strlen($next_run)>=5){
-            $next_box_id = "BEY" . $next_run;
-          }
-          else{
-            $next_box_id = "BEY" . str_pad($next_run, 5, '0', STR_PAD_LEFT);;
-          }
-          // $next_box_id = "BEY0001" ;?>
+          $no = $row['id'];
+          ?>
           <!-- Main content -->
           <section class="content">
             <div class="panel panel-default">
-              <div class="panel-heading">Box (RMA)</div>
+              <div class="panel-heading">Box Details</div>
               <div class="panel-body">
-                <form id="form_rma" class="form-horizontal" method="post" action="rma_in.php" enctype='multipart/form-data'>
-                  <p><h3 class="text-red">THIS IS FOR RMA ONLY!</h3></p>
-                  <p>Product: <b><?php $pModel = get_model_name($con); echo $pModel[$model];?></b></p>
-                  <p>Model Number: <b><?php $nModel = get_modelNo2($con); echo $nModel[$model];?></b></p>
+                <form id="form_box" class="form-horizontal" method="post" action="box_in.php" enctype='multipart/form-data'>
+                <p>Line: <b><?php echo $line;?></b></p>
+                  <p>Product: <b><?php echo $model;?></b></p>
+                  <p>Model Number: <b><?php echo $model_no;?></b></p>
                   <p>Quantity: <b><?php echo $qty;?></b></p>
-                  <p>Box ID: <b><?php echo $next_box_id; ?></b></p><br>
-                  <input type="hidden" name="box_id" id="box_id" value="<?php echo $next_box_id; ?>"></input>
+                  <p>Box ID: <b><?php echo $box_id; ?></b></p><br>
+                  <input type="hidden" name="box_id" id="box_id" value="<?php echo $box_id; ?>"></input>
                   <input type="hidden" name="qty" id="qty" value="<?php echo $qty; ?>"></input>
-                  <input type="hidden" name="model" id="model" value="<?php echo $model;?>"></input>
+                  <input type="hidden" name="model" id="model" value="<?php echo $no;?>"></input>
                   <table class="table table-bordered table-striped">
                     <thead>
                       <th class="info text-center">Item</th>
@@ -106,7 +109,7 @@ endif;
                     </tbody>
                   </table>
                 </form>
-                <button type="button" id="btn_rma" class="btn btn-primary" style="float: right;">Print Label</button>
+                <button type="button" id="btn_box" class="btn btn-primary" style="float: right;">Print Label</button>
               </div>
             </div>
 
@@ -179,8 +182,8 @@ endif;
      <script>
       $(function () {
         
-        $("#btn_rma").click(function () {
-          document.getElementById("form_rma").submit();
+        $("#btn_box").click(function () {
+          document.getElementById("form_box").submit();
           // var valid = true;
           // var i;
           // for (i = 1; i < 21; i++) { 

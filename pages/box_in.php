@@ -76,8 +76,9 @@ include('product_cfg.php');
 					echo "<script>window.history.back();</script>"; 
 				}
 				else{
-					mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model)
-					VALUES('$box_id','$id', '$qty', '$tmstmp', '$model_no2', '$model_name')")or die(mysqli_error($con));
+					// mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model)
+					// VALUES('$box_id','$id', '$qty', '$tmstmp', '$model_no2', '$model_name')")or die(mysqli_error($con));
+					mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
 					echo "<script type='text/javascript'>alert('Data saved!');</script>";
 					
 					$query=mysqli_query($con,"select ip from printer_cfg where id=1")or die(mysqli_error($con));
@@ -142,11 +143,11 @@ include('product_cfg.php');
 								fputs($fp,$lblbox);
 								fclose($fp);				
 								echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
-								echo "<script>window.history.back();</script>"; 
+								echo "<script>document.location='box_start.php'</script>";
 							}
 							else{
 								echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-								echo "<script>window.history.back();</script>";  
+								echo "<script>document.location='box_start.php'</script>";
 							} 
 						}
 						catch (Exception $e) 
@@ -156,7 +157,7 @@ include('product_cfg.php');
 					}
 					else{
 						echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-						echo "<script>window.history.back();</script>";  
+						echo "<script>document.location='box_start.php'</script>";
 					}
 				}
 			}
@@ -380,7 +381,7 @@ include('product_cfg.php');
 					}
 				}
 				elseif(strpos($model_no,"IQ-M011795")!== false){//for D5  Core
-					$printlbl = 2;
+					$printlbl = 1;
 					$query=mysqli_query($con,"select result,count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['result']!="P")){
@@ -389,7 +390,7 @@ include('product_cfg.php');
 					}
 				}
 				elseif(strpos($model_no,"IQ-M011793")!== false){//for D5 FG
-					$printlbl = 1;
+					$printlbl = 2;
 					$query=mysqli_query($con,"select result,count(*) as cnt from d5_durability where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['result']!="P")){
@@ -436,6 +437,9 @@ include('product_cfg.php');
 				else{
 					if(strpos($model_no,"IQ-M009453")!== false){//for D5 FG
 						$printlbl = 1;
+					}
+					else{
+						$printlbl = 2;
 					}
 					$query=mysqli_query($con,"select lockTest, durTest, rfsTest,lDate,rDate,dDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
@@ -512,8 +516,9 @@ include('product_cfg.php');
 					$i++;
 				}
 				
-				mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model)
-				VALUES('$box_id','$id', '$qty', '$tmstmp', '$model_no2', '$model_name')")or die(mysqli_error($con));
+				// mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model)
+				// VALUES('$box_id','$id', '$qty', '$tmstmp', '$model_no2', '$model_name')")or die(mysqli_error($con));
+				mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
 				echo "<script type='text/javascript'>alert('Data saved!');</script>";
 				
 				$query=mysqli_query($con,"select ip from printer_cfg where id=1")or die(mysqli_error($con));
@@ -597,11 +602,11 @@ include('product_cfg.php');
 								fputs($fp,$lblbox);
 								fclose($fp);				
 								echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
-								echo "<script>window.history.back();</script>"; 
+								echo "<script>document.location='box_start.php'</script>";
 							}
 							else{
 								echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-								echo "<script>window.history.back();</script>";  
+								echo "<script>document.location='box_start.php'</script>";
 							} 
 						}
 						catch (Exception $e) 
@@ -611,7 +616,7 @@ include('product_cfg.php');
 					}
 					else{
 						echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-						echo "<script>window.history.back();</script>";  
+						echo "<script>document.location='box_start.php'</script>";
 					}
 				}
 
@@ -627,11 +632,11 @@ include('product_cfg.php');
 								fputs($fp,$lblbox);
 								fclose($fp);				
 								echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
-								echo "<script>window.history.back();</script>"; 
+								echo "<script>document.location='box_start.php'</script>";
 							}
 							else{
 								echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-								echo "<script>window.history.back();</script>";  
+								echo "<script>document.location='box_start.php'</script>";
 							} 
 						}
 						catch (Exception $e) 
@@ -641,7 +646,7 @@ include('product_cfg.php');
 					}
 					else{
 						echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-						echo "<script>window.history.back();</script>";  
+						echo "<script>document.location='box_start.php'</script>";
 					}
 
 					//function to print second label
@@ -657,7 +662,7 @@ include('product_cfg.php');
 				}
 				else{
 					echo '<script type="text/javascript">alert("Data Saved!");</script>';
-					echo "<script>window.history.back();</script>"; 
+					echo "<script>document.location='box_start.php'</script>"; 
 				}
 			}
 		}

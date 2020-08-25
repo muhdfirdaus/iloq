@@ -312,7 +312,7 @@ if(isset($_POST['login']))
 		mysqli_query($con,"INSERT INTO history_log(user_id,action,date) VALUES('$id','$remarks','$date')")or die(mysqli_error($con));         
 	}                
 	// echo "PASSS";
-	echo "<script type='text/javascript'>document.location='pages/box2.php'</script>";
+	echo "<script type='text/javascript'>document.location='pages/box_start.php'</script>";
 }
  
 ?>

@@ -13,6 +13,11 @@ date_default_timezone_set("Asia/Singapore");
   $query=mysqli_query($con,"select ip from printer_cfg where id=2")or die(mysqli_error($con));
   $row=mysqli_fetch_array($query);
   $ip2=$row['ip'];
+  $query=mysqli_query($con,"select * from printer_cfg order by id asc")or die(mysqli_error($con));
+  while($row=mysqli_fetch_array($query)){
+    $printer[$row['id']]['ip'] = $row['ip'];
+    $printer[$row['id']]['name'] = $row['name'];
+  }
 ?>
 <meta http-equiv="refresh" content="900;url=logout.php" />
       <header class="main-header">
@@ -221,9 +226,14 @@ date_default_timezone_set("Asia/Singapore");
             </div>
           </div><hr>
           <div class="form-group">
-            <label class="control-label col-lg-2" for="printer_ip">Printer IP</label>
+            <label class="control-label col-lg-2" for="printer_ip">Printer </label>
             <div class="col-lg-7">
-              <input autocomplete="off" type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP" value="<?php echo $ip1; ?>">  
+              <select name="printer_ip" id="printer_ip" class="form-control">
+              <?php foreach($printer as $data){
+                echo "<option value='{$data['ip']}'>{$data['name']}</option>";
+              }
+              ?>
+              </select>
             </div>
           </div>
           <!-- <div class="form-group control-label text-red">*Please insert ONE(1) field only</div> -->
@@ -259,9 +269,15 @@ date_default_timezone_set("Asia/Singapore");
             </div>
           </div><hr>
           <div class="form-group">
-            <label class="control-label col-lg-2" for="printer_ip">Printer IP</label>
+            <label class="control-label col-lg-2" for="printer_ip">Printer </label>
             <div class="col-lg-7">
-              <input autocomplete="off" type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP" value="<?php echo $ip2; ?>">  
+              <select name="printer_ip" id="printer_ip" class="form-control">
+              <?php foreach($printer as $data){
+                echo "<option value='{$data['ip']}'>{$data['name']}</option>";
+              }
+              ?>
+              </select>
+              
             </div>
           </div>
           <!-- <div class="form-group control-label text-red">*Please insert ONE(1) field only</div> -->
@@ -291,18 +307,14 @@ date_default_timezone_set("Asia/Singapore");
       </div>
       <div style="font-size:11px" class="modal-body">
         <form class="form-horizontal" id="form_report" method="post" action="printer_cfg.php" enctype='multipart/form-data'>
+          <?php foreach($printer as $key=>$value){?>
           <div class="form-group">
-            <label class="control-label col-lg-2" for="printer_ip">Printer IP (Box)</label>
+            <label class="control-label col-lg-2" for="printer_ip"><?php echo $value['name'];?></label>
             <div class="col-lg-7">
-              <input autocomplete="off" type="text" class="form-control" id="printer_ip" name="printer_ip" placeholder="Printer IP for Box" value="<?php echo $ip1; ?>">  
+              <input autocomplete="off" type="text" class="form-control" id="ip[<?php echo $key?>]" name="ip[<?php echo $key?>]" placeholder="Printer IP for Carton" value="<?php echo $value['ip']; ?>">  
             </div>
           </div>
-          <div class="form-group">
-            <label class="control-label col-lg-2" for="printer_ip">Printer IP (Carton)</label>
-            <div class="col-lg-7">
-              <input autocomplete="off" type="text" class="form-control" id="printer_ip2" name="printer_ip2" placeholder="Printer IP for Carton" value="<?php echo $ip2; ?>">  
-            </div>
-          </div>
+          <?php } ?>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" id="btn_submit">Send</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

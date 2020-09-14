@@ -71,6 +71,10 @@ endif;
           $id = $_GET['id'];
           $query2=mysqli_query($con,"select * from box_info where id=$id")or die(mysqli_error($con));
           $row2=mysqli_fetch_array($query2);
+          if($row2['status']==1){
+            echo '<script type="text/javascript">alert("Box Already Finished!");</script>';
+            echo "<script>document.location='box_start.php'</script>";
+          }
           $model=$row2['model'];
           $model_no=$row2['model_no'];
           $qty=$row2['qty'];

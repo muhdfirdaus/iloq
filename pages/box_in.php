@@ -409,6 +409,26 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
 					}
 				}
+				elseif(strpos($model_no,"IQ-M010158-C")!== false){//for D5 FG
+					$printlbl = 2;
+					$query=mysqli_query($con,"select result,count(*) as cnt from d5_durability where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['result']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+					}
+
+					if($tempres = checkTempTest($sn,$con)){
+						if($tempres['result']!="P"){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+						}
+					}
+					else{
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+					}
+				}
 				elseif(strpos($model_name,"SKOGEN KEY")!== false){//temporary for skogen  
 					$printlbl = 2;
 					$query=mysqli_query($con,"select lockTest,lDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
@@ -682,6 +702,7 @@ include('product_cfg.php');
 
         $rowcount=mysqli_num_rows($query);
 		$retval = array();
+		$timeout = 0;
         if($rowcount>=1){
 
             while($row = mysqli_fetch_assoc($query)) {

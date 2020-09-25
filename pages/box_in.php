@@ -388,6 +388,13 @@ include('product_cfg.php');
 						$testfailed = 1;
 						$testmsg.=$sn.' on line '.$i.' not pass Burn-in test yet!.\n';
 					}
+
+					$query=mysqli_query($con,"select result,count(*) as cnt from d5_rfs where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['result']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
+					}
 				}
 				elseif(strpos($model_no,"IQ-M011793")!== false){//for D5 FG
 					$printlbl = 2;
@@ -396,6 +403,13 @@ include('product_cfg.php');
 					if($row['cnt']==0 || ($row['result']!="P")){
 						$testfailed = 1;
 						$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+					}
+
+					$query=mysqli_query($con,"select result,count(*) as cnt from d5_rfs where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['result']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
 					}
 
 					if($tempres = checkTempTest($sn,$con)){

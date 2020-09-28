@@ -281,52 +281,55 @@ if(file_exists($mydir)){
 
 }
 
-$files = glob("C:\iLOQ\RFS_skogen\*.txt"); //RFS skogen
+$mydir = "\\\\iloq1830\\Skogen RFS";// RFS Logtest Update
+if(file_exists($mydir)){
+    $files = glob("\\\\iloq1830\\Skogen RFS\\Reports\\*.txt"); //RFS skogen
 
-foreach($files as $file) {
+    foreach($files as $file) {
 
-    $line = file($file);//file in to an array
-    $fdate = date ("YmdHis", filemtime($file));
-    $line1 = $line[3];//fetch serial number
-    $arr1 = explode(":",$line1);
-    $sn = preg_replace('/\s+/', '', $arr1[1]);
-    
-    $line3 = $line[9];//fetch test result
-    $arr2 = explode(":",$line3);
-    $statusfull = preg_replace('/\s+/', '', $arr2[1]);
-    $status = $statusfull[0];
+        $line = file($file);//file in to an array
+        $fdate = date ("YmdHis", filemtime($file));
+        $line1 = $line[3];//fetch serial number
+        $arr1 = explode(":",$line1);
+        $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+        $line3 = $line[9];//fetch test result
+        $arr2 = explode(":",$line3);
+        $statusfull = preg_replace('/\s+/', '', $arr2[1]);
+        $status = $statusfull[0];
 
-    if($status == 'P'){
-        $line165 = $line[165];
-        $arr3 = explode(":",$line165);
-        $vers = preg_replace('/\s+/', '', $arr3[1]);
+        if($status == 'P'){
+            $line165 = $line[165];
+            $arr3 = explode(":",$line165);
+            $vers = preg_replace('/\s+/', '', $arr3[1]);
 
-        if($vers == "007b"){
-            $status = "F";
+            if($vers == "007b"){
+                $status = "F";
+            }
         }
-    }
-    
-    if(isset($data[$sn])){
-        if(isset($data[$sn]['r'])){
-            //only save data if 'Pass'
-            // if($status=='P' && $data[$sn]['r']<$fdate){ 
-            if($status=='P' && $data[$sn]['r']<$fdate){
-                $data[$sn][0] = $sn;
-                $data[$sn][3] =   $status;
+        
+        if(isset($data[$sn])){
+            if(isset($data[$sn]['r'])){
+                //only save data if 'Pass'
+                // if($status=='P' && $data[$sn]['r']<$fdate){ 
+                if($status=='P' && $data[$sn]['r']<$fdate){
+                    $data[$sn][0] = $sn;
+                    $data[$sn][3] =   $status;
+                    $data[$sn]['r'] =  $fdate;
+                }
+            }
+            else{
+                $data[$sn][3] =  $status;
                 $data[$sn]['r'] =  $fdate;
             }
         }
         else{
+            $data[$sn][0] = $sn;
             $data[$sn][3] =  $status;
             $data[$sn]['r'] =  $fdate;
         }
+        // rename($file, 'C:/iLOQ/RFS_skogen/logged/'.basename($file));
     }
-    else{
-        $data[$sn][0] = $sn;
-        $data[$sn][3] =  $status;
-        $data[$sn]['r'] =  $fdate;
-    }
-    // rename($file, 'C:/iLOQ/RFS_skogen/logged/'.basename($file));
 }
 
 

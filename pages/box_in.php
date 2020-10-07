@@ -443,7 +443,16 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
 					}
 				}
-				elseif(strpos($model_name,"SKOGEN KEY")!== false){//temporary for skogen  
+				elseif(strpos($model_no,"IQ-M009453-J-00")!== false){//temporary for skogen  
+					$printlbl = 2;
+					$query=mysqli_query($con,"select lockTest,lDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['lockTest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Lock test yet!.\n';
+					}
+				}
+				elseif(strpos($model_no,"IQ-M010243")!== false){//For Key PCBA Potted  
 					$printlbl = 2;
 					$query=mysqli_query($con,"select lockTest,lDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);

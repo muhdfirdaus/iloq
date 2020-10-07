@@ -127,11 +127,11 @@
                     fputs($fp,$lblbox);
                     fclose($fp);				
                     echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
-                    echo "<script type='text/javascript'>document.location='box.php'</script>"; 
+                    echo "<script type='text/javascript'>document.location='box_start.php'</script>"; 
                 }
                 else{
                     echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-                    echo "<script type='text/javascript'>document.location='box.php'</script>";  
+                    echo "<script type='text/javascript'>document.location='box_start.php'</script>";  
                 } 
             }
             catch (Exception $e) 
@@ -141,7 +141,7 @@
         }
         else{
             echo '<script type="text/javascript">alert("Printer is not available!");</script>';
-            echo "<script type='text/javascript'>document.location='box.php'</script>";  
+            echo "<script type='text/javascript'>document.location='box_start.php'</script>";  
         }
     }
     else{

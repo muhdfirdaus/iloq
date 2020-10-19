@@ -43,6 +43,16 @@ function get_modelNo2($con){
     return $modelno2;
 }
 
+function get_modelNo2_selected($con){
+    $query=mysqli_query($con,"SELECT id, model_no2 FROM model_list where view_opt = 1 order by id asc")or die(mysqli_error());
+    while($row = mysqli_fetch_assoc($query)) {
+        $id = $row['id'];
+        $mdl = $row['model_no2'];
+        $modelno2_selected[$id] = $mdl;
+    }
+    return $modelno2_selected;
+}
+
 function get_custProd($con){
     $query=mysqli_query($con,"SELECT id, model_cust FROM model_list order by id asc")or die(mysqli_error());
     while($row = mysqli_fetch_assoc($query)) {

@@ -49,6 +49,14 @@
         {
             $weight = '4.455KG';
         }
+        elseif($carton_id =="IQ001951")
+        {
+            $weight = '6.13KG';
+        }
+        elseif($carton_id =="IQ001880")
+        {
+            $weight = '1.745KG';
+        }
         elseif($carton_id =="IQ001777")
         {
             $weight = '7.40KG';

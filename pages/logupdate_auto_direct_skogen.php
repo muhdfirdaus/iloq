@@ -48,6 +48,42 @@ if(file_exists($mydir)){
 
 }
 
+$mydir = "\\\\iloq1865\\reports";// Skogen Key Logtest Update
+if(file_exists($mydir)){
+    $files = glob("\\\\iloq1865\\reports\*.txt");//open all lock file
+
+    foreach($files as $file) {
+        
+        if (trim(file_get_contents($file)) == true) {
+            $line = file($file);//file in to an array
+            $fdate = date ("YmdHis", filemtime($file));
+            $line1 = $line[3];//fetch serial number
+            $arr1 = explode(":",$line1);
+            $sn = preg_replace('/\s+/', '', $arr1[1]);
+            
+            $line3 = $line[9];//fetch test result
+            $arr2 = explode(":",$line3);
+            $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+            if(isset($data[$sn]['l'])){
+                if($data[$sn]['l'] < $fdate){
+                    $data[$sn][0] = $sn;
+                    $data[$sn][2] =  $status[0];
+                    $data[$sn]['l'] =  $fdate;
+                }
+            }
+            else{
+                $data[$sn][0] = $sn;
+                $data[$sn][2] =  $status[0];
+                $data[$sn]['l'] =  $fdate;
+            }
+        }
+        // rename($file, 'C:/iLOQ/skogen_key/logged/'.basename($file));
+    }
+
+
+}
+
 $mydir = "\\\\iloq1843\\TestReports";// Skogen Lock Logtest Update
 if(file_exists($mydir)){
     $files = glob("\\\\iloq1843\\TestReports\Skogen_Assy_*.txt");//open all lock file

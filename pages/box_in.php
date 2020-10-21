@@ -42,6 +42,20 @@ include('product_cfg.php');
 			echo "<script>window.history.back();</script>"; 
 		}
 		else{
+			$snlengthmsg = 'Inconsistent SN length detected in: \n';
+			$snlength_T = 0;
+			for($i=1;$i<=$qty;$i++){
+				if($i!==1){
+					if(strlen($_POST['sn1'])!==strlen($_POST['sn'.$i])){
+						$snlength_T=1;
+						$snlengthmsg.='-line '.$i.'\n';
+					}
+				}
+			}
+			if($snlength_T==1){
+				echo '<script type="text/javascript">alert("'.$snlengthmsg.'");</script>';
+				echo "<script>window.history.back();</script>"; 
+			}
 
 			$invalidmsg = '';
 			$invalidsn = 0;
@@ -326,6 +340,20 @@ include('product_cfg.php');
         echo "<script>window.history.back();</script>"; 
 	}
 	else{
+		$snlengthmsg = 'Inconsistent SN length detected in: \n';
+		$snlength_T = 0;
+		for($i=1;$i<=$qty;$i++){
+			if($i!==1){
+				if(strlen($_POST['sn1'])!==strlen($_POST['sn'.$i])){
+					$snlength_T=1;
+					$snlengthmsg.='-line '.$i.'\n';
+				}
+			}
+		}
+		if($snlength_T==1){
+			echo '<script type="text/javascript">alert("'.$snlengthmsg.'");</script>';
+			echo "<script>window.history.back();</script>"; 
+		}
 		//check for existing data
 		$existmsg='';
 		$testmsg='';

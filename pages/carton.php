@@ -78,7 +78,7 @@ include('../dist/includes/dbcon.php');
                 <form id="form_box" class="form-horizontal" method="post" action="carton_in.php" enctype='multipart/form-data'>
                   <p>Product : <b>
                     <select name="model" id="model">
-                      <?php $model = get_modelNo2($con);
+                      <?php $model = get_modelNo2_selected($con);
 
                       foreach($model as $key=>$value){
                         echo '<option value="'.$key.'" >'.$value.'</option>';
@@ -105,7 +105,7 @@ include('../dist/includes/dbcon.php');
                     <tbody>
                       <?php for ($i=1; $i<=$limit; $i++) {
                           echo '<tr><td class="text-center">'.$i.'</td>
-                          <td class="text-center"><input class="form-control text-center" maxlength="8" required name="box'.$i.'" id="box'.$i.'" </td>';
+                          <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="8" required name="box'.$i.'" id="box'.$i.'" </td>';
                       }
                       ?>
                     </tbody>

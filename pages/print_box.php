@@ -69,7 +69,7 @@
                 $swversion = "1.5.10W";
             }
             else{
-                $swversion = "1.5.12W";
+                $swversion = "1.5.14W";
             }            
         }
         else{

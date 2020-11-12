@@ -56,6 +56,7 @@ include('product_cfg.php');
 				echo '<script type="text/javascript">alert("'.$snlengthmsg.'");</script>';
 				echo "<script>window.history.back();</script>"; 
 			}
+			else{
 
 			$invalidmsg = '';
 			$invalidsn = 0;
@@ -175,7 +176,7 @@ include('product_cfg.php');
 					}
 				}
 			}
-		}
+		}}
 	}
 	// elseif((strpos($model_no,"M011795.1")!== false) ){//for D5 just proceed to print
 	// 	//Check for duplicate SN
@@ -354,6 +355,30 @@ include('product_cfg.php');
 			echo '<script type="text/javascript">alert("'.$snlengthmsg.'");</script>';
 			echo "<script>window.history.back();</script>"; 
 		}
+		else{
+
+		$snlength2msg = 'Wrong SN length for selected model in: \n';
+		$snlength2_T = 0;
+		for($i=1;$i<=$qty;$i++){
+			if(strpos($model_name,"OVAL")!== false){
+				if(strlen($_POST['sn'.$i])!==8){
+					$snlength2_T=1;
+					$snlength2msg.='-line '.$i.'\n';
+				}
+			}
+			elseif(strpos($model_name,"SKOGEN")!== false){
+				if(strlen($_POST['sn'.$i])!==9){
+					$snlength2_T=1;
+					$snlength2msg.='-line '.$i.'\n';
+				}
+			}
+		}
+		if($snlength2_T==1){
+			echo '<script type="text/javascript">alert("'.$snlength2msg.'");</script>';
+			echo "<script>window.history.back();</script>"; 
+		}
+		else{
+
 		//check for existing data
 		$existmsg='';
 		$testmsg='';
@@ -626,7 +651,12 @@ include('product_cfg.php');
 				^XZ';
 
 				if(strpos($model_name,"SKOGEN")!==false){
-					$swversion = "1.5.12W";
+					if(strpos($model_no,"M010267")!==false){
+						$swversion = "1.5.10W";
+					}
+					else{
+						$swversion = "1.5.14W";
+					}    
 				}
 				else{
 					$swversion = "2.6";
@@ -737,7 +767,9 @@ include('product_cfg.php');
 				}
 			}
 		}
-	}
+		}
+		}
+		}
 
 		
 	}

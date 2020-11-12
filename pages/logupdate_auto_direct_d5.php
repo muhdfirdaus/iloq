@@ -121,6 +121,43 @@ if(file_exists($mydir)){
 }
 
 
+
+$mydir = "\\\\iloq1866\Test_Reports";// D5 Durability Logtest Update
+if(file_exists($mydir)){
+    $files = glob("\\\\iloq1866\Test_Reports\*.txt");
+
+    foreach($files as $file) {
+        
+        if (trim(file_get_contents($file)) == true) {
+            $line = file($file);//file in to an array
+            $fdate = date ("YmdHis", filemtime($file));
+            $line1 = $line[3];//fetch serial number
+            $arr1 = explode(":",$line1);
+            $sn = preg_replace('/\s+/', '', $arr1[1]);
+            
+            $line3 = $line[9];//fetch test result
+            $arr2 = explode(":",$line3);
+            $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+            if(isset($d5dur[$sn]['bdate'])){
+                if($d5dur[$sn]['bdate'] < $fdate){
+                    $d5dur[$sn][0] = $sn;
+                    $d5dur[$sn]['res'] =  $status[0];
+                    $d5dur[$sn]['bdate'] =  $fdate;
+                }
+            }
+            else{
+                $d5dur[$sn][0] = $sn;
+                $d5dur[$sn]['res'] =  $status[0];
+                $d5dur[$sn]['bdate'] =  $fdate;
+            }
+        }
+        // rename($file, 'C:/iLOQ/burn_D5/logged/'.basename($file));
+    }
+
+}
+
+
 $mydir = "\\\\iloq1859\\reports";// D5 RFS Logtest Update
 if(file_exists($mydir)){
     $files = glob("\\\\iloq1859\\reports\\*.txt");//open all lock file

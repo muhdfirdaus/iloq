@@ -10,31 +10,31 @@ This page is set to update logfile for iLOQ (Core) packing system automatically.
 
 include('../dist/includes/dbcon.php');
 
-$files = glob("C:\iLOQ\Durability\*.txt");//open all file 
+// $files = glob("C:\iLOQ\Durability\*.txt");//open all file 
 
-foreach($files as $file) {
+// foreach($files as $file) {
 
-    $line = file($file);//file in to an array
-    // echo basename($file)."\n";
-    $fdate = date ("YmdHis", filemtime($file));
-    $line1 = $line[0];//fetch serial number
-    $arr1 = explode(":",$line1);
-    $sn = preg_replace('/\s+/', '', $arr1[1]);
+//     $line = file($file);//file in to an array
+//     // echo basename($file)."\n";
+//     $fdate = date ("YmdHis", filemtime($file));
+//     $line1 = $line[0];//fetch serial number
+//     $arr1 = explode(":",$line1);
+//     $sn = preg_replace('/\s+/', '', $arr1[1]);
     
-    $line3 = $line[2];//fetch test result
-    $arr2 = explode(":",$line3);
-    $status = preg_replace('/\s+/', '', $arr2[1]);
+//     $line3 = $line[2];//fetch test result
+//     $arr2 = explode(":",$line3);
+//     $status = preg_replace('/\s+/', '', $arr2[1]);
     
-    if(isset($data[$sn])){
-        if($data[$sn]['d'] < $fdate){
-            $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
-        }
-    }
-    else{
-        $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
-    }
-    // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
-}
+//     if(isset($data[$sn])){
+//         if($data[$sn]['d'] < $fdate){
+//             $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+//         }
+//     }
+//     else{
+//         $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+//     }
+//     // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+// }
 
 $mydir = "\\\\iloq1815\\TestReports";// Lock Logtest Update
 if(file_exists($mydir)){

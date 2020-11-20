@@ -149,6 +149,16 @@ date_default_timezone_set("Asia/Singapore");
                                 <i class="glyphicon glyphicon-list-alt text-orange"></i>Model List
                               </a>
                           </li><!-- end notification -->
+                          <li><!-- start notification -->
+                              <a href="model_list_cfg.php" class="dropdown-toggle" >
+                                <i class="glyphicon glyphicon-list-alt text-orange"></i>Model List View Cfg.
+                              </a>
+                          </li><!-- end notification -->
+                          <li><!-- start notification -->
+                              <a href="box_record_search.php" class="dropdown-toggle" >
+                                <i class="glyphicon glyphicon-search text-orange"></i>Box Record - Search
+                              </a>
+                          </li><!-- end notification -->
                           <?php } ?>
                         </ul>
                       </li>

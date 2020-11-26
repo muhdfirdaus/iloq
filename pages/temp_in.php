@@ -7,6 +7,7 @@ include('../dist/includes/dbcon.php');
 
 $user_id = $_SESSION['id'];
 $temp = $_POST['temp'];
+$durations = $_POST['durations'];
 $tray = $_POST['tray'];
 $sn[1] = $_POST['sn1'];
 $sn[2] = $_POST['sn2'];
@@ -59,8 +60,8 @@ if($start==1){
         }
         else{
             
-            $sql = "INSERT INTO temp_test (tray_no, temperature, user_id)
-            VALUES ('$tray', '$temp', '$user_id')";
+            $sql = "INSERT INTO temp_test (tray_no, temperature, durations,user_id)
+            VALUES ('$tray', '$temp', '$durations', '$user_id')";
 
             if (mysqli_query($con, $sql)) {
                 

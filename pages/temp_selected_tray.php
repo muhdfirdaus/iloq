@@ -55,9 +55,9 @@ if(!empty($_POST['id'])){
             $query=mysqli_query($con,"SELECT * from temp_test where id = '$id'")or die(mysqli_error($con));
             $row=mysqli_fetch_array($query);
             
-            $temperature = $row['temperature'];
+            $durations = $row['durations'];
             $time_in = $row['time_in'];
-            $min_time = $time_in + ($temperature * 3600);
+            $min_time = $time_in + ($durations * 3600);
             $timestamp = time();
 
             if($row['time_out']!=null){

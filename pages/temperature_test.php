@@ -39,9 +39,9 @@ endif;
 
                         <?php include('../dist/includes/dbcon.php');
                         
-                        $query=mysqli_query($con,"SELECT id, tray_no, temperature, 
+                        $query=mysqli_query($con,"SELECT id, tray_no, temperature, time_in as time_in_original,
                         DATE_FORMAT(FROM_UNIXTIME(`time_in`), '%d %M %Y %h:%i:%s%p') AS 'time_in',
-                        DATE_FORMAT(FROM_UNIXTIME(`time_in` + (temperature*3600)),'%d %M %Y %h:%i:%s%p') AS exp_tout,
+                        durations,
                         DATE_FORMAT(FROM_UNIXTIME(`time_out`), '%d %M %Y %h:%i:%s%p') AS 'time_out'
                         FROM temp_test WHERE status = '0' order by temperature, id asc")or die(mysqli_error());
                         
@@ -71,7 +71,8 @@ endif;
                                         echo "-";
                                     }
                                     elseif($row['time_out']==null&&$row['time_in']!=null){
-                                        echo "<font color='red'>Take out at : ".$row['exp_tout']."</font>";
+                                        $expOut = date('d M Y H:i:sA',(($row['durations']*60*60)+$row['time_in_original']));
+                                        echo "<font color='red'>Take out at : ".$expOut."</font>";
                                     }
                                     else{
                                         echo "<b>".$row['time_out']."</b>";

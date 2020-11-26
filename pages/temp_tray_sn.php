@@ -49,6 +49,15 @@ endif;
                                 </td>
                             </tr>
                             <tr>
+                                <td>Duration : </td>
+                                <td>
+                                    <select id="durations" name="durations" class="form-control">
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td >Tray : </td>
                                 <td><input type="text" id="tray" name="tray" placeholder="Tray Number" class="form-control"></input></td>
                             </tr>

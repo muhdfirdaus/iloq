@@ -379,6 +379,27 @@ include('product_cfg.php');
 		}
 		else{
 
+		//check for NFC Padlock pairing record
+		if(strpos($model_name,"PADLOCK")!== false){
+			$pairingmsg = 'No pairing record for: \n';
+			$pairingmsgT = 0;
+			for($i=1;$i<=$qty;$i++){
+				$sn = $_POST['sn'.$i];
+				$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
+				$row=mysqli_fetch_array($query);
+				if($row['cnt']!=0){
+					$pairingmsgT=1;
+					$pairingmsg.='- '.$sn.' in line : '.$i.'\n';
+				}
+
+			}
+			if($pairingmsgT==1){
+				echo '<script type="text/javascript">alert("'.$pairingmsg.'");</script>';
+				echo "<script>window.history.back();</script>"; 
+			}
+
+		}
+		
 		//check for existing data
 		$existmsg='';
 		$testmsg='';
@@ -594,6 +615,16 @@ include('product_cfg.php');
 
 				}
 				
+
+				if(strpos($model_name,"INDOOR")){
+					if($tempres = checkTempTest($sn,$con)){
+						$rdate = strtotime($row['rDate']);
+						if($tempres['result']=="P"){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' is for Outdoor model.\n';
+						}
+					}
+				}
 			}
 			if($testfailed){
 				echo '<script type="text/javascript">alert("'.$testmsg.'");</script>';

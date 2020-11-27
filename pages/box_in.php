@@ -22,7 +22,7 @@ include('product_cfg.php');
 	$model_no = $allmodelNo[$no];
 	$model_name = $allmodel_name[$no];
 	$model_no2 = $allmodelNo2[$no];
-
+	
 	if((strpos($model_no,"M009249.1")!== false) ){//for K5 Key just proceed to print
 		//Check for duplicate SN
 		$dupmsg = 'Duplicate SN detected in: \n';
@@ -595,7 +595,7 @@ include('product_cfg.php');
 					}
 				}
 
-				if(strpos($model_name,"OUTDOOR")){
+				if(strpos($model_name,"OUTDOOR")!==false){
 
 					if($tempres = checkTempTest($sn,$con)){
 						$rdate = strtotime($row['rDate']);
@@ -616,7 +616,7 @@ include('product_cfg.php');
 				}
 				
 
-				if(strpos($model_name,"INDOOR")){
+				if(strpos($model_name,"INDOOR")!==false){
 					if($tempres = checkTempTest($sn,$con)){
 						$rdate = strtotime($row['rDate']);
 						if($tempres['result']=="P"){
@@ -822,13 +822,13 @@ include('product_cfg.php');
             while($row = mysqli_fetch_assoc($query)) {
 
                 if($row['temperature']==1){
-					$timeout = date("YmdHis", $retval['time_out']);
+					$timeout = date("YmdHis", $row['time_out']);
                     isset($retval['result'])?$retval['result']=$retval['result']:$retval['result']=$row['result'];
                     isset($retval['time_out'])?$retval['time_out']=$retval['time_out']:$retval['time_out']=$timeout;
                 }
 
                 // if($row['temperature']==2){
-					// $timeout = date("YmdHis", $retval['time_out']);
+					// $timeout = date("YmdHis", $row['time_out']);
                 //     isset($retval['result2'])?$retval['result2']=$retval['result2']:$retval['result2']=$row['result'];
                 //     isset($retval['time_out2'])?$retval['time_out2']=$retval['time_out2']:$retval['time_out2']=$timeout;
                 // }

@@ -108,6 +108,18 @@ include('product_cfg.php');
                 {
                     $weight = '8KG';
                 }
+                elseif(strpos($lblcode, 'M011442')!== false)
+                {
+                    $weight = '22.96KG';
+                }
+                elseif(strpos($lblcode, 'M009801')!== false)
+                {
+                    $weight = '19.28KG';
+                }
+                elseif(strpos($lblcode, 'M010293')!== false)
+                {
+                    $weight = '22.76KG';
+                }
                 elseif(strpos($lblcode, 'M007739')!== false)
                 {
                     $weight = '17KG';

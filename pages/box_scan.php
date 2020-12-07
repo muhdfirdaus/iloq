@@ -99,6 +99,7 @@ endif;
                   <input type="hidden" name="box_id" id="box_id" value="<?php echo $box_id; ?>"></input>
                   <input type="hidden" name="qty" id="qty" value="<?php echo $qty; ?>"></input>
                   <input type="hidden" name="model" id="model" value="<?php echo $no;?>"></input>
+                  <input type="hidden" name="line" id="line" value="<?php echo $line;?>"></input>
                   <table class="table table-bordered table-striped">
                     <thead>
                       <th class="info text-center">Item</th>

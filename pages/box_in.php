@@ -11,6 +11,7 @@ include('product_cfg.php');
 	$box_id = $_POST['box_id'];
 	$qty = $_POST['qty'];
 	$no = $_POST['model'];
+	$line = $_POST['line'];
 	$id = $_SESSION['id'];
 	$tmstmp = time(); 
 
@@ -96,7 +97,7 @@ include('product_cfg.php');
 					mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
 					echo "<script type='text/javascript'>alert('Data saved!');</script>";
 					
-					$query=mysqli_query($con,"select ip from printer_cfg where id=1")or die(mysqli_error($con));
+					$query=mysqli_query($con,"select ip from printer_cfg where name=Box$line")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					$ip=$row['ip'];
 
@@ -648,7 +649,7 @@ include('product_cfg.php');
 				mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
 				echo "<script type='text/javascript'>alert('Data saved!');</script>";
 				
-				$query=mysqli_query($con,"select ip from printer_cfg where id=1")or die(mysqli_error($con));
+				$query=mysqli_query($con,"select ip from printer_cfg where name=Box$line")or die(mysqli_error($con));
 				$row=mysqli_fetch_array($query);
 				$ip=$row['ip'];
 

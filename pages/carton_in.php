@@ -5,9 +5,15 @@ endif;
 
 include('../dist/includes/dbcon.php');
 include('product_cfg.php');
-	$carton_id = $_POST['carton_id'];
+
+    $query=mysqli_query($con,"select * from carton_info order by carton_id desc limit 1")or die(mysqli_error($con));
+    $row=mysqli_fetch_array($query);
+    $carton_id=$row['carton_id'];
+    $run_no =  preg_replace("/[^0-9,.]/", "", $carton_id);         
+    $carton_id = "IQ" . str_pad(($run_no +1), 6, '0', STR_PAD_LEFT);
 	$no_box = $_POST['no_box'];
 	$no = $_POST['model'];
+	$line = $_POST['line'];
 	$id = $_SESSION['id'];
 	$tmstmp = time(); 
 
@@ -79,12 +85,12 @@ include('product_cfg.php');
                 for($i=1;$i<=$no_box;$i++){
                     mysqli_query($con,"INSERT INTO carton_box(carton_id,box_id)VALUES('$carton_id','$box[$i]')")or die(mysqli_error($con));
                 }
-                mysqli_query($con,"INSERT INTO carton_info(carton_id,user_id,no_of_box,timestamp,model, qty, model_no)
-                VALUES('$carton_id','$id', '$no_box', '$tmstmp',  '$model',  '$qty',  '$model_no2')")or die(mysqli_error($con));
+                mysqli_query($con,"INSERT INTO carton_info(carton_id,user_id,no_of_box,timestamp,model, qty, model_no,line)
+                VALUES('$carton_id','$id', '$no_box', '$tmstmp',  '$model',  '$qty',  '$model_no2', '$line')")or die(mysqli_error($con));
                 echo "<script type='text/javascript'>alert('Data saved!');</script>";
                 
 
-                $query=mysqli_query($con,"select ip from printer_cfg where id=2")or die(mysqli_error($con));
+                $query=mysqli_query($con,"select ip from printer_cfg where name='Carton$line'")or die(mysqli_error($con));
 				$row=mysqli_fetch_array($query);
                 $ip=$row['ip'];
                 

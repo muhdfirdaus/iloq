@@ -64,12 +64,7 @@ include('../dist/includes/dbcon.php');
          
           <?php 
           isset($_GET['limit'])? $limit = $_GET['limit'] : $limit = 6;
-          $limit>6 ? $limit=6 : $limit = $limit; 
-          $query=mysqli_query($con,"select * from carton_info order by carton_id desc limit 1")or die(mysqli_error($con));
-          $row=mysqli_fetch_array($query);
-          $carton_id=$row['carton_id'];
-          $run_no =  preg_replace("/[^0-9,.]/", "", $carton_id);         
-          $next_carton_id = "IQ" . str_pad(($run_no +1), 6, '0', STR_PAD_LEFT);?>
+          $limit>6 ? $limit=6 : $limit = $limit; ?>
           <!-- Main content -->
           <section class="content">
             <div class="panel panel-default">
@@ -85,7 +80,13 @@ include('../dist/includes/dbcon.php');
                       }?>
                     </select>
                   </b></p>
-                  <p>Pallet ID: <b><?php echo $next_carton_id; ?></b></p>
+                  <p>Line: 
+                    <select name="line" id="line" >
+                        <option value="1" >1</option>
+                        <option value="2" >2</option>
+                        <option value="3" >3</option>
+                    </select>
+                  </p>
                   <p>No. of Box: 
                     <select name="no_box" id="no_box" >
                         <option value="1" <?php if($limit==1){echo"selected";} ?>>1</option>

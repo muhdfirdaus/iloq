@@ -691,7 +691,7 @@ include('product_cfg.php');
 					}    
 				}
 				else{
-					$swversion = "2.6";
+					$swversion = "2.8";
 				}
 				$lblbox2 ="^XA
 				^CFP,180,120

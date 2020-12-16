@@ -96,15 +96,17 @@ endif;
                 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                   $criteria = $_POST['criteria'];
                   $val = $_POST['val'];
-                  $query2=mysqli_query($con,"SELECT bs.sn, bi.box_id, bi.model_no, bi.timestamp
+                  $query2=mysqli_query($con,"SELECT bs.sn, bi.box_id, bi.model_no, bi.timestamp, cb.carton_id
                   FROM box_sn bs
                   LEFT JOIN box_info bi ON bs.box_id = bi.box_id
+                  LEFT JOIN carton_box cb on bs.box_id = cb.box_id
                   WHERE bs.$criteria = '$val' ")or die(mysqli_error($con));
                   if(mysqli_num_rows($query2)>0){
                     echo"<br><br><br><hr>
                     <p><b>Result:</b></p>";?>
                     <table class="table table-bordered" width="50%" align="center">
                     <tr>
+                        <th class="info text-center">Carton ID</th>  
                         <th class="info text-center">Box ID</th>
                         <th class="info text-center">Model No</th>  
                         <th class="info text-center">SN</th>
@@ -114,9 +116,12 @@ endif;
                         $sn = $row2['sn'];
                         $box_id = $row2['box_id'];
                         $model_no = $row2['model_no'];
+                        $carton_id = $row2['carton_id'];
+                        $carton_id!==null?$carton_id=$carton_id:$carton_id="-";
                         $tmstmp = date('d-M-Y h:i:sA', $row2['timestamp']);
                         echo"
                         <tr>
+                            <td class='text-center'>$carton_id</td>
                             <td class='text-center'>$box_id</td>
                             <td class='text-center'>$model_no</td>
                             <td class='text-center'>$sn</td>

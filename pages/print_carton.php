@@ -49,6 +49,22 @@
         {
             $weight = '4.455KG';
         }
+        elseif(strpos($lblcode, 'M10795')!== false)
+        {
+            $weight = '7.5KG';
+        }
+        elseif(strpos($lblcode, 'M10794')!== false)
+        {
+            $weight = '7.5KG';
+        }
+        elseif(strpos($lblcode, 'M009373')!== false)
+        {
+            $weight = '7.5KG';
+        }
+        elseif(strpos($lblcode, 'M009370')!== false)
+        {
+            $weight = '7.5KG';
+        }
         elseif($carton_id =="IQ001951")
         {
             $weight = '6.13KG';

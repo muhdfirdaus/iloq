@@ -179,6 +179,279 @@ include('product_cfg.php');
 			}
 		}}
 	}
+	elseif((strpos($model_no,"M011442.3")!== false)){//for NFC Padlock Grade 3
+		//Check for duplicate SN
+		if($_POST['sn1']==$_POST['sn2']){
+			echo '<script type="text/javascript">alert("Duplicate SN detected!");</script>';
+			echo "<script>window.history.back();</script>"; 
+		}
+		else{
+			//Check if SN is already in the system
+			$sn1 = $_POST['sn1'];
+			$sn2 = $_POST['sn2'];
+			$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn in ('$sn1','$sn2')")or die(mysqli_error($con));
+			$row=mysqli_fetch_array($query);
+			if($row['cnt']!=0){
+				echo '<script type="text/javascript">alert("SN already exist in the system!");</script>';
+				echo "<script>window.history.back();</script>"; 
+			}
+			else{
+				$testfailed=0;
+				$testmsg='';
+				for($i=1;$i<=$qty;$i++){
+					$rfsissue = 0;
+					$sn= $_POST['sn'.$i];
+					$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+					COUNT(*) AS cnt 
+					FROM padlock_test pt
+					LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+					LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+					WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass any test yet!.\n';
+					}
+					else{
+						if($row['iptest']!='P'){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass IP test yet!.\n';
+						}
+						if($row['satest']!='P'){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
+						}
+						if($row['rfstest']!='P'){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
+						}
+						if($row['thermaltest']!='P'){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Thermal test yet!.\n';
+						}
+					}
+					$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']!=0){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' have not do Padlock Pairing yet!.\n';
+					}
+				}
+				if($testfailed==1){
+					echo '<script type="text/javascript">alert("'.$testmsg.'");</script>';
+					echo "<script>window.history.back();</script>"; 
+				}
+				else{
+					mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn1')")or die(mysqli_error($con));
+					mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn2')")or die(mysqli_error($con));
+					mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
+					echo "<script type='text/javascript'>alert('Data saved!');</script>";
+
+					//set label content and send to print function
+					$lbldate = date('j.n.Y');
+					strpos($model_no,"M011442.341")?$lblmodel='341':$lblmodel='331';
+					$lblbox = "^XA
+							
+					^FX first section
+							^FO350,100
+
+						^BXN,22,200
+						^FD$sn1^FS
+
+							^CFA,45
+							^FO360,400^FD$sn1^FS
+
+							^CFP,130,99
+							^FO180,490^FDH50S.$lblmodel.15.HC^FS
+							
+							^CFA,50
+							^FO40,680^FD$lbldate^FS
+							
+					^FX secondsection
+
+							^FO1400,100
+
+						^BXN,22,200
+						^FD$sn2^FS
+
+							^CFA,45
+							^FO1410,400^FD$sn2^FS
+
+							^CFP,130,99
+							^FO1230,490^FDH50S.$lblmodel.15.HC^FS
+
+							^CFA,50
+							^FO1090,680^FD$lbldate^FS
+							^XZ ";
+					printpadlocklabel($lblbox,$line);
+				}
+			}
+		}
+	}
+	elseif((strpos($model_no,"M009801.4")!== false)){//for NFC Padlock Grade 4
+		//Check if SN is already in the system
+		$sn1 = $_POST['sn1'];
+		$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn = '$sn1'")or die(mysqli_error($con));
+		$row=mysqli_fetch_array($query);
+		if($row['cnt']!=0){
+			echo '<script type="text/javascript">alert("SN already exist in the system!");</script>';
+			echo "<script>window.history.back();</script>"; 
+		}
+		else{
+			$testfailed=0;
+			$testmsg='';
+
+			$sn= $_POST['sn1'];
+			$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+			COUNT(*) AS cnt 
+			FROM padlock_test pt
+			LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+			LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+			WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+			$row=mysqli_fetch_array($query);
+			if($row['cnt']==0){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass any test yet!.\n';
+			}
+			else{
+				if($row['iptest']!='P'){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass IP test yet!.\n';
+				}
+				if($row['satest']!='P'){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass SN Assign test yet!.\n';
+				}
+				if($row['rfstest']!='P'){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass RFS test yet!.\n';
+				}
+				if($row['thermaltest']!='P'){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass Thermal test yet!.\n';
+				}
+			}
+			$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
+			$row=mysqli_fetch_array($query);
+			if($row['cnt']!=0){
+				$testfailed = 1;
+				$testmsg.=$sn.' have not do Padlock Pairing yet!.\n';
+			}
+			if($testfailed==1){
+				echo '<script type="text/javascript">alert("'.$testmsg.'");</script>';
+				echo "<script>window.history.back();</script>"; 
+			}
+			else{
+				mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn')")or die(mysqli_error($con));
+				mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
+				echo "<script type='text/javascript'>alert('Data saved!');</script>";
+
+				//set label content and send to print function
+				$lbldate = date('j.n.Y');
+				strpos($model_no,"M009801.431")?$lblmodel='431':$lblmodel='441';
+				$lblbox = "^XA
+						
+				^FX first section
+						^FO850,100
+
+					^BXN,22,200
+					^FD$sn^FS
+
+						^CFA,45
+						^FO860,400^FD$sn^FS
+
+						^CFP,130,99
+						^FO600,490^FDH50S.$lblmodel.15.HC^FS
+						
+						^CFA,50
+						^FO540,680^FD$lbldate^FS
+						^XZ ";
+				printpadlocklabel($lblbox,$line);
+			}
+		}
+	}
+	elseif((strpos($model_no,"M010293.5")!== false)){//for NFC Padlock Grade 5
+		//Check if SN is already in the system
+		$sn1 = $_POST['sn1'];
+		$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn = '$sn1'")or die(mysqli_error($con));
+		$row=mysqli_fetch_array($query);
+		if($row['cnt']!=0){
+			echo '<script type="text/javascript">alert("SN already exist in the system!");</script>';
+			echo "<script>window.history.back();</script>"; 
+		}
+		else{
+			$testfailed=0;
+			$testmsg='';
+
+			$sn= $_POST['sn1'];
+			$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+			COUNT(*) AS cnt 
+			FROM padlock_test pt
+			LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+			LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+			WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+			$row=mysqli_fetch_array($query);
+			if($row['cnt']==0){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass any test yet!.\n';
+			}
+			else{
+				if($row['iptest']!='P'){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass IP test yet!.\n';
+				}
+				if($row['satest']!='P'){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass SN Assign test yet!.\n';
+				}
+				if($row['rfstest']!='P'){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass RFS test yet!.\n';
+				}
+				if($row['thermaltest']!='P'){
+				$testfailed = 1;
+				$testmsg.=$sn.' not pass Thermal test yet!.\n';
+				}
+			}
+			$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
+			$row=mysqli_fetch_array($query);
+			if($row['cnt']!=0){
+				$testfailed = 1;
+				$testmsg.=$sn.' have not do Padlock Pairing yet!.\n';
+			}
+			if($testfailed==1){
+				echo '<script type="text/javascript">alert("'.$testmsg.'");</script>';
+				echo "<script>window.history.back();</script>"; 
+			}
+			else{
+				mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn')")or die(mysqli_error($con));
+				mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
+				echo "<script type='text/javascript'>alert('Data saved!');</script>";
+
+				//set label content and send to print function
+				$lbldate = date('j.n.Y');
+				strpos($model_no,"M010293.531")?$lblmodel='531':$lblmodel='541';
+				$lblbox = "^XA
+						
+				^FX first section
+						^FO850,100
+
+					^BXN,22,200
+					^FD$sn^FS
+
+						^CFA,45
+						^FO860,400^FD$sn^FS
+
+						^CFP,130,99
+						^FO600,490^FDH50S.$lblmodel.15.HC^FS
+						
+						^CFA,50
+						^FO540,680^FD$lbldate^FS
+						^XZ ";
+				printpadlocklabel($lblbox,$line);
+			}
+		}
+	}
 	// elseif((strpos($model_no,"M011795.1")!== false) ){//for D5 just proceed to print
 	// 	//Check for duplicate SN
 	// 	$dupmsg = 'Duplicate SN detected in: \n';
@@ -894,6 +1167,49 @@ include('product_cfg.php');
 			// alert("Message could not be sent.");
 			// window.history.back();
 			// </script>';
+		}
+	}
+	function printpadlocklabel($lblcontent,$line){
+		$query=mysqli_query($con,"select ip from printer_cfg where name='Box$line'")or die(mysqli_error($con));
+		$row=mysqli_fetch_array($query);
+		$ip=$row['ip'];
+
+		// function to ping ip address
+		function pingAddress($ip1) {
+			$pingresult = exec("ping -n 2 $ip1", $outcome, $status);
+			if (0 == $status) {//status-alive
+				$toReturn = true;
+			} else {//status-dead
+				$toReturn = false;
+			}
+			return $toReturn;
+		}
+
+		$printable = pingAddress($ip);
+		if($printable){
+			try//attempt to print label
+			{
+				// Number of seconds to wait for a response from remote host
+				$timeout = 2;
+				if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
+					fputs($fp,$lblcontent);
+					fclose($fp);				
+					echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
+					echo "<script>document.location='box_start.php'</script>";
+				}
+				else{
+					echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+					echo "<script>document.location='box_start.php'</script>";
+				} 
+			}
+			catch (Exception $e) 
+			{
+				echo 'Caught exception: ',  $e->getMessage(), "\n";
+			}
+		}
+		else{
+			echo '<script type="text/javascript">alert("Printer is not available!");</script>';
+			echo "<script>document.location='box_start.php'</script>";
 		}
 	}
 ?>

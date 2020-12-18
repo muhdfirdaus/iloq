@@ -30,10 +30,30 @@ $tmstmp = time();
 $line = $_POST['line'];
 $qty = $_POST['qty'];
 
-mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model,line,status)
-VALUES('$next_box_id','$userid', '$qty', '$tmstmp', '$modelNo', '$modelName','$line',0)")or die(mysqli_error($con));
-$newid = mysqli_insert_id($con);
-echo "<script>document.location='box_scan.php?id=$newid'</script>";  
+$qtytrigger = 0;
+
+if((strpos($modelNo,"M010293.5")!== false) || (strpos($modelNo,"M009801.4")!== false)){//check qty for NFC Grade 4&5
+  if($qty!=1){
+    $qtytrigger = 1;
+  }
+}
+
+if((strpos($modelNo,"M011442.3")!== false)){//check qty for NFC Grade 3
+  if($qty!=2){
+    $qtytrigger = 1;
+  }
+}
+
+if($qtytrigger==1){ //trigger error if quantity is exceed or less then allowed  
+  echo '<script type="text/javascript">alert("Wrong quantity inserted!");</script>';
+  echo "<script>window.history.back();</script>";
+}
+else{//proceed to register box into database
+  mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model,line,status)
+  VALUES('$next_box_id','$userid', '$qty', '$tmstmp', '$modelNo', '$modelName','$line',0)")or die(mysqli_error($con));
+  $newid = mysqli_insert_id($con);
+  echo "<script>document.location='box_scan.php?id=$newid'</script>";  
+}
 
 
 

@@ -249,7 +249,12 @@ include('product_cfg.php');
 
 					//set label content and send to print function
 					$lbldate = date('j.n.Y');
-					strpos($model_no,"M011442.341")?$lblmodel='341':$lblmodel='331';
+					if(strpos($modelno,"M011442.341")!==false){
+						$lblmodel='341';
+					}
+					else{
+						$lblmodel='331';
+					}
 					$lblbox = "^XA
 							
 					^FX first section
@@ -348,7 +353,12 @@ include('product_cfg.php');
 
 				//set label content and send to print function
 				$lbldate = date('j.n.Y');
-				strpos($model_no,"M009801.431")?$lblmodel='431':$lblmodel='441';
+				if(strpos($modelno,"M009801.431")!==false){
+					$lblmodel='431';
+				}
+				else{
+					$lblmodel='441';
+				}
 				$lblbox = "^XA
 						
 				^FX first section
@@ -430,7 +440,12 @@ include('product_cfg.php');
 
 				//set label content and send to print function
 				$lbldate = date('j.n.Y');
-				strpos($model_no,"M010293.531")?$lblmodel='531':$lblmodel='541';
+				if(strpos($modelno,"M010293.531")!==false){
+					$lblmodel='531';
+				}
+				else{
+					$lblmodel='541';
+				}
 				$lblbox = "^XA
 						
 				^FX first section

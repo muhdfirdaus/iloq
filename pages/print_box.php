@@ -31,7 +31,12 @@
             $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
             $row=mysqli_fetch_array($query);      
             $sn = $row['sn'];
-            strpos($modelno,"M010293.531")?$lblmodel='531':$lblmodel='541';
+            if(strpos($modelno,"M010293.531")!==false){
+                $lblmodel='531';
+            }
+            else{
+                $lblmodel='541';
+            }
             $lbldate = date('j.n.Y',$tmstmp);    
             $lblbox = "^XA
                     
@@ -55,7 +60,12 @@
             $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
             $row=mysqli_fetch_array($query);      
             $sn = $row['sn'];
-            strpos($modelno,"M009801.431")?$lblmodel='431':$lblmodel='441';
+            if(strpos($modelno,"M009801.431")!==false){
+                $lblmodel='431';
+            }
+            else{
+                $lblmodel='441';
+            }
             $lbldate = date('j.n.Y',$tmstmp);    
             $lblbox = "^XA
                     
@@ -83,7 +93,12 @@
                 $i++;
             }    
             
-            strpos($modelno,"M011442.341")?$lblmodel='341':$lblmodel='331';
+            if(strpos($modelno,"M011442.341")!==false){
+                $lblmodel='341';
+            }
+            else{
+                $lblmodel='331';
+            }
             $lbldate = date('j.n.Y',$tmstmp);    
             $lblbox = "^XA
 							

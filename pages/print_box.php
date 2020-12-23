@@ -26,6 +26,9 @@
         $tmstmp=$row['timestamp'];
         $current_ip=$row['id'];
         $secondlbl = 0;
+        $doublepizza = 0;
+        $expall = $expall = explode("-",$modelno);
+        $lblheight = $expall[2];
 
         if((strpos($modelno,"M010293.5")!== false)){
             $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
@@ -39,22 +42,22 @@
             }
             $lbldate = date('j.n.Y',$tmstmp);    
             $lblbox = "^XA
-                    
+						
             ^FX first section
-            ^FO850,100
+                    ^FO360,100
 
-            ^BXN,22,200
-            ^FD$sn^FS
+                ^BXN,15,200
+                ^FD$sn^FS
 
-                ^CFA,45
-                ^FO860,400^FD$sn^FS
+                    ^CFA,30
+                    ^FO380,320^FD$sn^FS
 
-                ^CFP,130,99
-                ^FO600,490^FDH50S.$lblmodel.15.HC^FS
-                
-                ^CFA,50
-                ^FO540,680^FD$lbldate^FS
-                ^XZ "; 
+                    ^CFP,80,90
+                    ^FO220,370^FDH50S.$lblmodel.$lblheight.HC^FS
+                    
+                    ^CFA,40
+                    ^FO60,500^FD$lbldate^FS
+                    ^XZ "; 
         }
         elseif((strpos($modelno,"M009801.4")!== false)){
             $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
@@ -68,22 +71,22 @@
             }
             $lbldate = date('j.n.Y',$tmstmp);    
             $lblbox = "^XA
-                    
+						
             ^FX first section
-            ^FO850,100
+                    ^FO360,100
 
-            ^BXN,22,200
-            ^FD$sn^FS
+                ^BXN,15,200
+                ^FD$sn^FS
 
-                ^CFA,45
-                ^FO860,400^FD$sn^FS
+                    ^CFA,30
+                    ^FO380,320^FD$sn^FS
 
-                ^CFP,130,99
-                ^FO600,490^FDH50S.$lblmodel.15.HC^FS
-                
-                ^CFA,50
-                ^FO540,680^FD$lbldate^FS
-                ^XZ "; 
+                    ^CFP,80,90
+                    ^FO220,370^FDH50S.$lblmodel.$lblheight.HC^FS
+                    
+                    ^CFA,40
+                    ^FO60,500^FD$lbldate^FS
+                    ^XZ "; 
         }
         elseif((strpos($modelno,"M011442.3")!== false)){
             $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
@@ -101,38 +104,40 @@
             }
             $lbldate = date('j.n.Y',$tmstmp);    
             $lblbox = "^XA
-							
+						
             ^FX first section
-                    ^FO350,100
+                    ^FO360,100
 
-                ^BXN,22,200
+                ^BXN,15,200
                 ^FD$sn1^FS
 
-                    ^CFA,45
-                    ^FO360,400^FD$sn1^FS
+                    ^CFA,30
+                    ^FO380,320^FD$sn1^FS
 
-                    ^CFP,130,99
-                    ^FO180,490^FDH50S.$lblmodel.15.HC^FS
+                    ^CFP,80,90
+                    ^FO220,370^FDH50S.$lblmodel.$lblheight.HC^FS
                     
-                    ^CFA,50
-                    ^FO40,680^FD$lbldate^FS
-                    
-            ^FX secondsection
+                    ^CFA,40
+                    ^FO60,500^FD$lbldate^FS
+                    ^XZ ";    
+            $lblbox2 = "^XA
+                        
+            ^FX first section
+                    ^FO360,100
 
-                    ^FO1400,100
-
-                ^BXN,22,200
+                ^BXN,15,200
                 ^FD$sn2^FS
 
-                    ^CFA,45
-                    ^FO1410,400^FD$sn2^FS
+                    ^CFA,30
+                    ^FO380,320^FD$sn2^FS
 
-                    ^CFP,130,99
-                    ^FO1230,490^FDH50S.$lblmodel.15.HC^FS
-
-                    ^CFA,50
-                    ^FO1090,680^FD$lbldate^FS
+                    ^CFP,80,90
+                    ^FO220,370^FDH50S.$lblmodel.$lblheight.HC^FS
+                    
+                    ^CFA,40
+                    ^FO60,500^FD$lbldate^FS
                     ^XZ "; 
+            $doublepizza = 1;
         }
         else{
 
@@ -239,6 +244,9 @@
                 $timeout = 2;
                 if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
                     fputs($fp,$lblbox);
+                    if($doublepizza==1){
+                        fputs($fp,$lblbox2);
+                    }
                     fclose($fp);				
                     echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
                     echo "<script type='text/javascript'>document.location='box_start.php'</script>"; 

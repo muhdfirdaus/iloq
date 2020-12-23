@@ -232,7 +232,7 @@ include('product_cfg.php');
 					}
 					$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
-					if($row['cnt']!=0){
+					if($row['cnt']==0){
 						$testfailed = 1;
 						$testmsg.=$sn.' on line '.$i.' have not do Padlock Pairing yet!.\n';
 					}
@@ -249,46 +249,83 @@ include('product_cfg.php');
 
 					//set label content and send to print function
 					$lbldate = date('j.n.Y');
-					if(strpos($modelno,"M011442.341")!==false){
-						$lblmodel='341';
+					$expall = $expall = explode("-",$model_no);
+					$lblheight = $expall[2];
+					if(strpos($model_no,"M011442.341")!==false){
+						$lblmodel='341.'.$lblheight;
 					}
 					else{
-						$lblmodel='331';
+						$lblmodel='331.'.$lblheight;
 					}
+					// $lblbox = "^XA
+							
+					// ^FX first section
+					// 		^FO350,100
+
+					// 	^BXN,22,200
+					// 	^FD$sn1^FS
+
+					// 		^CFA,45
+					// 		^FO360,400^FD$sn1^FS
+
+					// 		^CFP,130,99
+					// 		^FO180,490^FDH50S.$lblmodel.15.HC^FS
+							
+					// 		^CFA,50
+					// 		^FO40,680^FD$lbldate^FS
+							
+					// ^FX secondsection
+
+					// 		^FO1400,100
+
+					// 	^BXN,22,200
+					// 	^FD$sn2^FS
+
+					// 		^CFA,45
+					// 		^FO1410,400^FD$sn2^FS
+
+					// 		^CFP,130,99
+					// 		^FO1230,490^FDH50S.$lblmodel.15.HC^FS
+
+					// 		^CFA,50
+					// 		^FO1090,680^FD$lbldate^FS
+					// 		^XZ ";
 					$lblbox = "^XA
 							
 					^FX first section
-							^FO350,100
-
-						^BXN,22,200
+							^FO360,100
+		
+						^BXN,15,200
 						^FD$sn1^FS
-
-							^CFA,45
-							^FO360,400^FD$sn1^FS
-
-							^CFP,130,99
-							^FO180,490^FDH50S.$lblmodel.15.HC^FS
+		
+							^CFA,30
+							^FO380,320^FD$sn1^FS
+		
+							^CFP,80,90
+							^FO220,370^FDH50S.$lblmodel.HC^FS
 							
-							^CFA,50
-							^FO40,680^FD$lbldate^FS
-							
-					^FX secondsection
-
-							^FO1400,100
-
-						^BXN,22,200
-						^FD$sn2^FS
-
-							^CFA,45
-							^FO1410,400^FD$sn2^FS
-
-							^CFP,130,99
-							^FO1230,490^FDH50S.$lblmodel.15.HC^FS
-
-							^CFA,50
-							^FO1090,680^FD$lbldate^FS
+							^CFA,40
+							^FO60,500^FD$lbldate^FS
 							^XZ ";
-					printpadlocklabel($lblbox,$line);
+					$lblbox2 = "^XA
+							
+					^FX first section
+							^FO360,100
+		
+						^BXN,15,200
+						^FD$sn2^FS
+		
+							^CFA,30
+							^FO380,320^FD$sn2^FS
+		
+							^CFP,80,90
+							^FO220,370^FDH50S.$lblmodel.HC^FS
+							
+							^CFA,40
+							^FO60,500^FD$lbldate^FS
+							^XZ ";
+					printpadlocklabel($lblbox,$line,$con);
+					printpadlocklabel($lblbox2,$line,$con);
 				}
 			}
 		}
@@ -338,7 +375,7 @@ include('product_cfg.php');
 			}
 			$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
 			$row=mysqli_fetch_array($query);
-			if($row['cnt']!=0){
+			if($row['cnt']==0){
 				$testfailed = 1;
 				$testmsg.=$sn.' have not do Padlock Pairing yet!.\n';
 			}
@@ -353,30 +390,50 @@ include('product_cfg.php');
 
 				//set label content and send to print function
 				$lbldate = date('j.n.Y');
-				if(strpos($modelno,"M009801.431")!==false){
-					$lblmodel='431';
+				$expall = $expall = explode("-",$model_no);
+				$lblheight = $expall[2];
+				if(strpos($model_no,"M009801.431")!==false){
+					$lblmodel='431.'.$lblheight;
 				}
 				else{
-					$lblmodel='441';
+					$lblmodel='441.'.$lblheight;
 				}
+				// $lblbox = "^XA
+						
+				// ^FX first section
+				// 		^FO850,100
+
+				// 	^BXN,22,200
+				// 	^FD$sn^FS
+
+				// 		^CFA,45
+				// 		^FO860,400^FD$sn^FS
+
+				// 		^CFP,130,99
+				// 		^FO600,490^FDH50S.$lblmodel.15.HC^FS
+						
+				// 		^CFA,50
+				// 		^FO540,680^FD$lbldate^FS
+				// 		^XZ ";
+				
 				$lblbox = "^XA
 						
 				^FX first section
-						^FO850,100
-
-					^BXN,22,200
+						^FO360,100
+	
+					^BXN,15,200
 					^FD$sn^FS
-
-						^CFA,45
-						^FO860,400^FD$sn^FS
-
-						^CFP,130,99
-						^FO600,490^FDH50S.$lblmodel.15.HC^FS
+	
+						^CFA,30
+						^FO380,320^FD$sn^FS
+	
+						^CFP,80,90
+						^FO220,370^FDH50S.$lblmodel.HC^FS
 						
-						^CFA,50
-						^FO540,680^FD$lbldate^FS
+						^CFA,40
+						^FO60,500^FD$lbldate^FS
 						^XZ ";
-				printpadlocklabel($lblbox,$line);
+				printpadlocklabel($lblbox,$line,$con);
 			}
 		}
 	}
@@ -425,7 +482,7 @@ include('product_cfg.php');
 			}
 			$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
 			$row=mysqli_fetch_array($query);
-			if($row['cnt']!=0){
+			if($row['cnt']==0){
 				$testfailed = 1;
 				$testmsg.=$sn.' have not do Padlock Pairing yet!.\n';
 			}
@@ -440,30 +497,50 @@ include('product_cfg.php');
 
 				//set label content and send to print function
 				$lbldate = date('j.n.Y');
-				if(strpos($modelno,"M010293.531")!==false){
-					$lblmodel='531';
+				$expall = $expall = explode("-",$model_no);
+				$lblheight = $expall[2];
+				if(strpos($model_no,"M010293.531")!==false){
+					$lblmodel='531.'.$lblheight;
 				}
 				else{
-					$lblmodel='541';
+					$lblmodel='541.'.$lblheight;
 				}
+				// $lblbox = "^XA
+						
+				// ^FX first section
+				// 		^FO850,100
+
+				// 	^BXN,22,200
+				// 	^FD$sn^FS
+
+				// 		^CFA,45
+				// 		^FO860,400^FD$sn^FS
+
+				// 		^CFP,130,99
+				// 		^FO600,490^FDH50S.$lblmodel.15.HC^FS
+						
+				// 		^CFA,50
+				// 		^FO540,680^FD$lbldate^FS
+				// 		^XZ ";
+				
 				$lblbox = "^XA
 						
 				^FX first section
-						^FO850,100
-
-					^BXN,22,200
+						^FO360,100
+	
+					^BXN,15,200
 					^FD$sn^FS
-
-						^CFA,45
-						^FO860,400^FD$sn^FS
-
-						^CFP,130,99
-						^FO600,490^FDH50S.$lblmodel.15.HC^FS
+	
+						^CFA,30
+						^FO380,320^FD$sn^FS
+	
+						^CFP,80,90
+						^FO220,370^FDH50S.$lblmodel.HC^FS
 						
-						^CFA,50
-						^FO540,680^FD$lbldate^FS
+						^CFA,40
+						^FO60,500^FD$lbldate^FS
 						^XZ ";
-				printpadlocklabel($lblbox,$line);
+				printpadlocklabel($lblbox,$line,$con);
 			}
 		}
 	}
@@ -1184,7 +1261,7 @@ include('product_cfg.php');
 			// </script>';
 		}
 	}
-	function printpadlocklabel($lblcontent,$line){
+	function printpadlocklabel($lblcontent,$line,$con){
 		$query=mysqli_query($con,"select ip from printer_cfg where name='Box$line'")or die(mysqli_error($con));
 		$row=mysqli_fetch_array($query);
 		$ip=$row['ip'];

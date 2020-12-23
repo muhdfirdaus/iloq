@@ -12,9 +12,9 @@
 	$query=mysqli_query($con,"select ip from printer_cfg where id=1")or die(mysqli_error($con));
     $row=mysqli_fetch_array($query);
     $current_ip=$row['ip'];
-    if($current_ip != $ip){
-        mysqli_query($con,"update printer_cfg set ip='$ip' where id=1")or die(mysqli_error($con));
-    }
+    // if($current_ip != $ip){
+    //     mysqli_query($con,"update printer_cfg set ip='$ip' where id=1")or die(mysqli_error($con));
+    // }
     
 	$query=mysqli_query($con,"select * from box_info where box_id='{$box_id}'")or die(mysqli_error($con));
     $row=mysqli_fetch_array($query);
@@ -27,8 +27,8 @@
         $current_ip=$row['id'];
         $secondlbl = 0;
         $doublepizza = 0;
-        $expall = $expall = explode("-",$modelno);
-        $lblheight = $expall[2];
+        $expall = explode("-",$modelno);
+        $lblheight = $expall[1];
 
         if((strpos($modelno,"M010293.5")!== false)){
             $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));

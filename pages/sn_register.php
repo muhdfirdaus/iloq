@@ -84,7 +84,7 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="25" required name="pwbsn" id="pwbsn" </td>
+                        <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="25" required name="pwbsn" id="pwbsn" autofocus </td>
                         <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="8" required name="locksn" id="locksn" </td>
                       </tr>
                     </tbody>
@@ -96,10 +96,10 @@
 
 	        </section><!-- /.content -->
           
-          <!-- Main content
+          <!-- Main content -->
           <section class="content">
             <div class="panel panel-default">
-              <div class="panel-heading">NFC Padlock Pairing - Search</div>
+              <div class="panel-heading">SN Register - Search</div>
               <div class="panel-body">
                 <form id="form_search" class="form-horizontal" method="post" enctype='multipart/form-data'>
                   <br>
@@ -112,11 +112,11 @@
                       <tr>
                         <td class="text-center">
                           <select id="sntype" name="sntype" class="form-control">
-                            <option value="core_sn">Core SN</option>
-                            <option value="padlock_sn">Padlock SN</option>
+                            <option value="locksn">Lock SN</option>
+                            <option value="pwbsn">PWB SN</option>
                           </select>
                         </td>
-                        <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="8" required name="sn" id="sn" </td>
+                        <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="32" required name="sn" id="sn" </td>
                       </tr>
                     </tbody>
                   </table>
@@ -127,16 +127,16 @@
                 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                   $sntype = $_POST['sntype'];
                   $sn = $_POST['sn'];
-                  $query2=mysqli_query($con,"select * from nfc_padlock where $sntype = '$sn'")or die(mysqli_error($con));
+                  $query2=mysqli_query($con,"select * from sn_register where $sntype = '$sn'")or die(mysqli_error($con));
                   $row2=mysqli_fetch_array($query2);
                   if(count($row2)>1){
-                    $coresn = $row2['core_sn'];
-                    $padlocksn = $row2['padlock_sn'];
+                    $coresn = $row2['pwbsn'];
+                    $padlocksn = $row2['locksn'];
                     $tmstmp = date('d-M-Y h:i:sA', $row2['timestamp']);
                     echo"<br><br><br><hr>
                       <p><b>Result:</b></p>
-                      <p>Core SN    :   <b>$coresn</b></p>
-                      <p>Padlock SN :   <b>$padlocksn</b></p>
+                      <p>PWB SN    :   <b>$coresn</b></p>
+                      <p>Lock SN :   <b>$padlocksn</b></p>
                       <p>Time       :   <b>$tmstmp</b></p>";
                   }
                   else{
@@ -148,7 +148,7 @@
               </div>
             </div>
 
-	        </section> -->
+	        </section> 
           
         </div><!-- /.container -->
       </div><!-- /.content-wrapper -->

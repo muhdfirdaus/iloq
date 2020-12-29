@@ -324,8 +324,7 @@ include('product_cfg.php');
 							^CFA,40
 							^FO60,500^FD$lbldate^FS
 							^XZ ";
-					printpadlocklabel($lblbox,$line,$con);
-					printpadlocklabel($lblbox2,$line,$con);
+					printpadlocklabel($lblbox,$line,$con,$lblbox2);
 				}
 			}
 		}
@@ -1261,7 +1260,7 @@ include('product_cfg.php');
 			// </script>';
 		}
 	}
-	function printpadlocklabel($lblcontent,$line,$con){
+	function printpadlocklabel($lblcontent,$line,$con,$secondlabel = null){
 		$query=mysqli_query($con,"select ip from printer_cfg where name='Box$line'")or die(mysqli_error($con));
 		$row=mysqli_fetch_array($query);
 		$ip=$row['ip'];
@@ -1285,6 +1284,9 @@ include('product_cfg.php');
 				$timeout = 2;
 				if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
 					fputs($fp,$lblcontent);
+					if($secondlabel!=null){					
+						fputs($fp,$secondlabel);
+					}
 					fclose($fp);				
 					echo '<script type="text/javascript">alert("Label printed successfully!");</script>';
 					echo "<script>document.location='box_start.php'</script>";

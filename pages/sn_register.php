@@ -85,7 +85,7 @@
                     <tbody>
                       <tr>
                         <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="25" required name="pwbsn" id="pwbsn" autofocus </td>
-                        <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="8" required name="locksn" id="locksn" </td>
+                        <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="10" required name="locksn" id="locksn" </td>
                       </tr>
                     </tbody>
                   </table>

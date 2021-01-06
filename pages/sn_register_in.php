@@ -20,7 +20,7 @@ else{
         $tmstmp = time();
         mysqli_query($con,"INSERT INTO sn_register(pwbsn,locksn,timestamp)VALUES('$pwbsn','$locksn','$tmstmp')")or die(mysqli_error($con));
         echo '<script type="text/javascript">alert("Data saved!");</script>';
-        echo "<script>window.history.back();</script>"; 
+        echo "<script type='text/javascript'>document.location='sn_register.php'</script>"; 
     }
 }
 

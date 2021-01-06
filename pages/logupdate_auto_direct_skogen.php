@@ -23,7 +23,7 @@ if(file_exists($mydir)){
             $fdate = date ("YmdHis", filemtime($file));
             $line1 = $line[3];//fetch serial number
             $arr1 = explode(":",$line1);
-            $sn = preg_replace('/\s+/', '', $arr1[1]);
+            $sn = preg_replace('/[^0-9]/', '', $arr1[1]);
             
             $line3 = $line[9];//fetch test result
             $arr2 = explode(":",$line3);
@@ -59,7 +59,7 @@ if(file_exists($mydir)){
             $fdate = date ("YmdHis", filemtime($file));
             $line1 = $line[3];//fetch serial number
             $arr1 = explode(":",$line1);
-            $sn = preg_replace('/\s+/', '', $arr1[1]);
+            $sn = preg_replace('/[^0-9]/', '', $arr1[1]);
             
             $line3 = $line[9];//fetch test result
             $arr2 = explode(":",$line3);
@@ -95,7 +95,7 @@ if(file_exists($mydir)){
             $fdate = date ("YmdHis", filemtime($file));
             $line1 = $line[3];//fetch serial number
             $arr1 = explode(":",$line1);
-            $sn = preg_replace('/\s+/', '', $arr1[1]);
+            $sn = preg_replace('/[^0-9]/', '', $arr1[1]);
             
             $line3 = $line[9];//fetch test result
             $arr2 = explode(":",$line3);
@@ -130,7 +130,7 @@ if(file_exists($mydir)){
             $fdate = date ("YmdHis", filemtime($file));
             $line1 = $line[3];//fetch serial number
             $arr1 = explode(":",$line1);
-            $sn = preg_replace('/\s+/', '', $arr1[1]);
+            $sn = preg_replace('/[^0-9]/', '', $arr1[1]);
             
             $line3 = $line[9];//fetch test result
             $arr2 = explode(":",$line3);
@@ -164,7 +164,7 @@ if(file_exists($mydir)){
         $fdate = date ("YmdHis", filemtime($file));
         $line1 = $line[3];//fetch serial number
         $arr1 = explode(":",$line1);
-        $sn = preg_replace('/\s+/', '', $arr1[1]);
+        $sn = preg_replace('/[^0-9]/', '', $arr1[1]);
         
         $line3 = $line[9];//fetch test result
         $arr2 = explode(":",$line3);

@@ -64,7 +64,7 @@ include('../dist/includes/dbcon.php');
          
           <?php 
           isset($_GET['limit'])? $limit = $_GET['limit'] : $limit = 6;
-          $limit>6 ? $limit=6 : $limit = $limit; ?>
+          // $limit>6 ? $limit=6 : $limit = $limit; ?>
           <!-- Main content -->
           <section class="content">
             <div class="panel panel-default">
@@ -95,6 +95,9 @@ include('../dist/includes/dbcon.php');
                         <option value="4" <?php if($limit==4){echo"selected";} ?>>4</option>
                         <option value="5" <?php if($limit==5){echo"selected";} ?>>5</option>
                         <option value="6" <?php if($limit==6){echo"selected";} ?>>6</option>
+                        <option value="8" <?php if($limit==8){echo"selected";} ?>>8</option>
+                        <option value="10" <?php if($limit==10){echo"selected";} ?>>10</option>
+                        <option value="12" <?php if($limit==12){echo"selected";} ?>>12</option>
                     </select>
                   </p><br>
                   <input type="hidden" name="carton_id" id="carton_id" value="<?php echo $next_carton_id; ?>"></input>

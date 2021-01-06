@@ -355,10 +355,10 @@ include('product_cfg.php');
 				$testmsg.=$sn.' not pass any test yet!.\n';
 			}
 			else{
-				if($row['iptest']!='P'){
-				$testfailed = 1;
-				$testmsg.=$sn.' not pass IP test yet!.\n';
-				}
+				// if($row['iptest']!='P'){
+				// $testfailed = 1;
+				// $testmsg.=$sn.' not pass IP test yet!.\n';
+				// }
 				if($row['satest']!='P'){
 				$testfailed = 1;
 				$testmsg.=$sn.' not pass SN Assign test yet!.\n';
@@ -462,10 +462,10 @@ include('product_cfg.php');
 				$testmsg.=$sn.' not pass any test yet!.\n';
 			}
 			else{
-				if($row['iptest']!='P'){
-				$testfailed = 1;
-				$testmsg.=$sn.' not pass IP test yet!.\n';
-				}
+				// if($row['iptest']!='P'){
+				// $testfailed = 1;
+				// $testmsg.=$sn.' not pass IP test yet!.\n';
+				// }
 				if($row['satest']!='P'){
 				$testfailed = 1;
 				$testmsg.=$sn.' not pass SN Assign test yet!.\n';

@@ -5,7 +5,7 @@ include('../dist/includes/dbcon.php');
 $pwbsn=$_POST['pwbsn'];
 $locksn=$_POST['locksn'];
 
-if(strlen($locksn)<8 || strlen($pwbsn)>25){
+if(strlen($locksn)<8 || strlen($locksn)>9 || strlen($pwbsn)>25 || strlen($pwbsn)<20){
     echo '<script type="text/javascript">alert("Invalid SN length entered!");</script>';
     echo "<script>window.history.back();</script>"; 
 }

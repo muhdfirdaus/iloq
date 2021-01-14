@@ -20,6 +20,7 @@ if(file_exists($mydir)){
         
         if (trim(file_get_contents($file)) == true) {
             $line = file($file);//file in to an array
+            // echo basename($file)."\n";
             $fdate = date ("YmdHis", filemtime($file));
             $line1 = $line[3];//fetch serial number
             $arr1 = explode(":",$line1);
@@ -28,18 +29,19 @@ if(file_exists($mydir)){
             $line3 = $line[9];//fetch test result
             $arr2 = explode(":",$line3);
             $status = preg_replace('/\s+/', '', $arr2[1]);
-
-            if(isset($data[$sn]['i'])){
-                if($data[$sn]['i'] < $fdate){
+            if($status[0] == 'P'){
+                if(isset($data[$sn]['i'])){
+                    if($data[$sn]['i'] < $fdate){
+                        $data[$sn][0] = $sn;
+                        $data[$sn][2] =  $status[0];
+                        $data[$sn]['i'] =  $fdate;
+                    }
+                }
+                else{
                     $data[$sn][0] = $sn;
                     $data[$sn][2] =  $status[0];
                     $data[$sn]['i'] =  $fdate;
                 }
-            }
-            else{
-                $data[$sn][0] = $sn;
-                $data[$sn][2] =  $status[0];
-                $data[$sn]['i'] =  $fdate;
             }
         }
         // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
@@ -60,17 +62,19 @@ if(file_exists($mydir)){
             $arr2 = explode(":",$line3);
             $status = preg_replace('/\s+/', '', $arr2[1]);
 
-            if(isset($data[$sn]['s'])){
-                if($data[$sn]['s'] < $fdate){
+            if($status[0] == 'P'){
+                if(isset($data[$sn]['s'])){
+                    if($data[$sn]['s'] < $fdate){
+                        $data[$sn][0] = $sn;
+                        $data[$sn][4] =  $status[0];
+                        $data[$sn]['s'] =  $fdate;
+                    }
+                }
+                else{
                     $data[$sn][0] = $sn;
                     $data[$sn][4] =  $status[0];
                     $data[$sn]['s'] =  $fdate;
                 }
-            }
-            else{
-                $data[$sn][0] = $sn;
-                $data[$sn][4] =  $status[0];
-                $data[$sn]['s'] =  $fdate;
             }
         }
         // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
@@ -78,15 +82,15 @@ if(file_exists($mydir)){
 }
 
 
-$mydir = "\\\\iloq1827\\Reports";// Lock Logtest Update
+$mydir = "\\\\iloq1827\\Reports";// dur Logtest Update
 if(file_exists($mydir)){ 
 
-    $files = glob("\\\\iloq1827\\Reports\*.txt");//open all lock file
+    $files = glob("\\\\iloq1827\\Reports\*.txt");//open all dur file
 
     foreach($files as $file) { 
-
+		if(filesize($file)){
         $line = file($file);//file in to an array
-        // echo basename($file)."\n";
+        //  echo basename($file)."\n";
         $fdate = date ("YmdHis", filemtime($file));
         $line1 = $line[4];//fetch serial number
         $arr1 = explode(":",$line1);
@@ -96,15 +100,18 @@ if(file_exists($mydir)){
         $arr2 = explode(":",$line3);
         $status = preg_replace('/\s+/', '', $arr2[1]);
         
-        if(isset($data[$sn]['d'])){
-            if($data[$sn]['d'] < $fdate){
+        if($status[0] =='P'){
+            if(isset($data[$sn]['d'])){
+                if($data[$sn]['d'] < $fdate){
+                    $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+                }
+            }
+            else{
                 $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
             }
         }
-        else{
-            $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
-        }
         // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+		}
     }
 }
 
@@ -123,24 +130,26 @@ if(file_exists($mydir)){
             $line3 = $line[9];//fetch test result
             $arr2 = explode(":",$line3);
             $status = preg_replace('/\s+/', '', $arr2[1]);
-
-            if(isset($data[$sn])){
-                if(isset($data[$sn]['r'])){
-                    if($data[$sn]['r'] < $fdate){
-                        $data[$sn][0] = $sn;
+            
+            if($status[0] =='P'){
+                if(isset($data[$sn])){
+                    if(isset($data[$sn]['r'])){
+                        if($data[$sn]['r'] < $fdate){
+                            $data[$sn][0] = $sn;
+                            $data[$sn][3] =  'P';
+                            $data[$sn]['r'] =  $fdate;
+                        }
+                    }
+                    else{
                         $data[$sn][3] =  'P';
                         $data[$sn]['r'] =  $fdate;
                     }
                 }
                 else{
+                    $data[$sn][0] = $sn;
                     $data[$sn][3] =  'P';
                     $data[$sn]['r'] =  $fdate;
                 }
-            }
-            else{
-                $data[$sn][0] = $sn;
-                $data[$sn][3] =  'P';
-                $data[$sn]['r'] =  $fdate;
             }
         }     
         // rename($file, 'C:/iLOQ/RFS/logged/'.basename($file));
@@ -179,7 +188,7 @@ foreach($data as $newdata){
             $iDate2 = preg_replace('/\s+/', '', $row['ipdate']);
             if($iDate!="NULL"){
                 if($iDate2=="NULL"||$iDate>$iDate2||is_null($iDate2)){
-                    mysqli_query($con,"update padlock_test set ipdate='$iDate',iptest='$lock',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
+                    mysqli_query($con,"update padlock_test set ipdate='$iDate',iptest='$ip',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
                 }
             }
             $rDate2 = preg_replace('/\s+/', '', $row['rdate']);

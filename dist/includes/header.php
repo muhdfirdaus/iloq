@@ -40,12 +40,31 @@ date_default_timezone_set("Asia/Singapore");
                       Box
                     </a>
                   </li>
-                  <li class="">
+
+                  
+                  <li class="dropdown notifications-menu">
                     <!-- Menu Toggle Button -->
-                    <a href="carton.php" class="dropdown-toggle">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="glyphicon glyphicon-list-alt text-blue"></i>
                       Carton
                     </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <!-- Inner Menu: contains the notifications -->
+                        <ul class="menu">
+                          <li><!-- start notification -->
+                              <a href="carton_padlock.php" class="dropdown-toggle" >
+                                <i class="glyphicon glyphicon-list-alt text-blue"></i>Padlock model
+                              </a>
+                          </li><!-- end notification -->
+                          <li><!-- start notification -->
+                              <a href="carton.php" class="dropdown-toggle" >
+                                <i class="glyphicon glyphicon-list-alt text-blue"></i>Other model
+                              </a>
+                          </li><!-- end notification -->
+                        </ul>
+                      </li>
+                    </ul>
                   </li>
                   <li class="dropdown notifications-menu">
                     <!-- Menu Toggle Button -->

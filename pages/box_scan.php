@@ -81,7 +81,7 @@ endif;
           $box_id=$row2['box_id'];
           $line=$row2['line'];
           
-          $query=mysqli_query($con,"select id from model_list where model_name='$model'")or die(mysqli_error($con));
+          $query=mysqli_query($con,"select id from model_list where model_no2='$model_no'")or die(mysqli_error($con));
           $row=mysqli_fetch_array($query);
           $no = $row['id'];
           ?>

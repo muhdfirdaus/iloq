@@ -180,19 +180,16 @@ include('product_cfg.php');
 		}}
 	}
 	elseif((strpos($model_no,"M011442.3")!== false)){//for NFC Padlock Grade 3
-		//Check for duplicate SN
-		if($_POST['sn1']==$_POST['sn2']){
-			echo '<script type="text/javascript">alert("Duplicate SN detected!");</script>';
-			echo "<script>window.history.back();</script>"; 
-		}
-		else{
+		
+		$expall = $expall = explode("-",$model_no);
+		$lblheight = $expall[2];
+		if($lblheight=="60"){
 			//Check if SN is already in the system
 			$sn1 = $_POST['sn1'];
-			$sn2 = $_POST['sn2'];
-			$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn in ('$sn1','$sn2')")or die(mysqli_error($con));
+			$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn in ('$sn1')")or die(mysqli_error($con));
 			$row=mysqli_fetch_array($query);
 			if($row['cnt']!=0){
-				echo '<script type="text/javascript">alert("SN already exist in the system!");</script>';
+				echo '<script type="text/javascript">alert("SN '.$sn1.' already exist in the system!");</script>';
 				echo "<script>window.history.back();</script>"; 
 			}
 			else{
@@ -243,14 +240,11 @@ include('product_cfg.php');
 				}
 				else{
 					mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn1')")or die(mysqli_error($con));
-					mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn2')")or die(mysqli_error($con));
 					mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
 					echo "<script type='text/javascript'>alert('Data saved!');</script>";
 
 					//set label content and send to print function
 					$lbldate = date('j.n.Y');
-					$expall = $expall = explode("-",$model_no);
-					$lblheight = $expall[2];
 					if(strpos($model_no,"M011442.341")!==false){
 						$lblmodel='341.'.$lblheight;
 					}
@@ -307,27 +301,126 @@ include('product_cfg.php');
 							^CFA,40
 							^FO60,500^FD$lbldate^FS
 							^XZ ";
-					$lblbox2 = "^XA
-							
-					^FX first section
-							^FO360,100
-		
-						^BXN,15,200
-						^FD$sn2^FS
-		
-							^CFA,30
-							^FO380,320^FD$sn2^FS
-		
-							^CFP,80,90
-							^FO220,370^FDH50S.$lblmodel.HC^FS
-							
-							^CFA,40
-							^FO60,500^FD$lbldate^FS
-							^XZ ";
-					printpadlocklabel($lblbox,$line,$con,$lblbox2);
+					printpadlocklabel($lblbox,$line,$con);
 				}
 			}
 		}
+		else{
+			//Check for duplicate SN
+			if($_POST['sn1']==$_POST['sn2']){
+				echo '<script type="text/javascript">alert("Duplicate SN detected!");</script>';
+				echo "<script>window.history.back();</script>"; 
+			}
+			else{
+				//Check if SN is already in the system
+				$sn1 = $_POST['sn1'];
+				$sn2 = $_POST['sn2'];
+				$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn in ('$sn1','$sn2')")or die(mysqli_error($con));
+				$row=mysqli_fetch_array($query);
+				if($row['cnt']!=0){
+					echo '<script type="text/javascript">alert("SN '.$sn1.','.$lblheight.' already exist in the system!");</script>';
+					echo "<script>window.history.back();</script>"; 
+				}
+				else{
+					$testfailed=0;
+					$testmsg='';
+					for($i=1;$i<=$qty;$i++){
+						$rfsissue = 0;
+						$sn= $_POST['sn'.$i];
+						$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+						COUNT(*) AS cnt 
+						FROM padlock_test pt
+						LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+						LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+						WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+						$row=mysqli_fetch_array($query);
+						if($row['cnt']==0){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass any test yet!.\n';
+						}
+						else{
+							if($row['iptest']!='P'){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass IP test yet!.\n';
+							}
+							if($row['satest']!='P'){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
+							}
+							if($row['rfstest']!='P'){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
+							}
+							if($row['thermaltest']!='P'){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass Thermal test yet!.\n';
+							}
+						}
+						$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
+						$row=mysqli_fetch_array($query);
+						if($row['cnt']==0){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' have not do Padlock Pairing yet!.\n';
+						}
+					}
+					if($testfailed==1){
+						echo '<script type="text/javascript">alert("'.$testmsg.'");</script>';
+						echo "<script>window.history.back();</script>"; 
+					}
+					else{
+						mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn1')")or die(mysqli_error($con));
+						mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn2')")or die(mysqli_error($con));
+						mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
+						echo "<script type='text/javascript'>alert('Data saved!');</script>";
+
+						//set label content and send to print function
+						$lbldate = date('j.n.Y');
+						if(strpos($model_no,"M011442.341")!==false){
+							$lblmodel='341.'.$lblheight;
+						}
+						else{
+							$lblmodel='331.'.$lblheight;
+						}
+						$lblbox = "^XA
+								
+						^FX first section
+								^FO360,100
+			
+							^BXN,15,200
+							^FD$sn1^FS
+			
+								^CFA,30
+								^FO380,320^FD$sn1^FS
+			
+								^CFP,80,90
+								^FO220,370^FDH50S.$lblmodel.HC^FS
+								
+								^CFA,40
+								^FO60,500^FD$lbldate^FS
+								^XZ ";
+						$lblbox2 = "^XA
+								
+						^FX first section
+								^FO360,100
+			
+							^BXN,15,200
+							^FD$sn2^FS
+			
+								^CFA,30
+								^FO380,320^FD$sn2^FS
+			
+								^CFP,80,90
+								^FO220,370^FDH50S.$lblmodel.HC^FS
+								
+								^CFA,40
+								^FO60,500^FD$lbldate^FS
+								^XZ ";
+						printpadlocklabel($lblbox,$line,$con,$lblbox2);
+					}
+				}
+			}
+		}
+		
 	}
 	elseif((strpos($model_no,"M009801.4")!== false)){//for NFC Padlock Grade 4
 		//Check if SN is already in the system

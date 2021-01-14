@@ -9,7 +9,7 @@ include('../dist/includes/dbcon.php');
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Carton | <?php include('../dist/includes/title.php'); include('product_cfg.php');?></title>
+    <title>Carton (Padlock) | <?php include('../dist/includes/title.php'); include('product_cfg.php');?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -63,14 +63,15 @@ include('../dist/includes/dbcon.php');
           <!-- Content Header (Page header) -->
          
           <?php 
-          isset($_GET['limit'])? $limit = $_GET['limit'] : $limit = 6;
+          isset($_GET['limit'])? $limit = $_GET['limit'] : $limit = 20;
           // $limit>6 ? $limit=6 : $limit = $limit; ?>
           <!-- Main content -->
           <section class="content">
             <div class="panel panel-default">
               <div class="panel-heading">Carton Details</div>
               <div class="panel-body">
-                <form id="form_box" class="form-horizontal" method="post" action="carton_in.php" enctype='multipart/form-data'>
+              <p><b>*This carton packing is for Padlock Only*</b></p>
+                <form id="form_box" class="form-horizontal" method="post" action="carton_padlock_in.php" enctype='multipart/form-data'>
                   <p>Product : <b>
                     <select name="model" id="model">
                       <?php $model = get_modelNo2_selected($con);
@@ -87,31 +88,19 @@ include('../dist/includes/dbcon.php');
                         <option value="3" >3</option>
                     </select>
                   </p>
-                  <p>No. of Box: 
-                    <select name="no_box" id="no_box" >
-                        <option value="1" <?php if($limit==1){echo"selected";} ?>>1</option>
-                        <option value="2" <?php if($limit==2){echo"selected";} ?>>2</option>
-                        <option value="3" <?php if($limit==3){echo"selected";} ?>>3</option>
-                        <option value="4" <?php if($limit==4){echo"selected";} ?>>4</option>
-                        <option value="5" <?php if($limit==5){echo"selected";} ?>>5</option>
-                        <option value="6" <?php if($limit==6){echo"selected";} ?>>6</option>
-                        <option value="8" <?php if($limit==8){echo"selected";} ?>>8</option>
-                        <option value="10" <?php if($limit==10){echo"selected";} ?>>10</option>
-                        <option value="12" <?php if($limit==12){echo"selected";} ?>>12</option>
-                        <option value="20" <?php if($limit==20){echo"selected";} ?>>20</option>
-                        <option value="40" <?php if($limit==40){echo"selected";} ?>>40</option>
-                    </select>
+                  <p>Quantity: 
+                    <input type="number" name="no_box" id="no_box" value='<?php echo $limit; ?>'/>
                   </p><br>
                   <input type="hidden" name="carton_id" id="carton_id" value="<?php echo $next_carton_id; ?>"></input>
                   <table class="table table-bordered table-striped">
                     <thead>
                       <th class="info text-center">Item</th>
-                      <th class="info text-center">Box Number</th>
+                      <th class="info text-center">SN</th>
                     </thead>
                     <tbody>
                       <?php for ($i=1; $i<=$limit; $i++) {
                           echo '<tr><td class="text-center">'.$i.'</td>
-                          <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="8" required name="box'.$i.'" id="box'.$i.'" </td>';
+                          <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="12" required name="sn'.$i.'" id="sn'.$i.'" </td>';
                       }
                       ?>
                     </tbody>

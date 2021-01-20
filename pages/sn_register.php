@@ -132,12 +132,52 @@
                   if(count($row2)>1){
                     $coresn = $row2['pwbsn'];
                     $padlocksn = $row2['locksn'];
+                    $tmstmp_ori = $row2['timestamp'];
                     $tmstmp = date('d-M-Y h:i:sA', $row2['timestamp']);
                     echo"<br><br><br><hr>
                       <p><b>Result:</b></p>
                       <p>PWB SN    :   <b>$coresn</b></p>
                       <p>Lock SN :   <b>$padlocksn</b></p>
-                      <p>Time       :   <b>$tmstmp</b></p>";
+                      <p>Time       :   <b>$tmstmp</b></p>";?>
+                      
+                      <!-- <p><button id='btn_del' class='btn btn-danger'  type='button'>DELETE</button></p> -->
+                      <a href="#pswd" data-target="#pswd" data-toggle="modal" class="btn btn-danger">Delete</a>
+
+                      
+
+                      <!--start of REPORT modal--> 
+                      <div id="pswd" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+                      <div class="modal-dialog">
+                        <div class="modal-content" style="height:auto">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title">SN Pairing Record Delete</h4>
+                          </div>
+                          <div style="font-size:11px" class="modal-body">
+                            <form class="form-horizontal" id="form_report" method="post" action="sn_register_delete.php" enctype='multipart/form-data'>
+                              <div class="form-group">
+                                <label class="control-label col-lg-2" for="pallet">Please insert password:</label>
+                                <div class="col-lg-7">
+                                  <input type='text' id="coresn" name='coresn' value='<?php echo $coresn;?>' hidden></input>
+                                  <input type='text' id="padlocksn" name='padlocksn' value='<?php echo $padlocksn;?>' hidden></input>
+                                  <input type='text' id="tmstmp_ori" name='tmstmp_ori' value='<?php echo $tmstmp_ori;?>' hidden></input>
+                                  <input autocomplete="off" type="password" class="form-control" id="pswrd" name="pswrd" placeholder="Password">  
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="btn_submit">Send</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>  
+                      </div><!--end of modal-dialog-->
+                      </div> 
+                      <!--end of REPORT modal--> 
+                      <?php
                   }
                   else{
                     echo '<script type="text/javascript">alert("No Record!");</script>';
@@ -154,33 +194,7 @@
       </div><!-- /.content-wrapper -->
       <?php include('../dist/includes/footer.php');?>
     </div><!-- ./wrapper -->
-
-
-	<script>
-    $(function() {
-      $(".btn_delete").click(function(){
-      var element = $(this);
-      var id = element.attr("id");
-      var dataString = 'id=' + id;
-      if(confirm("Sure you want to delete this item?"))
-      {
-	$.ajax({
-	type: "GET",
-	url: "temp_trans_del.php",
-	data: dataString,
-	success: function(){
-		
-	      }
-	  });
-	  
-	  $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
-	  .animate({ opacity: "hide" }, "slow");
-      }
-      return false;
-      });
-
-      });
-    </script>
+    
 	
 	<script type="text/javascript" src="autosum.js"></script>
   
@@ -219,23 +233,15 @@
         
         $("#btn_pair").click(function () {
           document.getElementById("form_pair").submit();
-          // var valid = true;
-          // var i;
-          // for (i = 1; i < 21; i++) { 
-          //   var sn_name = "sn"+i;
-          //   var pass1 = document.getElementById(sn_name).value;
-          //   var pass_t = pass1.trim();
-          //   if(pass_t.length < 1 || pass_t == ""){
-          //     valid = false;
-          //   }
-          // }
-          // if(valid = false){
-          //   alert("Product is not enough");
-          // }
         });
         $("#btn_search").click(function () {
           document.getElementById("form_search").submit();
         });
+        // $("#btn_del").click(function(){
+        //   var coresn = document.getElementById('coresn').value;
+        //   var pswrd = prompt("Please insert password:", "Password");
+        //   location.href='sn_register_delete.php?core='+coresn+'&key='+pswrd;
+        // });
         //Initialize Select2 Elements
         $(".select2").select2();
 

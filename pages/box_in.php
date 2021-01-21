@@ -955,6 +955,15 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
 					}
 				}
+				elseif(strpos($model_no,"IQ-M010475")!== false){//for D5 core
+					$printlbl = 2;
+					$query=mysqli_query($con,"select result,count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['result']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass burn-in test yet!.\n';
+					}
+				}
 				elseif(strpos($model_no,"IQ-M010158-C")!== false){//for D5 FG
 					$printlbl = 2;
 					$query=mysqli_query($con,"select result,count(*) as cnt from d5_durability where sn='$sn'")or die(mysqli_error($con));
@@ -1148,7 +1157,7 @@ include('product_cfg.php');
 					}    
 				}
 				else{
-					$swversion = "2.8";
+					$swversion = "2.9";
 				}
 				$lblbox2 ="^XA
 				^CFP,180,120

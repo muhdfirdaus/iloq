@@ -88,7 +88,7 @@
                     ^FO60,500^FD$lbldate^FS
                     ^XZ "; 
         }
-        elseif((strpos($modelno,"M011442.3")!== false)){
+        elseif((strpos($modelno,"M011442.3")!== false)&&(strpos($modelno,"-60-")=== false)){
             $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
             $i=1;
             while($row=mysqli_fetch_array($query)){
@@ -139,6 +139,39 @@
                     ^XZ "; 
             $doublepizza = 1;
         }
+        elseif((strpos($modelno,"M011442.3")!== false)&&(strpos($modelno,"-60-")!== false)){
+            $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
+            $i=1;
+            while($row=mysqli_fetch_array($query)){
+                ${'sn'.$i} = $row['sn'];
+                $i++;
+            }    
+            
+            if(strpos($modelno,"M011442.341")!==false){
+                $lblmodel='341';
+            }
+            else{
+                $lblmodel='331';
+            }
+            $lbldate = date('j.n.Y',$tmstmp);    
+            $lblbox = "^XA
+						
+            ^FX first section
+                    ^FO360,100
+
+                ^BXN,15,200
+                ^FD$sn1^FS
+
+                    ^CFA,30
+                    ^FO380,320^FD$sn1^FS
+
+                    ^CFP,80,90
+                    ^FO220,370^FDH50S.$lblmodel.$lblheight.HC^FS
+                    
+                    ^CFA,40
+                    ^FO60,500^FD$lbldate^FS
+                    ^XZ ";    
+        }
         else{
 
             $allmodel = get_modelNo2($con);
@@ -188,7 +221,7 @@
                 }            
             }
             else{
-                $swversion = "2.8";
+                $swversion = "2.9";
             }
             $lblbox2 ="^XA
             ^CFP,180,120

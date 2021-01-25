@@ -221,7 +221,7 @@
                 }            
             }
             else{
-                $swversion = "2.9";
+                $swversion = "2.8";
             }
             $lblbox2 ="^XA
             ^CFP,180,120

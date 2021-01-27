@@ -71,7 +71,7 @@ endif;
                                         echo "-";
                                     }
                                     elseif($row['time_out']==null&&$row['time_in']!=null){
-                                        $expOut = date('d M Y H:i:sA',(($row['durations']*60*60)+$row['time_in_original']));
+                                        $expOut = date('d M Y h:i:sA',(($row['durations']*60*60)+$row['time_in_original']));
                                         echo "<font color='red'>Take out at : ".$expOut."</font>";
                                     }
                                     else{

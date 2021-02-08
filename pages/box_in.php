@@ -1002,6 +1002,45 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' not pass Lock test yet!.\n';
 					}
 				}
+				elseif(strpos($model_name,"D50")!== false){//For D50 
+					$printlbl = 2;
+					$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+					COUNT(*) AS cnt 
+					FROM padlock_test pt
+					LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+					LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+					WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass any test yet!.\n';
+					}
+					else{
+						if($row['iptest']!='P'){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass IP test yet!.\n';
+						}
+						if($row['satest']!='P'){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
+						}
+						if($row['rfstest']!='P'){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
+						}
+						if($row['thermaltest']!='P'){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Thermal test yet!.\n';
+						}
+					}
+					$query=mysqli_query($con,"select count(*) as cnt from nfc_padlock where core_sn='$sn' or padlock_sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' have not do Padlock Pairing yet!.\n';
+					}
+					
+				}
 				// elseif(strpos($model_name,"OVAL LOCK INDOOR C5S.10.SB")!== false){//temporary for skogen 
 				// 	$query=mysqli_query($con,"select lockTest, durTest, rfsTest,lDate,rDate,dDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 				// 	$row=mysqli_fetch_array($query);

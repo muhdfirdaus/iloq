@@ -114,11 +114,15 @@ include('product_cfg.php');
                 {
                     $weight = '8KG';
                 }
-                elseif(strpos($lblcode, 'M10795')!== false)
+                elseif(strpos($lblcode, 'M010795')!== false)
                 {
                     $weight = '7.5KG';
                 }
-                elseif(strpos($lblcode, 'M10794')!== false)
+                elseif(strpos($lblcode, 'M010794')!== false)
+                {
+                    $weight = '7.5KG';
+                }
+                elseif(strpos($lblcode, 'M010475')!== false)
                 {
                     $weight = '7.5KG';
                 }
@@ -136,7 +140,7 @@ include('product_cfg.php');
                 }
                 elseif(strpos($lblcode, 'M009801')!== false)
                 {
-                    $weight = '19.28KG';
+                    $weight = '21.15KG';
                 }
                 elseif(strpos($lblcode, 'M010293')!== false)
                 {

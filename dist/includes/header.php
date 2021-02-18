@@ -124,6 +124,11 @@ date_default_timezone_set("Asia/Singapore");
                                 <i class="glyphicon glyphicon-barcode text-black"></i>Carton Label
                               </a>
                           </li><!-- end notification -->
+                          <li><!-- start notification -->
+                              <a href="print_4446.php" class="dropdown-toggle" >
+                                <i class="glyphicon glyphicon-barcode text-black"></i>IQ-M004446-L-01
+                              </a>
+                          </li><!-- end notification -->
                         </ul>
                       </li>
                     </ul>

@@ -19,9 +19,31 @@ endif;
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
-    <style>
-      
-    </style>
+  <script language="javascript">
+           var message="This function is not allowed here.";
+           function clickIE4(){
+                 if (event.button==2){
+                     alert(message);
+                     return false;
+                 }
+           }
+           function clickNS4(e){
+                if (document.layers||document.getElementById&&!document.all){
+                        if (e.which==2||e.which==3){
+                                  alert(message);
+                                  return false;
+                        }
+                }
+           }
+           if (document.layers){
+                 document.captureEvents(Event.MOUSEDOWN);
+                 document.onmousedown=clickNS4;
+           }
+           else if (document.all&&!document.getElementById){
+                 document.onmousedown=clickIE4;
+           }
+           document.oncontextmenu=new Function("alert(message);return false;")
+</script>
  </head>
   <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
   <body class="hold-transition skin-black layout-top-nav">
@@ -35,7 +57,7 @@ endif;
           <!-- Content Header (Page header) -->
           <section class="content-header">
             <h1>
-              <a class="btn btn-lg btn-warning" href="home.php">Back</a>
+              <a class="btn btn-lg btn-warning" href="box_start.php">Back</a>
               
             </h1>
             <ol class="breadcrumb">
@@ -58,50 +80,42 @@ endif;
                   </div>
                   <div class="box-body">
                     <!-- Date range -->
-                    <form id = "formE" method="post" action="profile_update.php">
+                    <form id = "formE" method="post" action="profile_update.php" enctype='multipart/form-data'>
     
                     <div class="form-group">
-                      <label for="date">Full Name</label>
+                      <label for="Full Name">Full Name</label>
                       <div class="input-group col-md-12">
                         <input type="text" class="form-control pull-right" value="<?php echo $row['name'];?>" name="name" placeholder="Full Name" required>
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->
                     <div class="form-group">
-                      <label for="date">Username</label>
+                      <label for="Username">Username</label>
                       <div class="input-group col-md-12">
                         <input type="text" class="form-control pull-right" value="<?php echo $row['username'];?>" readonly="readonly" name="username" placeholder="Username" required>
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->
                     <div class="form-group">
-                      <label for="date">Change Password</label>
+                      <label for="New Password">New Password</label>
                       <div class="input-group col-md-12">
                         <input type="password" class="form-control pull-right" id="password" name="password" placeholder="Type new password">
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->
                     <div class="form-group">
-                      <label for="date">Confirm New Password</label>
+                      <label for="Confirm New Password">Confirm New Password</label>
                       <div class="input-group col-md-12">
                         <input type="password" class="form-control pull-right" id="cfmPassword" name="newpassword" placeholder="Reenter new password">
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->
                     <hr>
                     <div class="form-group">
-                      <label for="date">Enter Old Password to confirm changes</label>
+                      <label for="Old Password">Enter Old Password to confirm changes</label>
                       <div class="input-group col-md-12">
                         <input type="password" class="form-control pull-right" id="pass_old" name="passwordold" placeholder="Type old password" required>
                       </div><!-- /.input group -->
             
                     </div><!-- /.form group -->
-            
-                    <div class="form-group">
-                      <div class="input-group">
-                        <input class = "btn btn-primary" type="button" value="Submit" id="btn_submit">
-                        <button class="btn" id="daterange-btn">
-                          Clear
-                        </button>
-                      </div>
-                    </div><!-- /.form group -->
                     </form>	
+                        <button type="button" id="btnsub" class="btn btn-primary" style="float: right;">Save</button>
                   </div><!-- /.box-body -->
                 </div><!-- /.box -->
               </div><!-- /.col (right) -->
@@ -114,10 +128,12 @@ endif;
       <?php include('../dist/includes/footer.php');?>
     </div><!-- ./wrapper -->
 
+
     <!-- jQuery 2.1.4 -->
     <script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/select2/select2.full.min.js"></script>
     <!-- SlimScroll -->
     <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
@@ -129,18 +145,16 @@ endif;
     <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
     
-    <script>
+    <!-- <script>
       $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false
+        $("#btn_sut").click(function () {
+          alert('ddasdasd');
+          // document.getElementById("form_pair").submit();
         });
       });
+    </script> -->
+    <script>
+      $(function () {
       // ('#formE').on('keyup keypress', function(e) {
       //   var keyCode = e.keyCode || e.which;
       //   if (keyCode === 13) { 
@@ -155,20 +169,7 @@ endif;
         }
       });
 
-      $("#btn_submit").click(function () {
-          tot = 1;
-          ok = myFunction();
-
-          if(ok == true){
-            tot += 1;
-          }
-          //  alert("tot is : " + tot); 
-          if(tot>1){
-            document.getElementById("formE").submit();
-          }
-      });
-
-      function myFunction() {
+      $("#btnsub").click(function () {
         var pass1 = document.getElementById("password").value;
         var pass2 = document.getElementById("cfmPassword").value;
         var pass_old = document.getElementById("pass_old").value;
@@ -178,20 +179,42 @@ endif;
           alert("Please enter your current password");
           ok = false;
         }
-        if ((pass1 != null || pass2 != null ) && pass1 != pass2) {
+        else if ((pass1 != null || pass2 != null ) && pass1 != pass2) {
             alert("Passwords Do not match");
             document.getElementById("password").style.borderColor = "#E34234";
             document.getElementById("cfmPassword").style.borderColor = "#E34234";
             ok = false;
         }
-        return ok;
+        else{
+          document.getElementById("formE").submit();
+        }
+      });
 
-      }
+      // function myFunction() {
+      //   var pass1 = document.getElementById("password").value;
+      //   var pass2 = document.getElementById("cfmPassword").value;
+      //   var pass_old = document.getElementById("pass_old").value;
+      //   var ok = true;
+        
+      //   if(pass_old.trim() == ""){
+      //     alert("Please enter your current password");
+      //     ok = false;
+      //   }
+      //   if ((pass1 != null || pass2 != null ) && pass1 != pass2) {
+      //       alert("Passwords Do not match");
+      //       document.getElementById("password").style.borderColor = "#E34234";
+      //       document.getElementById("cfmPassword").style.borderColor = "#E34234";
+      //       ok = false;
+      //   }
+      //   return ok;
 
-      function validateEmail(email) {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-      }
+      // });
+
+      // function validateEmail(email) {
+      //   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      //   return re.test(email);
+      // });
+      });
 
 	</script>
   </body>

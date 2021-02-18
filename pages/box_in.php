@@ -964,7 +964,7 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' not pass burn-in test yet!.\n';
 					}
 				}
-				elseif(strpos($model_no,"IQ-M010158-C")!== false){//for D5 FG
+				elseif(strpos($model_no,"IQ-M010158")!== false){//for D5 FG
 					$printlbl = 2;
 					$query=mysqli_query($con,"select result,count(*) as cnt from d5_durability where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);

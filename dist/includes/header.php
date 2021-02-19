@@ -125,8 +125,13 @@ date_default_timezone_set("Asia/Singapore");
                               </a>
                           </li><!-- end notification -->
                           <li><!-- start notification -->
-                              <a href="print_4446.php" class="dropdown-toggle" >
-                                <i class="glyphicon glyphicon-barcode text-black"></i>IQ-M004446-L-01
+                              <a href="#m004446box" class="dropdown-toggle" data-target="#m004446box" data-toggle="modal">
+                                <i class="glyphicon glyphicon-barcode text-black"></i>IQ-M004446-L-01 (Box)
+                              </a>
+                          </li><!-- end notification -->
+                          <li><!-- start notification -->
+                              <a href="#m004446carton" class="dropdown-toggle" data-target="#m004446carton" data-toggle="modal">
+                                <i class="glyphicon glyphicon-barcode text-black"></i>IQ-M004446-L-01 (Carton)
                               </a>
                           </li><!-- end notification -->
                         </ul>
@@ -238,6 +243,76 @@ date_default_timezone_set("Asia/Singapore");
   </div><!--end of modal-dialog-->
 </div> 
 <!--end of REPORT modal--> 
+
+
+<!--start of LABEL PRINTING M004446 Box modal--> 
+<div id="m004446box" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+  <div class="modal-dialog">
+    <div class="modal-content" style="height:auto">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Print Label M004446(Box)</h4>
+      </div>
+      <div style="font-size:11px" class="modal-body">
+        <form class="form-horizontal" id="form_report" method="post" action="print_4446.php" enctype='multipart/form-data'>
+          <div class="form-group">
+            <label class="control-label col-lg-2" for="box">Quantity</label>
+            <div class="col-lg-7">
+              <input autocomplete="off" type="text" class="form-control" id="qty" name="qty" placeholder="Quantity" value="63">  
+            </div>
+          </div><hr>
+          <!-- <div class="form-group control-label text-red">*Please insert ONE(1) field only</div> -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="btn_submit">Send</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>  
+  </div><!--end of modal-dialog-->
+</div> 
+<!--end of BOX LABEL PRINTING modal--> 
+
+
+<!--start of LABEL PRINTING M004446 Carton modal--> 
+<div id="m004446carton" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+  <div class="modal-dialog">
+    <div class="modal-content" style="height:auto">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Print Label M004446(Carton)</h4>
+      </div>
+      <div style="font-size:11px" class="modal-body">
+        <form class="form-horizontal" id="form_report" method="post" action="print_4446_carton.php" enctype='multipart/form-data'>
+          <div class="form-group">
+            <label class="control-label col-lg-2" for="box">Quantity</label>
+            <div class="col-lg-7">
+              <input autocomplete="off" type="text" class="form-control" id="qty" name="qty" placeholder="Quantity" value="189">  
+            </div>
+          </div><hr>
+          <div class="form-group">
+            <label class="control-label col-lg-2" for="box">Weight (kg)</label>
+            <div class="col-lg-7">
+              <input autocomplete="off" type="text" class="form-control" id="weight" name="weight" placeholder="Weight" value="20">  
+            </div>
+          </div>
+          <!-- <div class="form-group control-label text-red">*Please insert ONE(1) field only</div> -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="btn_submit">Send</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>  
+  </div><!--end of modal-dialog-->
+</div> 
+<!--end of BOX LABEL PRINTING modal--> 
 
 
 <!--start of LABEL PRINTING modal--> 

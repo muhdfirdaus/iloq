@@ -154,9 +154,9 @@ if(file_exists($mydir)){
 }
 
 
-$mydir = "\\\\iloq1830\\Skogen RFS";// RFS Logtest Update
+$mydir = "\\\\iloq1830\\Reports";// RFS Logtest Update
 if(file_exists($mydir)){
-    $files = glob("\\\\iloq1830\\Skogen RFS\\Reports\\*.txt"); //RFS skogen
+    $files = glob("\\\\iloq1830\\Reports\\*.txt"); //RFS skogen
 
     foreach($files as $file) {
 

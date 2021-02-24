@@ -1,6 +1,12 @@
 <?php
 session_start();
 include('../dist/includes/dbcon.php');
+
+$datestart = $_POST['datestart'];
+$dateend = $_POST['dateend'];
+$startd = strtotime($datestart);
+$endd = strtotime($dateend)+86400;
+
 /*******EDIT LINES 3-8*******/
 
 
@@ -9,12 +15,13 @@ $DB_Username = $uname; //MySQL Username
 $DB_Password = $pass; //MySQL Password     
 $DB_DBName = $dbname; //MySQL Database Name  
 
-$filename = "Temperature_Log_".date('YmdHi'); //File Name
+$filename = "Temperature_Log_$datestart-$dateend"; //File Name
 $sql ="SELECT tt.tray_no AS tray_no, tt.temperature AS temperature, ts.sn AS sn,
 DATE_FORMAT(FROM_UNIXTIME(`time_in`),'%d %M %Y %H:%i:%s') AS 'time_in',
-DATE_FORMAT(FROM_UNIXTIME(`time_out`), '%d %M %Y %H:%i:%s') AS 'time_out',ts.result 
+DATE_FORMAT(FROM_UNIXTIME(`time_out`), '%d %M %Y %H:%i:%s') AS 'time_out',tt.durations as durations_hrs,ts.result 
 FROM temp_test AS tt
-LEFT JOIN temp_test_sn AS ts ON ts.batch_id = tt.id"; 
+LEFT JOIN temp_test_sn AS ts ON ts.batch_id = tt.id
+where time_out>$startd and time_out<$endd"; 
 
 $Connect = @mysql_connect($DB_Server, $DB_Username, $DB_Password) or die("Couldn't connect to MySQL:<br>" . mysql_error() . "<br>" . mysql_errno());
 //select database   
@@ -32,6 +39,7 @@ header("Expires: 0");
 /*******Start of Formatting for Excel*******/   
 //define separator (defines columns in excel & tabs in word)
 $sep = "\t"; //tabbed character
+print("Notes for temperature: 1=Cold, 2=Hot \n \n");
 //start of printing column names as names of MySQL fields
 for ($i = 0; $i < mysql_num_fields($result); $i++) {
 echo mysql_field_name($result,$i) . "\t";

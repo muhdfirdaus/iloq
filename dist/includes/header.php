@@ -88,7 +88,7 @@ date_default_timezone_set("Asia/Singapore");
                           </li><!-- end notification -->
                           <?php  if($_SESSION['admin']==1){?>
                           <li><!-- start notification -->
-                              <a href="report_temptest.php" class="dropdown-toggle" >
+                              <a href="#temptestreportmodal" class="dropdown-toggle" data-target="#temptestreportmodal" data-toggle="modal">
                                 <i class="glyphicon glyphicon-time text-yellow"></i>Test Log
                               </a>
                           </li><!-- end notification -->
@@ -205,6 +205,43 @@ date_default_timezone_set("Asia/Singapore");
           </div><!-- /.container-fluid -->
         </nav>
       </header>
+
+
+<!--start of REPORT modal--> 
+<div id="temptestreportmodal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+  <div class="modal-dialog">
+    <div class="modal-content" style="height:auto">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Temperature Test Report</h4>
+      </div>
+      <div style="font-size:11px" class="modal-body">
+        <form class="form-horizontal" id="form_report" method="post" action="report_temptest.php" enctype='multipart/form-data'>
+          <div class="form-group">
+            <label class="control-label col-lg-2" for="Date start">From (Date) :</label>
+            <div class="col-lg-7">
+              <input autocomplete="off" type="date" class="form-control" id="datestart" name="datestart" placeholder="Date start">  
+            </div>
+          </div><hr>
+          <div class="form-group">
+            <label class="control-label col-lg-2" for="Date end">To (Date) :</label>
+            <div class="col-lg-7">
+              <input autocomplete="off" type="date" class="form-control" id="dateend" name="dateend" placeholder="Date end">  
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="btn_submit">Send</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>  
+  </div><!--end of modal-dialog-->
+</div> 
+<!--end of REPORT modal--> 
 
 
 <!--start of REPORT modal--> 

@@ -162,7 +162,6 @@ endif;
                 <p class="text-red text-center"><b>**Pastikan semua maklumat tepat sebelum mengklik butang "Start"</b></p>
                 <p class="text-red text-center"><b>**பொத்தானைக் கிளிக் செய்வதற்கு முன் எல்லா தகவல்களும் சரியானவை என்பதை உறுதிப்படுத்தவும் "Start"</b></p>
                 <p class="text-red text-center"><b>**请确保所有信息正确无误后再点击 "Start"</b></p>
-                <p class="text-red text-center"><b>**ক্লিক করার আগে দয়া করে নিশ্চিত করুন যে সমস্ত তথ্য সঠিক কিনা "Start"</b></p>
                 <br><br>
 
                 <div>

@@ -1,9 +1,9 @@
-<?php 
-// session_start();
-// if(empty($_SESSION['id'])):
-// header('Location:../index.php');
-// endif;
-
+<?php session_start();
+if(empty($_SESSION['id'])):
+header('Location:../index.php');
+endif;
+// include('../pages/logupdate.php');
+// logupd();
 ?>
 <!DOCTYPE html>
 <html>
@@ -71,7 +71,6 @@
           $id = $_GET['id'];
           $query2=mysqli_query($con,"select * from box_info where id=$id")or die(mysqli_error($con));
           $row2=mysqli_fetch_array($query2);
-
           if($row2['status']==1){
             echo '<script type="text/javascript">alert("Box Already Finished!");</script>';
             echo "<script>document.location='box_start.php'</script>";
@@ -82,15 +81,9 @@
           $box_id=$row2['box_id'];
           $line=$row2['line'];
           
-          $query3=mysqli_query($con,"select count(*) as tot from box_sn where box_id='$box_id'")or die(mysqli_error($con));
-          $row3=mysqli_fetch_array($query3);
-          $scanned = $row3['tot'];
-          
           $query=mysqli_query($con,"select id from model_list where model_no2='$model_no'")or die(mysqli_error($con));
           $row=mysqli_fetch_array($query);
           $no = $row['id'];
-
-          $maxrow = 1;
           ?>
           <!-- Main content -->
           <section class="content">
@@ -101,11 +94,9 @@
                 <p>Line: <b><?php echo $line;?></b></p>
                   <p>Product: <b><?php echo $model;?></b></p>
                   <p>Model Number: <b><?php echo $model_no;?></b></p>
-                  <p>Quantity: <b><?php echo $scanned.' / '.$qty;?></b></p>
+                  <p>Quantity: <b><?php echo $qty;?></b></p>
                   <p>Box ID: <b><?php echo $box_id; ?></b></p><br>
-                  <input type="hidden" name="id" id="id" value="<?php echo $id; ?>"></input>
                   <input type="hidden" name="box_id" id="box_id" value="<?php echo $box_id; ?>"></input>
-                  <input type="hidden" name="scanned" id="scanned" value="<?php echo $scanned; ?>"></input>
                   <input type="hidden" name="qty" id="qty" value="<?php echo $qty; ?>"></input>
                   <input type="hidden" name="model" id="model" value="<?php echo $no;?>"></input>
                   <input type="hidden" name="line" id="line" value="<?php echo $line;?>"></input>
@@ -115,7 +106,7 @@
                       <th class="info text-center">Serial Number</th>
                     </thead>
                     <tbody>
-                      <?php for ($i=1; $i<=$maxrow; $i++) {
+                      <?php for ($i=1; $i<=$qty; $i++) {
                           echo '<tr><td class="text-center">'.$i.'</td>
                           <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="25" required name="sn'.$i.'" id="sn'.$i.'" </td>';
                       }
@@ -123,7 +114,7 @@
                     </tbody>
                   </table>
                 </form>
-                <button type="button" id="btn_box" class="btn btn-primary" style="float: right;">Next</button>
+                <button type="button" id="btn_box" class="btn btn-primary" style="float: right;">Print Label</button>
               </div>
             </div>
 

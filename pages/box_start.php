@@ -69,7 +69,7 @@ endif;
           <!-- Content Header (Page header) -->
           <!-- Existing unfinished box -->
           <?php 
-          $query=mysqli_query($con,"SELECT DISTINCT id,timestamp,box_id,model_no,qty, line FROM box_info m WHERE m.status=0")or die(mysqli_error($con));
+          $query=mysqli_query($con,"SELECT DISTINCT m.id,m.timestamp,m.box_id,m.model_no,m.qty, m.line,(SELECT COUNT(*) FROM box_sn WHERE box_id = m.box_id) AS scanned FROM box_info m WHERE m.status=0")or die(mysqli_error($con));
           if(mysqli_num_rows($query)>0){
           ?>
               <section class="content">
@@ -95,12 +95,13 @@ endif;
                           $id = $row['id'];
                           $box_id = $row['box_id'];
                           $model = $row['model_no'];
+                          $scanned = $row['scanned'];
                           $qty = $row['qty'];
                           $wo = $row['line'];
                           $timestamp = date('d-M-Y h:i:sa',$row['timestamp']);
                           echo  "<td >$box_id</td>
                               <td >$model</td>
-                              <td >$qty</td>
+                              <td >$scanned / $qty</td>
                               <td >$wo</td>
                               <td >$timestamp</td>
                               <td  align='center'><a href='box_scan.php?id=$id'><i class='glyphicon glyphicon-chevron-right text-blue'></i></a></td>";

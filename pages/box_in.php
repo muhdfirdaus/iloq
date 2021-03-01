@@ -1114,6 +1114,9 @@ include('product_cfg.php');
 							$swversion = "1.5.14W";
 						}    
 					}
+					elseif(strpos($model_no2,"M010358")!==false){
+						$swversion = "1.5.14W";
+					}
 					else{
 						$swversion = "2.8";
 					}

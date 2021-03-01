@@ -117,7 +117,7 @@
                     <tbody>
                       <?php for ($i=1; $i<=$maxrow; $i++) {
                           echo '<tr><td class="text-center">'.$i.'</td>
-                          <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="25" required name="sn'.$i.'" id="sn'.$i.'" </td>';
+                          <td class="text-center"><input autofocus autocomplete="off" class="form-control text-center" maxlength="25" required name="sn'.$i.'" id="sn'.$i.'" </td>';
                       }
                       ?>
                     </tbody>

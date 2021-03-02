@@ -332,6 +332,12 @@ include('product_cfg.php');
 						mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
 						echo "<script type='text/javascript'>alert('Data saved!');</script>";
 
+						$query=mysqli_query($con,"select sn from box_sn where box_id='BEY20125'")or die(mysqli_error($con));
+						$i = 1;
+						while($row=mysqli_fetch_array($query)){
+						${"sn".$i} = $row['sn'];
+						$i++;
+						}
 						//set label content and send to print function
 						$lbldate = date('j.n.Y');
 						if(strpos($model_no,"M011442.341")!==false){

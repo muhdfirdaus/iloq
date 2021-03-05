@@ -217,8 +217,11 @@
                     $swversion = "1.5.10W";
                 }
                 else{
-                    $swversion = "1.5.14W";
+                    $swversion = "1.5.16W";
                 }            
+            }
+            elseif(strpos($modelno,"M010358")!==false){
+                $swversion = "1.5.16W";
             }
             else{
                 $swversion = "2.8";

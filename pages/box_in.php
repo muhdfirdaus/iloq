@@ -877,7 +877,7 @@ include('product_cfg.php');
 					$printlbl = 2;
 					$query=mysqli_query($con,"select satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
-					if($row['cnt']==0 ||){
+					if($row['cnt']==0 ){
 						$testfailed = 1;
 						$testmsg.=$sn.' on line '.$i.' not pass any test yet!.\n';
 					} 

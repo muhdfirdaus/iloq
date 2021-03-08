@@ -46,7 +46,7 @@ if(file_exists($mydir)){
         }
         // rename($file, 'C:/iLOQ/pcba/logged/'.basename($file));
     }
-
+    
     $files = glob("\\\\iloq1867\\reports\NFC*.txt");//open all SN assign file
 
     foreach($files as $file) {
@@ -82,10 +82,10 @@ if(file_exists($mydir)){
 }
 
 
-$mydir = "\\\\iloq1827\\Reports";// dur Logtest Update
+$mydir = "\\\\iloq1827\\D";// dur Logtest Update
 if(file_exists($mydir)){ 
 
-    $files = glob("\\\\iloq1827\\Reports\*.txt");//open all dur file
+    $files = glob("\\\\iloq1827\\D\\Reports\*.txt");//open all dur file
 
     foreach($files as $file) { 
 		if(filesize($file)){
@@ -103,11 +103,15 @@ if(file_exists($mydir)){
         if($status[0] =='P'){
             if(isset($data[$sn]['d'])){
                 if($data[$sn]['d'] < $fdate){
-                    $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+                    $data[$sn][0] = $sn;
+                    $data[$sn][1] =  $status[0];
+                    $data[$sn]['d'] =  $fdate;
                 }
             }
             else{
-                $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+                $data[$sn][0] = $sn;
+                $data[$sn][1] =  $status[0];
+                $data[$sn]['d'] =  $fdate;
             }
         }
         // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));

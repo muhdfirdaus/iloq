@@ -875,7 +875,7 @@ include('product_cfg.php');
 				elseif(strpos($model_name,"OBELIX")!== false){//for Obelix Model
 
 					$printlbl = 2;
-					$query=mysqli_query($con,"select satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
+					$query=mysqli_query($con,"select count(*) as cnt, satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 ){
 						$testfailed = 1;
@@ -895,7 +895,6 @@ include('product_cfg.php');
 					}
 
 					if($tempres = checkTempTest($sn,$con)){
-						$rdate = strtotime($row['rDate']);
 						if($tempres['result']!="P"){
 							$testfailed = 1;
 							$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
@@ -913,7 +912,8 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' have not do Padlock Pairing yet!.\n';
 					}
 					else{
-						$query=mysqli_query($con,"select count(*) as cnt,result from nfc_test where sn='$sn'")or die(mysqli_error($con));
+						$coresn = $row['core_sn'];
+						$query=mysqli_query($con,"select count(*) as cnt,result from nfc_test where sn='$coresn'")or die(mysqli_error($con));
 						$row=mysqli_fetch_array($query);
 						if($row['cnt']==0 || $row['result']!="P"){
 							$testfailed = 1;
@@ -998,7 +998,7 @@ include('product_cfg.php');
 				}
 				elseif(strpos($model_name,"D50")!== false){//For obelix D50x and s
 					$printlbl = 2;
-					$query=mysqli_query($con,"select satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
+					$query=mysqli_query($con,"select count(*) as cnt, satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 ){
 						$testfailed = 1;
@@ -1018,7 +1018,6 @@ include('product_cfg.php');
 					}
 
 					if($tempres = checkTempTest($sn,$con)){
-						$rdate = strtotime($row['rDate']);
 						if($tempres['result']!="P"){
 							$testfailed = 1;
 							$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
@@ -1036,7 +1035,8 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' have not do Padlock Pairing yet!.\n';
 					}
 					else{
-						$query=mysqli_query($con,"select count(*) as cnt,result from nfc_test where sn='$sn'")or die(mysqli_error($con));
+						$coresn = $row['core_sn'];
+						$query=mysqli_query($con,"select count(*) as cnt,result from nfc_test where sn='$coresn'")or die(mysqli_error($con));
 						$row=mysqli_fetch_array($query);
 						if($row['cnt']==0 || $row['result']!="P"){
 							$testfailed = 1;

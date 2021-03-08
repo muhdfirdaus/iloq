@@ -96,6 +96,7 @@ include('../dist/includes/dbcon.php');
                         <option value="5" <?php if($limit==5){echo"selected";} ?>>5</option>
                         <option value="6" <?php if($limit==6){echo"selected";} ?>>6</option>
                         <option value="8" <?php if($limit==8){echo"selected";} ?>>8</option>
+                        <option value="9" <?php if($limit==9){echo"selected";} ?>>9</option>
                         <option value="10" <?php if($limit==10){echo"selected";} ?>>10</option>
                         <option value="12" <?php if($limit==12){echo"selected";} ?>>12</option>
                         <option value="20" <?php if($limit==20){echo"selected";} ?>>20</option>
@@ -111,7 +112,7 @@ include('../dist/includes/dbcon.php');
                     <tbody>
                       <?php for ($i=1; $i<=$limit; $i++) {
                           echo '<tr><td class="text-center">'.$i.'</td>
-                          <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="8" required name="box'.$i.'" id="box'.$i.'" </td>';
+                          <td class="text-center"><input autocomplete="off" class="form-control text-center" maxlength="12" required name="box'.$i.'" id="box'.$i.'" </td>';
                       }
                       ?>
                     </tbody>

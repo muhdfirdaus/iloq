@@ -95,6 +95,7 @@ include('../dist/includes/dbcon.php');
                         <option value="4" <?php if($limit==4){echo"selected";} ?>>4</option>
                         <option value="5" <?php if($limit==5){echo"selected";} ?>>5</option>
                         <option value="6" <?php if($limit==6){echo"selected";} ?>>6</option>
+                        <option value="7" <?php if($limit==7){echo"selected";} ?>>7</option>
                         <option value="8" <?php if($limit==8){echo"selected";} ?>>8</option>
                         <option value="9" <?php if($limit==9){echo"selected";} ?>>9</option>
                         <option value="10" <?php if($limit==10){echo"selected";} ?>>10</option>

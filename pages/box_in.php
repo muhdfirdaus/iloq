@@ -996,6 +996,16 @@ include('product_cfg.php');
 						$testmsg.=$sn.' on line '.$i.' not pass Lock test yet!.\n';
 					}
 				}
+				elseif(strpos($model_name,"KEY-TUBE")!== false){//For keytube
+					$printlbl = 2;
+					$query=mysqli_query($con,"select durTest, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['durTest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+					}
+				
+				}
 				elseif(strpos($model_name,"D50")!== false){//For obelix D50x and s
 					$printlbl = 2;
 					$query=mysqli_query($con,"select count(*) as cnt, satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
@@ -1221,7 +1231,7 @@ include('product_cfg.php');
 							$swversion = "1.5.10W";
 						}
 						else{
-							$swversion = "1.5.16W";
+							$swversion = "1.5.14W";
 						}    
 					}
 					elseif(strpos($model_no2,"M010358")!==false){

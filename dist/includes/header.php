@@ -126,12 +126,12 @@ date_default_timezone_set("Asia/Singapore");
                           </li><!-- end notification -->
                           <li><!-- start notification -->
                               <a href="#m004446box" class="dropdown-toggle" data-target="#m004446box" data-toggle="modal">
-                                <i class="glyphicon glyphicon-barcode text-black"></i>IQ-M004446-L-01 (Box)
+                                <i class="glyphicon glyphicon-barcode text-black"></i>Label without SN (Box)
                               </a>
                           </li><!-- end notification -->
                           <li><!-- start notification -->
                               <a href="#m004446carton" class="dropdown-toggle" data-target="#m004446carton" data-toggle="modal">
-                                <i class="glyphicon glyphicon-barcode text-black"></i>IQ-M004446-L-01 (Carton)
+                                <i class="glyphicon glyphicon-barcode text-black"></i>Label without SN (Carton)
                               </a>
                           </li><!-- end notification -->
                         </ul>
@@ -291,10 +291,16 @@ date_default_timezone_set("Asia/Singapore");
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title">Print Label M004446(Box)</h4>
+        <h4 class="modal-title">Print Label without SN Scanning(Box)</h4>
       </div>
       <div style="font-size:11px" class="modal-body">
         <form class="form-horizontal" id="form_report" method="post" action="print_4446.php" enctype='multipart/form-data'>
+          <div class="form-group">
+            <label class="control-label col-lg-2" for="model">Model</label>
+            <div class="col-lg-7">
+              <input autocomplete="off" type="text" class="form-control" id="model" name="model" placeholder="Model" value="IQ-M004446-L-01">  
+            </div>
+          </div>
           <div class="form-group">
             <label class="control-label col-lg-2" for="box">Quantity</label>
             <div class="col-lg-7">
@@ -323,10 +329,16 @@ date_default_timezone_set("Asia/Singapore");
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title">Print Label M004446(Carton)</h4>
+        <h4 class="modal-title">Print Label without SN Scanning (Carton)</h4>
       </div>
       <div style="font-size:11px" class="modal-body">
         <form class="form-horizontal" id="form_report" method="post" action="print_4446_carton.php" enctype='multipart/form-data'>
+          <div class="form-group">
+            <label class="control-label col-lg-2" for="model">Model</label>
+            <div class="col-lg-7">
+              <input autocomplete="off" type="text" class="form-control" id="model" name="model" placeholder="Model" value="IQ-M004446-L-01">  
+            </div>
+          </div>
           <div class="form-group">
             <label class="control-label col-lg-2" for="box">Quantity</label>
             <div class="col-lg-7">

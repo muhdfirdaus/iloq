@@ -7,11 +7,12 @@ include('../dist/includes/dbcon.php');
 */
 
 $qty = $_POST['qty'];
+$model = $_POST['model'];
 $tmstmp = time(); 
 $lbldate = date('d/m/y',$tmstmp);
 $lblbox2 ="^XA
 ^CFP,180,120
-^FO60,50^FDIQ-M004446-L-01^FS
+^FO60,50^FD$model^FS
 
 ^CFP,190,230
 ^FO38,280^FDQuantity: $qty^FS

@@ -6,6 +6,7 @@ include('../dist/includes/dbcon.php');
 -Box Printing
 */
 
+$model = $_POST['model'];
 $qty = $_POST['qty'];
 $weight = $_POST['weight'];
 $tmstmp = time(); 
@@ -63,18 +64,18 @@ $lblbox = '^XA
 ^CF0,140
 ^FO1570,170^FD(P) Customer Product IDs:^FS
 ^FO1570,2310^FD(Q) Qty:^FS
-^FO1360,170^FDIQ-M004446-L-01^FS
+^FO1360,170^FD'.$model.'^FS
 ^FO1360,2430^FD'.$qty.'^FS
 
 ^BY5.5,3
-^FO1150,170^BCR,180,N^FDPIQ-M004446-L-01^FS
+^FO1150,170^BCR,180,N^FDP'.$model.'^FS
 ^FO1150,2310^BCR,180,N^FDQ'.$qty.'^FS
 
 ^FX horizontal line
 ^FO1080,3^GB9,3635,3^FS
 
 ^CF0,150
-^FO820,170^FDIQ-M004446-L-01^FS
+^FO820,170^FD'.$model.'^FS
 ^FO610,170^FDDate: '.$lbldate.'^FS
 
 ^FO610,2310^FDWeight:  '.$weight.'KG^FS

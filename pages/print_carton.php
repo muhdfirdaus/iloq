@@ -49,6 +49,10 @@
         {
             $weight = '4.455KG';
         }
+        elseif(strpos($lblcode, 'M012117')!== false)
+        {
+            $weight = '11.45KG';
+        }
         elseif(strpos($lblcode, 'M010795')!== false)
         {
             $weight = '7.5KG';
@@ -136,6 +140,14 @@
         elseif(strpos($lblcode, 'M007739')!== false)
         {
             $weight = '17KG';
+        }
+        elseif(strpos($lblcode, 'M011442.341.60')!== false)
+        {
+            $weight = '14KG';
+        }
+        elseif(strpos($lblcode, 'M011442.341.25')!== false)
+        {
+            $weight = '24KG';
         }
         elseif(strpos($lblcode, 'M011442')!== false)
         {

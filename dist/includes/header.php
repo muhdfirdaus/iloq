@@ -334,9 +334,15 @@ date_default_timezone_set("Asia/Singapore");
       <div style="font-size:11px" class="modal-body">
         <form class="form-horizontal" id="form_report" method="post" action="print_4446_carton.php" enctype='multipart/form-data'>
           <div class="form-group">
-            <label class="control-label col-lg-2" for="model">Model</label>
+            <label class="control-label col-lg-2" for="model">Model (Top)</label>
             <div class="col-lg-7">
-              <input autocomplete="off" type="text" class="form-control" id="model" name="model" placeholder="Model" value="IQ-M004446-L-01">  
+              <input autocomplete="off" type="text" class="form-control" id="model" name="model" placeholder="Model Top" value="IQ-M004446-L-01">  
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-2" for="model">Model (Bottom)</label>
+            <div class="col-lg-7">
+              <input autocomplete="off" type="text" class="form-control" id="modelb" name="modelb" placeholder="Model Bottom" value="Dummy lock unit">  
             </div>
           </div>
           <div class="form-group">

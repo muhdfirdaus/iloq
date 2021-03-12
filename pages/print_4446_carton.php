@@ -7,6 +7,7 @@ include('../dist/includes/dbcon.php');
 */
 
 $model = $_POST['model'];
+$modelb = $_POST['modelb'];
 $qty = $_POST['qty'];
 $weight = $_POST['weight'];
 $tmstmp = time(); 
@@ -75,7 +76,7 @@ $lblbox = '^XA
 ^FO1080,3^GB9,3635,3^FS
 
 ^CF0,150
-^FO820,170^FD'.$model.'^FS
+^FO820,170^FD'.$modelb.'^FS
 ^FO610,170^FDDate: '.$lbldate.'^FS
 
 ^FO610,2310^FDWeight:  '.$weight.'KG^FS

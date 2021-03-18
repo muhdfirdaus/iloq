@@ -166,12 +166,20 @@ include('product_cfg.php');
 				for($i=1;$i<=$qty;$i++){
 					$rfsissue = 0;
 					$sn= $_POST['sn'.$i];
-					$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+					// $query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+					// COUNT(*) AS cnt 
+					// FROM padlock_test pt
+					// LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+					// LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+					// WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+					$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,
+					(SELECT ts.result FROM temp_test_sn ts
+					LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+					WHERE tt.temperature=1 AND ts.sn='$sn'
+					ORDER BY ts.id DESC LIMIT 1) AS thermaltest,
 					COUNT(*) AS cnt 
 					FROM padlock_test pt
-					LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
-					LEFT JOIN temp_test tt ON ts.batch_id=tt.id
-					WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+					WHERE pt.sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0){
 						$testfailed = 1;
@@ -287,12 +295,20 @@ include('product_cfg.php');
 				$testmsg='';
 				$rfsissue = 0;
 				$sn= $_POST['sn1'];
-				$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+				// $query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+				// COUNT(*) AS cnt 
+				// FROM padlock_test pt
+				// LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+				// LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+				// WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+				$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,
+				(SELECT ts.result FROM temp_test_sn ts
+				LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+				WHERE tt.temperature=1 AND ts.sn='$sn'
+				ORDER BY ts.id DESC LIMIT 1) AS thermaltest,
 				COUNT(*) AS cnt 
 				FROM padlock_test pt
-				LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
-				LEFT JOIN temp_test tt ON ts.batch_id=tt.id
-				WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+				WHERE pt.sn='$sn'")or die(mysqli_error($con));
 				$row=mysqli_fetch_array($query);
 				if($row['cnt']==0){
 					$testfailed = 1;
@@ -404,12 +420,20 @@ include('product_cfg.php');
 			$testmsg='';
 
 			$sn= $_POST['sn1'];
-			$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+			// $query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+			// COUNT(*) AS cnt 
+			// FROM padlock_test pt
+			// LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+			// LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+			// WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+			$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,
+			(SELECT ts.result FROM temp_test_sn ts
+			LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+			WHERE tt.temperature=1 AND ts.sn='$sn'
+			ORDER BY ts.id DESC LIMIT 1) AS thermaltest,
 			COUNT(*) AS cnt 
 			FROM padlock_test pt
-			LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
-			LEFT JOIN temp_test tt ON ts.batch_id=tt.id
-			WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+			WHERE pt.sn='$sn'")or die(mysqli_error($con));
 			$row=mysqli_fetch_array($query);
 			if($row['cnt']==0){
 				$testfailed = 1;
@@ -511,12 +535,20 @@ include('product_cfg.php');
 			$testmsg='';
 
 			$sn= $_POST['sn1'];
-			$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+			// $query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,ts.result AS thermaltest,
+			// COUNT(*) AS cnt 
+			// FROM padlock_test pt
+			// LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
+			// LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+			// WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+			$query=mysqli_query($con,"SELECT pt.iptest,pt.satest,pt.rfstest,
+			(SELECT ts.result FROM temp_test_sn ts
+			LEFT JOIN temp_test tt ON ts.batch_id=tt.id
+			WHERE tt.temperature=1 AND ts.sn='$sn'
+			ORDER BY ts.id DESC LIMIT 1) AS thermaltest,
 			COUNT(*) AS cnt 
 			FROM padlock_test pt
-			LEFT JOIN temp_test_sn ts ON pt.sn = ts.sn
-			LEFT JOIN temp_test tt ON ts.batch_id=tt.id
-			WHERE tt.temperature=1 AND pt.sn='$sn'")or die(mysqli_error($con));
+			WHERE pt.sn='$sn'")or die(mysqli_error($con));
 			$row=mysqli_fetch_array($query);
 			if($row['cnt']==0){
 				$testfailed = 1;

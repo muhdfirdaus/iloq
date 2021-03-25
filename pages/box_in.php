@@ -1038,6 +1038,55 @@ include('product_cfg.php');
 					}
 				
 				}
+				elseif(strpos($model_name,"KEY SAFE")!== false){//For F50 Corona Key Safe
+					$printlbl = 2;
+					$query=mysqli_query($con,"select count(*) as cnt, satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 ){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass any test yet!.\n';
+					} 
+					elseif(($row['durtest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+					}
+					elseif(($row['satest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
+					}
+					elseif(($row['rfstest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
+					}
+
+					if($tempres = checkTempTest($sn,$con)){
+						if($tempres['result']!="P"){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+						}
+					}
+					else{
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+					}
+					
+					// $query=mysqli_query($con,"select count(*) as cnt,core_sn from nfc_padlock where padlock_sn='$sn'")or die(mysqli_error($con));
+					// $row=mysqli_fetch_array($query);
+					// if($row['cnt']==0){
+					// 	$testfailed = 1;
+					// 	$testmsg.=$sn.' on line '.$i.' have not do Padlock Pairing yet!.\n';
+					// }
+					// else{
+					// 	$coresn = $row['core_sn'];
+					// 	$query=mysqli_query($con,"select count(*) as cnt,result from nfc_test where sn='$coresn'")or die(mysqli_error($con));
+					// 	$row=mysqli_fetch_array($query);
+					// 	if($row['cnt']==0 || $row['result']!="P"){
+					// 		$testfailed = 1;
+					// 		$testmsg.=$sn.' on line '.$i.' have not passed NFC Main PWB test yet!.\n';
+					// 	}
+					// }
+					
+				}
 				elseif(strpos($model_name,"D50")!== false){//For obelix D50x and s
 					$printlbl = 2;
 					$query=mysqli_query($con,"select count(*) as cnt, satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
@@ -1263,7 +1312,7 @@ include('product_cfg.php');
 							$swversion = "1.5.10W";
 						}
 						else{
-							$swversion = "1.5.14W";
+							$swversion = "1.5.16W";
 						}    
 					}
 					elseif(strpos($model_no2,"M010358")!==false){

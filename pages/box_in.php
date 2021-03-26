@@ -21,10 +21,12 @@ include('product_cfg.php');
 	$allmodelNo = get_modelNo($con);
 	$allmodelNo2 = get_modelNo2($con);
 	$allmodel_name = get_model_name($con);
+	$allshippn = get_shipPN($con);
 	$model = $allmodel[$no];
 	$model_no = $allmodelNo[$no];
 	$model_name = $allmodel_name[$no];
 	$model_no2 = $allmodelNo2[$no];
+	$shippn = $allshippn[$no];
 	
 	// if((strpos($model_no,"M009249.1")!== false) ){//for K5 Key just proceed to print
 		
@@ -635,6 +637,81 @@ include('product_cfg.php');
 				printpadlocklabel($lblbox,$line,$con);
 			}
 		}
+	}
+	elseif((strpos($shippn,"F50")!== false)){//for F50 Corona key safe
+		//Check if SN is already in the system
+		$sn = $_POST['sn1'];
+		$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn = '$sn'")or die(mysqli_error($con));
+		$row=mysqli_fetch_array($query);
+		if($row['cnt']!=0){
+			echo '<script type="text/javascript">alert("SN already exist in the system!");</script>';
+			echo "<script>window.history.back();</script>";  
+		}
+		else{
+			$testfailed=0;
+			$testmsg='';
+			$query=mysqli_query($con,"select count(*) as cnt, satest, durtest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
+			$row=mysqli_fetch_array($query);
+			if($row['cnt']==0 ){
+				$testfailed = 1;
+				$testmsg.=$sn.' on line '.$i.' not pass any test yet!.\n';
+			} 
+			elseif(($row['durtest']!="P")){
+				$testfailed = 1;
+				$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+			}
+			elseif(($row['satest']!="P")){
+				$testfailed = 1;
+				$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
+			}
+			elseif(($row['rfstest']!="P")){
+				$testfailed = 1;
+				$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
+			}
+
+			if($tempres = checkTempTest($sn,$con)){
+				if($tempres['result']!="P"){
+					$testfailed = 1;
+					$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+				}
+			}
+			else{
+				$testfailed = 1;
+				$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+			}
+			if($testfailed==1){
+				echo '<script type="text/javascript">alert("'.$testmsg.'");</script>';
+				echo "<script>window.history.back();</script>"; 
+			}
+			else{
+				mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn')")or die(mysqli_error($con));
+				mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
+				echo "<script type='text/javascript'>alert('Data saved!');</script>";
+
+				$lbldate = date('j.n.Y');
+				$lblbox="^XA
+        
+				^CF0,100
+				^FO180,600^FD$shippn^FS
+
+				^CF0,70
+				^FO190,760^FD$lbldate^FS
+
+				^CF0,80
+				^FO980,710^FD$sn^FS
+
+				^FO1060,520
+				^BXN,11,200
+				^FD$sn^FS
+
+				^XZ";
+				printpadlocklabel($lblbox,$line,$con);
+
+			}
+
+		}
+	
+
 	}
 	// elseif((strpos($model_no,"M011795.1")!== false) ){//for D5 just proceed to print
 	// 	//Check for duplicate SN

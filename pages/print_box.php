@@ -172,6 +172,30 @@
                     ^FO60,500^FD$lbldate^FS
                     ^XZ ";    
         }
+        elseif((strpos($modelno,"M011362")!== false) || (strpos($modelno,"M011984")!== false)){
+            $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
+            $row=mysqli_fetch_array($query);      
+            $sn = $row['sn'];
+            $lbldate = date('j.n.Y',$tmstmp); 
+            $expmoddot = explode(".",$modelno);
+            $lblmodel= $expmoddot[1];
+            $lblbox="^XA
+    
+            ^CF0,100
+            ^FO180,600^FDF50S.$lblmodel.HZ^FS
+
+            ^CF0,70
+            ^FO190,760^FD$lbldate^FS
+
+            ^CF0,80
+            ^FO980,710^FD$sn^FS
+
+            ^FO1060,520
+            ^BXN,11,200
+            ^FD$sn^FS
+
+            ^XZ";
+        }
         else{
 
             $allmodel = get_modelNo2($con);

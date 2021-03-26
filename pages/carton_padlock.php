@@ -70,7 +70,7 @@ include('../dist/includes/dbcon.php');
             <div class="panel panel-default">
               <div class="panel-heading">Carton Details</div>
               <div class="panel-body">
-              <p><b>*This carton packing is for Padlock Only*</b></p>
+              <p><b>*This carton packing is for Padlock & F50 Only*</b></p>
                 <form id="form_box" class="form-horizontal" method="post" action="carton_padlock_in.php" enctype='multipart/form-data'>
                   <p>Product : <b>
                     <select name="model" id="model">

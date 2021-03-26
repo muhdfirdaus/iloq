@@ -127,6 +127,10 @@ else{
             {
                 $weight = '12.5KG';
             }
+            elseif(strpos($lblcode2, 'F50')!== false)
+            {
+                $weight = '10.65KG';
+            }
             elseif(strpos($lblcode, 'M009801')!== false)
             {
                 $weight = '21.15KG';

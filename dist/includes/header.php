@@ -54,7 +54,7 @@ date_default_timezone_set("Asia/Singapore");
                         <ul class="menu">
                           <li><!-- start notification -->
                               <a href="carton_padlock.php" class="dropdown-toggle" >
-                                <i class="glyphicon glyphicon-list-alt text-blue"></i>Padlock model
+                                <i class="glyphicon glyphicon-list-alt text-blue"></i>Padlock/F50 model
                               </a>
                           </li><!-- end notification -->
                           <li><!-- start notification -->

@@ -53,6 +53,16 @@
         {
             $weight = '11.45KG';
         }
+        elseif(strpos($lblcode2, 'F50')!== false)
+        {
+            $explblcode = explode(".",$lblcode2);
+            if($explblcode[1]=='511'){
+                $weight="7.15KG";
+            }
+            else{
+                $weight = '10.65KG';
+            }
+        }
         elseif(strpos($lblcode, 'M010795')!== false)
         {
             $weight = '7.5KG';
@@ -159,7 +169,7 @@
         }
         elseif(strpos($lblcode, 'M011442.341.60')!== false)
         {
-            $weight = '14KG';
+            $weight = '13.54KG';
         }
         elseif(strpos($lblcode, 'M011442.341.25')!== false)
         {

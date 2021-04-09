@@ -120,7 +120,7 @@ include('product_cfg.php');
                 }
                 elseif(strpos($lblcode, '5064.50')!== false)
                 {
-                    $weight = '14.6KG';
+                    $weight = '15KG';
                 }
                 elseif(strpos($lblcode, 'M009025.1')!== false)
                 {
@@ -156,7 +156,7 @@ include('product_cfg.php');
                 }
                 elseif(strpos($lblcode, 'M011442.341.60')!== false)
                 {
-                    $weight = '13.54KG';
+                    $weight = '15.75KG';
                 }
                 elseif(strpos($lblcode, 'M011442.341.25')!== false)
                 {
@@ -178,6 +178,10 @@ include('product_cfg.php');
                 {
                     $weight = '17KG';
                 }
+                elseif(strpos($lblcode, 'M010349')!== false)
+                {
+                    $weight = '17KG';
+                }
                 elseif(strpos($lblcode, 'M010267')!== false)
                 {
                     $weight = '17KG';
@@ -192,11 +196,15 @@ include('product_cfg.php');
                 }
                 elseif(strpos($lblcode, 'M012309')!== false)
                 {
-                    $weight = '15.75KG';
+                    $weight = '12.5KG';
                 }
                 elseif(strpos($lblcode, 'M012217')!== false)
                 {
-                    $weight = '15.75KG';
+                    $weight = '12.5KG';
+                }
+                elseif(strpos($lblcode, 'M005503')!== false)
+                {
+                    $weight = '18.5KG';
                 }
                 else
                 {

@@ -79,6 +79,10 @@
         {
             $weight = '7.5KG';
         }
+        elseif(strpos($lblcode, 'M009397')!== false)
+        {
+            $weight = '7.5KG';
+        }
         elseif(strpos($lblcode, 'M009370')!== false)
         {
             $weight = '7.5KG';
@@ -167,9 +171,13 @@
         {
             $weight = '17KG';
         }
+        elseif(strpos($lblcode, 'M004699')!== false)
+        {
+            $weight = '14KG';
+        }
         elseif(strpos($lblcode, 'M011442.341.60')!== false)
         {
-            $weight = '13.54KG';
+            $weight = '15.75KG';
         }
         elseif(strpos($lblcode, 'M011442.341.25')!== false)
         {
@@ -186,6 +194,18 @@
         elseif(strpos($lblcode, 'M010293')!== false)
         {
             $weight = '22.76KG';
+        }
+        elseif(strpos($lblcode, 'M010349')!== false)
+        {
+            $weight = '16.5KG';
+        }
+        elseif(strpos($lblcode, 'M005503')!== false)
+        {
+            $weight = '18.5KG';
+        }
+        elseif(strpos($lblcode, 'M005064')!== false)
+        {
+            $weight = '15KG';
         }
         elseif($carton_id =="IQ001254")
         {
@@ -241,11 +261,11 @@
         }
         elseif(strpos($lblcode, 'M012309')!== false)
         {
-            $weight = '15.75KG';
+            $weight = '12.5KG';
         }
         elseif(strpos($lblcode, 'M012217')!== false)
         {
-            $weight = '15.75KG';
+            $weight = '12.5KG';
         }
         elseif($carton_id=="IQ001162")
         {

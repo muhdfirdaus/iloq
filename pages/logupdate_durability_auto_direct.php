@@ -289,6 +289,130 @@ if(file_exists($mydir)){
 }
 
 
+$mydir = "\\\\iloq1877\\Durability";// Lock Logtest Update
+if(file_exists($mydir)){ 
+
+    $files = glob("\\\\iloq1877\\Durability\\Fixture_1\\*.txt");//open all lock file
+
+    foreach($files as $file) { 
+
+        $line = file($file);//file in to an array
+        // echo basename($file)."\n";
+        $fdate = date ("YmdHis", filemtime($file));
+        $line1 = $line[0];//fetch serial number
+        $arr1 = explode(":",$line1);
+        $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+        $line3 = $line[2];//fetch test result
+        $arr2 = explode(":",$line3);
+        $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+        if(isset($data[$sn])){
+            if($data[$sn]['d'] < $fdate){
+                $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+            }
+        }
+        else{
+            $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+        }
+        // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+    }
+}
+
+
+$mydir = "\\\\iloq1877\\Durability";// Lock Logtest Update
+if(file_exists($mydir)){ 
+
+    $files = glob("\\\\iloq1877\\Durability\\Fixture_2\\*.txt");//open all lock file
+
+    foreach($files as $file) { 
+
+        $line = file($file);//file in to an array
+        // echo basename($file)."\n";
+        $fdate = date ("YmdHis", filemtime($file));
+        $line1 = $line[0];//fetch serial number
+        $arr1 = explode(":",$line1);
+        $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+        $line3 = $line[2];//fetch test result
+        $arr2 = explode(":",$line3);
+        $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+        if(isset($data[$sn])){
+            if($data[$sn]['d'] < $fdate){
+                $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+            }
+        }
+        else{
+            $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+        }
+        // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+    }
+}
+
+
+$mydir = "\\\\iloq1877\\Durability";// Lock Logtest Update
+if(file_exists($mydir)){ 
+
+    $files = glob("\\\\iloq1877\\Durability\\Fixture_3\\*.txt");//open all lock file
+
+    foreach($files as $file) { 
+
+        $line = file($file);//file in to an array
+        // echo basename($file)."\n";
+        $fdate = date ("YmdHis", filemtime($file));
+        $line1 = $line[0];//fetch serial number
+        $arr1 = explode(":",$line1);
+        $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+        $line3 = $line[2];//fetch test result
+        $arr2 = explode(":",$line3);
+        $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+        if(isset($data[$sn])){
+            if($data[$sn]['d'] < $fdate){
+                $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+            }
+        }
+        else{
+            $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+        }
+        // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+    }
+}
+
+
+$mydir = "\\\\iloq1879\\Durability";// Keytube dur Logtest Update
+if(file_exists($mydir)){ 
+	echo "lolol";
+
+    $files = glob("//iloq1879/Durability/Fixture_1/*.txt");//open all lock file
+
+    foreach($files as $file) { 
+
+        $line = file($file);//file in to an array
+        // echo basename($file)."\n";
+        $fdate = date ("YmdHis", filemtime($file));
+        $line1 = $line[0];//fetch serial number
+        $arr1 = explode(":",$line1);
+        $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+        $line3 = $line[2];//fetch test result
+        $arr2 = explode(":",$line3);
+        $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+        if(isset($data[$sn])){
+            if($data[$sn]['d'] < $fdate){
+                $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+            }
+        }
+        else{
+            $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+        }
+        // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+    }
+}
+
 
 foreach($data as $newdata){
     isset($newdata[0])?$sn = $newdata[0]:$sn="NULL";

@@ -158,12 +158,10 @@ endif;
                         <td><input type="number" class="form-control pull-right" max='150' value="20" name="qty" placeholder="Quantity" required></td>
                     </tr>
                 </table>
-                
-                <p class="text-red text-center"><b>**Please make sure information is correct before clicking "Start"</b></p>
-                <p class="text-red text-center"><b>**Pastikan semua maklumat tepat sebelum mengklik butang "Start"</b></p>
-                <p class="text-red text-center"><b>**பொத்தானைக் கிளிக் செய்வதற்கு முன் எல்லா தகவல்களும் சரியானவை என்பதை உறுதிப்படுத்தவும் "Start"</b></p>
-                <p class="text-red text-center"><b>**请确保所有信息正确无误后再点击 "Start"</b></p>
-                <br><br>
+                <br>
+                <p class="text-red text-center"><b>**Please make sure ALL informations are CORRECT before clicking "Start"</b></p>
+                <p class="text-red text-center"><b>**Pastikan SEMUA maklumat TEPAT sebelum menekan butang "Start"</b></p>
+                <br>
 
                 <div>
                     <button id="btn_start" name="btn_start" style="display: block; margin: 0 auto;" class="btn btn-primary">Start</button>

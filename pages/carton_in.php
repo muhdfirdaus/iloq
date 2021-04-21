@@ -200,7 +200,7 @@ include('product_cfg.php');
                 }
                 elseif(strpos($lblcode, 'M012217')!== false)
                 {
-                    $weight = '12.5KG';
+                    $weight = '15KG';
                 }
                 elseif(strpos($lblcode, 'M005503')!== false)
                 {

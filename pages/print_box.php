@@ -244,10 +244,7 @@
                     $swversion = "1.5.16W";
                 }            
             }
-            elseif(strpos($modelno,"M010358")!==false){
-                $swversion = "1.5.16W";
-            }
-            elseif(strpos($modelno,"M010349")!==false){
+            elseif((strpos($modelno,"M010358")!==false)||(strpos($modelno,"M010349")!==false)||(strpos($modelno,"M010339")!==false)||(strpos($modelno,"M010356")!==false)||(strpos($modelno,"M010308")!==false)){
                 $swversion = "1.5.16W";
             }
             else{

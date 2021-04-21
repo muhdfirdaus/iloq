@@ -195,10 +195,10 @@ if(file_exists($mydir)){
 }
 
 
-$mydir = "\\\\iloq1842\\TestReports";// Lock Logtest Update
+$mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
 if(file_exists($mydir)){ 
 
-    $files = glob("\\\\iloq1842\\TestReports\\Durability\\Fixture_1\\*.txt");//open all lock file
+    $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_1\\*.txt");//open all lock file
 
     foreach($files as $file) { 
 
@@ -226,10 +226,10 @@ if(file_exists($mydir)){
 }
 
 
-$mydir = "\\\\iloq1842\\TestReports";// Lock Logtest Update
+$mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
 if(file_exists($mydir)){ 
 
-    $files = glob("\\\\iloq1842\\TestReports\\Durability\\Fixture_2\\*.txt");//open all lock file
+    $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_2\\*.txt");//open all lock file
 
     foreach($files as $file) { 
 
@@ -258,10 +258,10 @@ if(file_exists($mydir)){
 
 
 
-$mydir = "\\\\iloq1842\\TestReports";// Lock Logtest Update
+$mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
 if(file_exists($mydir)){ 
 
-    $files = glob("\\\\iloq1842\\TestReports\\Durability\\Fixture_3\\*.txt");//open all lock file
+    $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_3\\*.txt");//open all lock file
 
     foreach($files as $file) { 
 
@@ -384,7 +384,6 @@ if(file_exists($mydir)){
 
 $mydir = "\\\\iloq1879\\Durability";// Keytube dur Logtest Update
 if(file_exists($mydir)){ 
-	echo "lolol";
 
     $files = glob("//iloq1879/Durability/Fixture_1/*.txt");//open all lock file
 

@@ -195,10 +195,103 @@ if(file_exists($mydir)){
 }
 
 
-$mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
+// $mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
+// if(file_exists($mydir)){ 
+
+//     $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_1\\*.txt");//open all lock file
+
+//     foreach($files as $file) { 
+
+//         $line = file($file);//file in to an array
+//         // echo basename($file)."\n";
+//         $fdate = date ("YmdHis", filemtime($file));
+//         $line1 = $line[0];//fetch serial number
+//         $arr1 = explode(":",$line1);
+//         $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+//         $line3 = $line[2];//fetch test result
+//         $arr2 = explode(":",$line3);
+//         $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+//         if(isset($data[$sn])){
+//             if($data[$sn]['d'] < $fdate){
+//                 $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+//             }
+//         }
+//         else{
+//             $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+//         }
+//         // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+//     }
+// }
+
+
+// $mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
+// if(file_exists($mydir)){ 
+
+//     $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_2\\*.txt");//open all lock file
+
+//     foreach($files as $file) { 
+
+//         $line = file($file);//file in to an array
+//         // echo basename($file)."\n";
+//         $fdate = date ("YmdHis", filemtime($file));
+//         $line1 = $line[0];//fetch serial number
+//         $arr1 = explode(":",$line1);
+//         $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+//         $line3 = $line[2];//fetch test result
+//         $arr2 = explode(":",$line3);
+//         $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+//         if(isset($data[$sn])){
+//             if($data[$sn]['d'] < $fdate){
+//                 $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+//             }
+//         }
+//         else{
+//             $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+//         }
+//         // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+//     }
+// }
+
+
+
+// $mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
+// if(file_exists($mydir)){ 
+
+//     $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_3\\*.txt");//open all lock file
+
+//     foreach($files as $file) { 
+
+//         $line = file($file);//file in to an array
+//         // echo basename($file)."\n";
+//         $fdate = date ("YmdHis", filemtime($file));
+//         $line1 = $line[0];//fetch serial number
+//         $arr1 = explode(":",$line1);
+//         $sn = preg_replace('/\s+/', '', $arr1[1]);
+        
+//         $line3 = $line[2];//fetch test result
+//         $arr2 = explode(":",$line3);
+//         $status = preg_replace('/\s+/', '', $arr2[1]);
+        
+//         if(isset($data[$sn])){
+//             if($data[$sn]['d'] < $fdate){
+//                 $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+//             }
+//         }
+//         else{
+//             $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
+//         }
+//         // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
+//     }
+// }
+
+$mydir = "C:\iloq\iloq1842";// temp for iloq1842 dura
 if(file_exists($mydir)){ 
 
-    $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_1\\*.txt");//open all lock file
+    $files = glob("C:\iloq\iloq1842\*.txt");//open all lock file
 
     foreach($files as $file) { 
 
@@ -224,70 +317,6 @@ if(file_exists($mydir)){
         // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
     }
 }
-
-
-$mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
-if(file_exists($mydir)){ 
-
-    $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_2\\*.txt");//open all lock file
-
-    foreach($files as $file) { 
-
-        $line = file($file);//file in to an array
-        // echo basename($file)."\n";
-        $fdate = date ("YmdHis", filemtime($file));
-        $line1 = $line[0];//fetch serial number
-        $arr1 = explode(":",$line1);
-        $sn = preg_replace('/\s+/', '', $arr1[1]);
-        
-        $line3 = $line[2];//fetch test result
-        $arr2 = explode(":",$line3);
-        $status = preg_replace('/\s+/', '', $arr2[1]);
-        
-        if(isset($data[$sn])){
-            if($data[$sn]['d'] < $fdate){
-                $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
-            }
-        }
-        else{
-            $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
-        }
-        // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
-    }
-}
-
-
-
-$mydir = "\\\\iloq1842\\D\\TestReports";// Lock Logtest Update
-if(file_exists($mydir)){ 
-
-    $files = glob("\\\\iloq1842\\D\\TestReports\\Durability\\Fixture_3\\*.txt");//open all lock file
-
-    foreach($files as $file) { 
-
-        $line = file($file);//file in to an array
-        // echo basename($file)."\n";
-        $fdate = date ("YmdHis", filemtime($file));
-        $line1 = $line[0];//fetch serial number
-        $arr1 = explode(":",$line1);
-        $sn = preg_replace('/\s+/', '', $arr1[1]);
-        
-        $line3 = $line[2];//fetch test result
-        $arr2 = explode(":",$line3);
-        $status = preg_replace('/\s+/', '', $arr2[1]);
-        
-        if(isset($data[$sn])){
-            if($data[$sn]['d'] < $fdate){
-                $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
-            }
-        }
-        else{
-            $data[$sn] = array(0=>$sn, 1=>$status[0], 'd'=>$fdate);
-        }
-        // rename($file, 'C:/iLOQ/Durability/logged/'.basename($file));
-    }
-}
-
 
 $mydir = "\\\\iloq1877\\Durability";// Lock Logtest Update
 if(file_exists($mydir)){ 

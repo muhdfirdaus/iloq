@@ -248,7 +248,7 @@
                 $swversion = "1.5.16W";
             }
             else{
-                $swversion = "2.8";
+                $swversion = "2.9";
             }
             $lblbox2 ="^XA
             ^CFP,180,120

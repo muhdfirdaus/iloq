@@ -874,6 +874,20 @@ include('product_cfg.php');
 				$snlength2msg.='-line '.$i.'\n';
 			}
 		}
+		elseif(strpos($model_name,"CAM LOCK")!== false){
+			if(strpos($model_no,"IQ-M0103")!== false){				
+				if(strlen($_POST['sn'.$i])!==9){
+					$snlength2_T=1;
+					$snlength2msg.='-line '.$i.'\n';
+				}
+			}
+			elseif(strpos($model_no,"IQ-M005")!== false){				
+				if(strlen($_POST['sn'.$i])!==8){
+					$snlength2_T=1;
+					$snlength2msg.='-line '.$i.'\n';
+				}
+			}
+		}
 	}
 	if($snlength2_T==1){
 		echo '<script type="text/javascript">alert("'.$snlength2msg.'");</script>';

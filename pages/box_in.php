@@ -153,7 +153,7 @@ include('product_cfg.php');
 		
 		$expall = $expall = explode("-",$model_no);
 		$lblheight = $expall[2];
-		if($lblheight=="60"){
+		if(($lblheight=="60")||($lblheight=="110")){
 			//Check if SN is already in the system
 			$sn1 = $_POST['sn1'];
 			$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn in ('$sn1')")or die(mysqli_error($con));

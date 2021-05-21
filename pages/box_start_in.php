@@ -32,7 +32,7 @@ $qty = $_POST['qty'];
 
 $qtytrigger = 0;
 
-if((strpos($modelNo,"M010293.5")!== false) || (strpos($modelNo,"M009801.4")!== false) || (strpos($modelNo,"M011442.331-60")!== false)){//check qty for NFC Grade 4&5
+if((strpos($modelNo,"M010293.5")!== false) || (strpos($modelNo,"M009801.4")!== false) || (strpos($modelNo,"M011442.331-60")!== false)||(strpos($modelNo,"M011442.341-60")!== false)||(strpos($modelNo,"M011442.331-110-D")!== false)){//check qty for NFC Grade 4&5
   if($qty!=1){
     $qtytrigger = 1;
   }

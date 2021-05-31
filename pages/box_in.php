@@ -986,6 +986,15 @@ include('product_cfg.php');
 					// 	$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
 					// }
 				}
+				elseif(strpos($model_no,"IQ-M013208")!== false){//for D5 3E
+					$printlbl = 1;
+					$query=mysqli_query($con,"select result,count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 || ($row['result']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Burn-in test yet!.\n';
+					}
+				}
 				elseif(strpos($model_name,"CAM LOCK")!== false){//for Camlock model
 					$printlbl = 2;
 					$query=mysqli_query($con,"select durTest,count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));

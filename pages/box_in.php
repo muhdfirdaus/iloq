@@ -1091,7 +1091,7 @@ include('product_cfg.php');
 					}
 				}
 				elseif(strpos($model_no,"IQ-M010475")!== false){//for D5 core
-					$printlbl = 2;
+					$printlbl = 1;
 					$query=mysqli_query($con,"select result,count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);
 					if($row['cnt']==0 || ($row['result']!="P")){

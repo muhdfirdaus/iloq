@@ -961,7 +961,60 @@ include('product_cfg.php');
 				1 = one label to be printed
 				2 = two label to be printed
 				*/
-				if(strpos($model_name,"NFC")!== false){//temporary for NFC 
+				if(strpos($model_name,"G50")!== false){//For G50 PVT
+					$printlbl = 2;
+					$query=mysqli_query($con,"select count(*) as cnt, satest, durtest,iptest, rfstest FROM padlock_test WHERE sn ='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0 ){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass any test yet!.\n';
+					} 
+					elseif(($row['durtest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+					}
+					elseif(($row['satest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass SN Assign test yet!.\n';
+					}
+					elseif(($row['rfstest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
+					}
+					elseif(($row['iptest']!="P")){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass iP test yet!.\n';
+					}
+
+					if($tempres = checkTempTest($sn,$con)){
+						if($tempres['result']!="P"){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+						}
+					}
+					else{
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+					}
+
+					$query=mysqli_query($con,"select count(*) as cnt,core_sn from nfc_padlock where padlock_sn='$sn'")or die(mysqli_error($con));
+					$row=mysqli_fetch_array($query);
+					if($row['cnt']==0){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' have not do SN Pairing yet!.\n';
+					}
+					else{
+						$coresn = $row['core_sn'];
+						$query=mysqli_query($con,"select count(*) as cnt,result from nfc_test where sn='$coresn'")or die(mysqli_error($con));
+						$row=mysqli_fetch_array($query);
+						if($row['cnt']==0 || $row['result']!="P"){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' have not passed NFC Core test yet!.\n';
+						}
+					}
+					
+				}
+				elseif(strpos($model_name,"NFC")!== false){//temporary for NFC 
 					$printlbl = 1;
 					$query=mysqli_query($con,"select result,fdate, count(*) as cnt from nfc_test where sn='$sn'")or die(mysqli_error($con));
 					$row=mysqli_fetch_array($query);

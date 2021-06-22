@@ -254,30 +254,33 @@ if(isset($nfc)){
 
 foreach($data as $newdata){
     isset($newdata[0])?$sn = $newdata[0]:$sn="NULL";
-    isset($newdata[1])?$durability = $newdata[1]:$durability="NULL";
+    // isset($newdata[1])?$durability = $newdata[1]:$durability="NULL";
     isset($newdata[2])?$lock = $newdata[2]:$lock="NULL";
     isset($newdata[3])?$rfs = $newdata[3]:$rfs="NULL";
-    isset($newdata['d'])?$dDate = $newdata['d']:$dDate="NULL";
+    // isset($newdata['d'])?$dDate = $newdata['d']:$dDate="NULL";
     isset($newdata['l'])?$lDate = $newdata['l']:$lDate="NULL";
     isset($newdata['r'])?$rDate = $newdata['r']:$rDate="NULL";
     $lupdt = time();
     
-    if($sn != "NULL" && ($durability != "NULL" || $lock != "NULL" || $rfs != "NULL")){
+    // if($sn != "NULL" && ($durability != "NULL" || $lock != "NULL" || $rfs != "NULL")){
+    if($sn != "NULL" && ($lock != "NULL" || $rfs != "NULL")){
         //check for existing data
-        $query=mysqli_query($con,"select lDate, dDate, rDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+        // $query=mysqli_query($con,"select lDate, dDate, rDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+        $query=mysqli_query($con,"select lDate, rDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
         $row=mysqli_fetch_array($query);
         if($row['cnt']==0){
             //insert new data
-            mysqli_query($con,"INSERT IGNORE INTO sn_master(sn,lockTest,durTest,lDate,dDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$durability', '$lDate', '$dDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
+            // mysqli_query($con,"INSERT IGNORE INTO sn_master(sn,lockTest,durTest,lDate,dDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$durability', '$lDate', '$dDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
+            mysqli_query($con,"INSERT IGNORE INTO sn_master(sn,lockTest,lDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$lDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
         }
         else{
             //update existing data
-            $dDate2 = preg_replace('/\s+/', '', $row['dDate']);
-            if($dDate!="NULL"){
-                if($dDate2=="NULL"||$dDate>$dDate2||is_null($dDate2)){
-                    mysqli_query($con,"update sn_master set dDate='$dDate',durTest='$durability',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
-                }
-            }
+            // $dDate2 = preg_replace('/\s+/', '', $row['dDate']);
+            // if($dDate!="NULL"){
+            //     if($dDate2=="NULL"||$dDate>$dDate2||is_null($dDate2)){
+            //         mysqli_query($con,"update sn_master set dDate='$dDate',durTest='$durability',lastUpdate='$lupdt' where sn='$sn'")or die(mysqli_error($con));
+            //     }
+            // }
             $lDate2 = preg_replace('/\s+/', '', $row['lDate']);
             if($lDate!="NULL"){
                 if($lDate2=="NULL"||$lDate>$lDate2||is_null($lDate2)){

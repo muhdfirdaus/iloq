@@ -445,20 +445,23 @@ if(file_exists($mydir)){
 foreach($data as $newdata){
     isset($newdata[0])?$sn = $newdata[0]:$sn="NULL";
     isset($newdata[1])?$durability = $newdata[1]:$durability="NULL";
-    isset($newdata[2])?$lock = $newdata[2]:$lock="NULL";
-    isset($newdata[3])?$rfs = $newdata[3]:$rfs="NULL";
+    // isset($newdata[2])?$lock = $newdata[2]:$lock="NULL";
+    // isset($newdata[3])?$rfs = $newdata[3]:$rfs="NULL";
     isset($newdata['d'])?$dDate = $newdata['d']:$dDate="NULL";
-    isset($newdata['l'])?$lDate = $newdata['l']:$lDate="NULL";
-    isset($newdata['r'])?$rDate = $newdata['r']:$rDate="NULL";
+    // isset($newdata['l'])?$lDate = $newdata['l']:$lDate="NULL";
+    // isset($newdata['r'])?$rDate = $newdata['r']:$rDate="NULL";
     $lupdt = time();
     
-    if($sn != "NULL" && ($durability != "NULL" || $lock != "NULL" || $rfs != "NULL")){
+    // if($sn != "NULL" && ($durability != "NULL" || $lock != "NULL" || $rfs != "NULL")){
+    if($sn != "NULL" && $durability != "NULL"){
         //check for existing data
-        $query=mysqli_query($con,"select lDate, dDate, rDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+        // $query=mysqli_query($con,"select lDate, dDate, rDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+        $query=mysqli_query($con,"select dDate, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
         $row=mysqli_fetch_array($query);
         if($row['cnt']==0){
             //insert new data
-            mysqli_query($con,"INSERT IGNORE INTO sn_master(sn,lockTest,durTest,lDate,dDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$durability', '$lDate', '$dDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
+            // mysqli_query($con,"INSERT IGNORE INTO sn_master(sn,lockTest,durTest,lDate,dDate,rfsTest,rDate,lastUpdate)VALUES('$sn','$lock', '$durability', '$lDate', '$dDate','$rfs','$rDate', '$lupdt')")or die(mysqli_error($con));
+            mysqli_query($con,"INSERT IGNORE INTO sn_master(sn,durTest,dDate,lastUpdate)VALUES('$sn', '$durability', '$dDate', '$lupdt')")or die(mysqli_error($con));
         }
         else{
             //update existing data

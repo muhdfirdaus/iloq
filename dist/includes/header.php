@@ -188,6 +188,11 @@ date_default_timezone_set("Asia/Singapore");
                                 <i class="glyphicon glyphicon-search text-orange"></i>Box Record - Search
                               </a>
                           </li><!-- end notification -->
+                          <li><!-- start notification -->
+                              <a href="record_delete.php" class="dropdown-toggle" >
+                                <i class="glyphicon glyphicon-trash text-red"></i>Box/Carton Delete
+                              </a>
+                          </li><!-- end notification -->
                           <?php } ?>
                         </ul>
                       </li>

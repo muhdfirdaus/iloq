@@ -176,6 +176,40 @@ if(file_exists($mydir)){
 
 }
 
+$mydir = "\\\\bts-iloq-rfs\Temp\OVAL_C10S_Reports";// RFS Logtest Update
+if(file_exists($mydir)){
+    $files = glob("\\\\bts-iloq-rfs\Temp\OVAL_C10S_Reports\*.txt");//open all RFS file 
+
+    foreach($files as $file) {
+
+        $line = file($file);//file in to an array
+        $sn =  basename($file, '.txt');
+        $fdate = date ("YmdHis", filemtime($file));
+
+        if(isset($data[$sn])){
+            if(isset($data[$sn]['r'])){
+                if($data[$sn]['r'] < $fdate){
+                    $data[$sn][0] = $sn;
+                    $data[$sn][3] =  'P';
+                    $data[$sn]['r'] =  $fdate;
+                }
+            }
+            else{
+                $data[$sn][3] =  'P';
+                $data[$sn]['r'] =  $fdate;
+            }
+        }
+        else{
+            $data[$sn][0] = $sn;
+            $data[$sn][3] =  'P';
+            $data[$sn]['r'] =  $fdate;
+        }
+
+        // rename($file, 'C:/iLOQ/RFS/logged/'.basename($file));
+    }
+
+}
+
 
 $mydir = "\\\\iloq1846\Results";// NFC Logtest Update
 if(file_exists($mydir)){

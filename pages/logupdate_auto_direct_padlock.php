@@ -32,7 +32,7 @@ if(file_exists($mydir)){
             if($status[0] == 'P'){
                 if(isset($data[$sn]['i'])){
                     if($data[$sn]['i'] < $fdate){
-                        $data[$sn][0] = $sn;
+                        $data[$sn][0] = $sn;         
                         $data[$sn][2] =  $status[0];
                         $data[$sn]['i'] =  $fdate;
                     }

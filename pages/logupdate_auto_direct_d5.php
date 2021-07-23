@@ -160,7 +160,7 @@ if(file_exists($mydir)){
 
 $mydir = "\\\\iloq1859\\reports";// D5 RFS Logtest Update
 if(file_exists($mydir)){
-    $files = glob("\\\\iloq1859\\reports\\*.txt");//open all lock file
+    $files = glob("\\\\iloq1859\\reports\\*RTC*.txt");//open all lock file
     foreach($files as $file) {
         
         if (trim(file_get_contents($file)) == true) {
@@ -191,8 +191,42 @@ if(file_exists($mydir)){
         }
         // rename($file, 'C:/iLOQ/skogen_key/logged/'.basename($file));
     }
+}
 
 
+$mydir = "\\\\iloq1876\\reports";// D5 RFS Logtest Update
+if(file_exists($mydir)){
+    $files = glob("\\\\iloq1876\\reports\\*RTC*.txt");//open all lock file
+    foreach($files as $file) {
+        
+        if (trim(file_get_contents($file)) == true) {
+            $line = file($file);//file in to an array
+            $fdate = date ("YmdHis", filemtime($file));
+            $line1 = $line[3];//fetch serial number
+            $arr1 = explode(":",$line1);
+            $sn = preg_replace('/\s+/', '', $arr1[1]);
+            
+            if(is_numeric($sn)){
+                $line3 = $line[9];//fetch test result
+                $arr2 = explode(":",$line3);
+                $status = preg_replace('/\s+/', '', $arr2[1]);
+            
+                if(isset($d5rfs[$sn]['bdate'])){
+                    if($d5rfs[$sn]['bdate'] < $fdate){
+                        $d5rfs[$sn][0] = $sn;
+                        $d5rfs[$sn]['res'] =  $status[0];
+                        $d5rfs[$sn]['bdate'] =  $fdate;
+                    }
+                }
+                else{
+                    $d5rfs[$sn][0] = $sn;
+                    $d5rfs[$sn]['res'] =  $status[0];
+                    $d5rfs[$sn]['bdate'] =  $fdate;
+                }
+            }
+        }
+        // rename($file, 'C:/iLOQ/skogen_key/logged/'.basename($file));
+    }
 }
 
 if(isset($d5rfs)){

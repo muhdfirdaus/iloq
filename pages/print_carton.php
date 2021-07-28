@@ -265,7 +265,7 @@
         }
         elseif(strpos($lblcode, 'M012309')!== false)
         {
-            $weight = '12.5KG';
+            $weight = '15KG';
         }
         elseif(strpos($lblcode, 'M012217')!== false)
         {

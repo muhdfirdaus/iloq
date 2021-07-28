@@ -112,12 +112,24 @@ endif;
                   <table class="table table-bordered table-striped">
                     <thead>
                       <th class="info text-center">Item</th>
+                      <?php if(strpos($model, 'PADLOCK') !== false){?>
+                      <th class="info text-center">Model</th>
+                      <?php } ?>
                       <th class="info text-center">Serial Number</th>
                     </thead>
                     <tbody>
-                      <?php for ($i=1; $i<=$maxrow; $i++) {
+                      <?php if(strpos($model, 'PADLOCK') !== false){
+                        for ($i=1; $i<=$maxrow; $i++) {
+                          echo '<tr><td class="text-center">'.$i.'</td>
+                          <td class="text-center"><input autofocus autocomplete="off" class="form-control text-center" maxlength="25" required name="modellbl'.$i.'" id="modellbl'.$i.'" </td>
+                          <td class="text-center"><input autofocus autocomplete="off" class="form-control text-center" maxlength="25" required name="sn'.$i.'" id="sn'.$i.'" </td>';
+                        }
+                      }
+                      else{ 
+                        for ($i=1; $i<=$maxrow; $i++) {
                           echo '<tr><td class="text-center">'.$i.'</td>
                           <td class="text-center"><input autofocus autocomplete="off" class="form-control text-center" maxlength="25" required name="sn'.$i.'" id="sn'.$i.'" </td>';
+                        }
                       }
                       ?>
                     </tbody>

@@ -33,6 +33,7 @@ date_default_timezone_set("Asia/Singapore");
             <!-- Navbar Right Menu -->
               <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                  <?php if($_SESSION['id']!=25){?>
                   <li class="">
                     <!-- Menu Toggle Button -->
                     <a href="box_start.php" class="dropdown-toggle">
@@ -62,37 +63,6 @@ date_default_timezone_set("Asia/Singapore");
                                 <i class="glyphicon glyphicon-list-alt text-blue"></i>Other model
                               </a>
                           </li><!-- end notification -->
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="dropdown notifications-menu">
-                    <!-- Menu Toggle Button -->
-                    <a href="#labelprint" class="dropdown-toggle"  data-toggle="dropdown">
-                      <i class="glyphicon glyphicon-time text-yellow"></i>
-                      Temperature Test
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <!-- Inner Menu: contains the notifications -->
-                        <ul class="menu">
-                          <li><!-- start notification -->
-                              <a href="temp_tray_sn.php" class="dropdown-toggle">
-                                <i class="glyphicon glyphicon-time text-yellow"></i>Tray Registration
-                              </a>
-                          </li><!-- end notification -->
-                          <li><!-- start notification -->
-                              <a href="temperature_test.php" class="dropdown-toggle" >
-                                <i class="glyphicon glyphicon-time text-yellow"></i>Start Temperature Test
-                              </a>
-                          </li><!-- end notification -->
-                          <?php  if($_SESSION['admin']==1){?>
-                          <li><!-- start notification -->
-                              <a href="#temptestreportmodal" class="dropdown-toggle" data-target="#temptestreportmodal" data-toggle="modal">
-                                <i class="glyphicon glyphicon-time text-yellow"></i>Test Log
-                              </a>
-                          </li><!-- end notification -->
-                          <?php } ?>
                         </ul>
                       </li>
                     </ul>
@@ -145,6 +115,40 @@ date_default_timezone_set("Asia/Singapore");
                       Box (RMA)
                     </a>
                   </li>
+                  <?php }?>
+                  <?php if($_SESSION['id']==25||$_SESSION['admin']==1){?>
+                  <li class="dropdown notifications-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#labelprint" class="dropdown-toggle"  data-toggle="dropdown">
+                      <i class="glyphicon glyphicon-time text-yellow"></i>
+                      Temperature Test
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <!-- Inner Menu: contains the notifications -->
+                        <ul class="menu">
+                          <li><!-- start notification -->
+                              <a href="temp_tray_sn.php" class="dropdown-toggle">
+                                <i class="glyphicon glyphicon-time text-yellow"></i>Tray Registration
+                              </a>
+                          </li><!-- end notification -->
+                          <li><!-- start notification -->
+                              <a href="temperature_test.php" class="dropdown-toggle" >
+                                <i class="glyphicon glyphicon-time text-yellow"></i>Start Temperature Test
+                              </a>
+                          </li><!-- end notification -->
+                          <?php  if($_SESSION['admin']==1){?>
+                          <li><!-- start notification -->
+                              <a href="#temptestreportmodal" class="dropdown-toggle" data-target="#temptestreportmodal" data-toggle="modal">
+                                <i class="glyphicon glyphicon-time text-yellow"></i>Test Log
+                              </a>
+                          </li><!-- end notification -->
+                          <?php } ?>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <?php }?>
                   <li class="dropdown notifications-menu">
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">

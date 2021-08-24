@@ -40,7 +40,7 @@ include('product_cfg.php');
 		$sysV = $expmodel2[0];
 		$sysH = $expmodel2[1];
 
-		if(($lblH != $sysH)||($lblV != $sysV)){
+		if(($lblH !== $sysH)||($lblV !== $sysV)){
 			$wrongmodel = 1;
 		}
 	}
@@ -1089,11 +1089,19 @@ include('product_cfg.php');
 					}
 					elseif(strpos($model_name,"CAM LOCK")!== false){//for Camlock model
 						$printlbl = 2;
-						$query=mysqli_query($con,"select durTest,count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+						$query=mysqli_query($con,"select rfsTest,durTest,count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 						$row=mysqli_fetch_array($query);
-						if($row['cnt']==0 || ($row['durTest']!="P")){
+						if($row['cnt']==0 ){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass any test yet!.\n';
+						}
+						elseif(($row['durTest']!="P")){
 							$testfailed = 1;
 							$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+						}
+						elseif(($row['rfsTest']!="P")){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
 						}
 					}
 					elseif(strpos($model_name,"OBELIX")!== false){//for Obelix Model

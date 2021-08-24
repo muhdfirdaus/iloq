@@ -154,15 +154,15 @@ include('product_cfg.php');
                 {
                     $weight = '7.5KG';
                 }
-                elseif((strpos($lblcode, 'M011442.341.60')!== false)||(strpos($lblcode, 'M011442.331.60')!== false))
+                elseif((strpos($lblcode, 'M011442.341-60')!== false)||(strpos($lblcode, 'M011442.331-60')!== false))
                 {
                     $weight = '15KG';
                 }
-                elseif((strpos($lblcode, 'M011442.341.110')!== false)||(strpos($lblcode, 'M011442.331.110')!== false))
+                elseif((strpos($lblcode, 'M011442.341-110')!== false)||(strpos($lblcode, 'M011442.331-110')!== false))
                 {
                     $weight = '15KG';
                 }
-                elseif(strpos($lblcode, 'M011442.341.25')!== false)
+                elseif(strpos($lblcode, 'M011442.341-25')!== false)
                 {
                     $weight = '24KG';
                 }

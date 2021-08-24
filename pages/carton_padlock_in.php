@@ -129,11 +129,29 @@ else{
             }
             elseif(strpos($lblcode2, 'F50')!== false)
             {
-                $weight = '10.65KG';
+                $explblcode = explode(".",$lblcode2);
+                if($explblcode[1]=='511'){
+                    $weight="7.15KG";
+                }
+                else{
+                    $weight = '10.65KG';
+                }
             }
             elseif(strpos($lblcode, 'M009801')!== false)
             {
                 $weight = '21.15KG';
+            }
+            elseif((strpos($lblcode, 'M011442.341-60')!== false)||(strpos($lblcode, 'M011442.331-60')!== false))
+            {
+                $weight = '15KG';
+            }
+            elseif((strpos($lblcode, 'M011442.341-110')!== false)||(strpos($lblcode, 'M011442.331-110')!== false))
+            {
+                $weight = '15KG';
+            }
+            elseif(strpos($lblcode, 'M011442.341-25')!== false)
+            {
+                $weight = '24KG';
             }
             elseif(strpos($lblcode, 'M011442')!== false)
             {

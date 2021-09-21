@@ -157,6 +157,10 @@ endif;
                         <td>Quantity : </td>
                         <td><input type="number" class="form-control pull-right" max='150' value="20" name="qty" placeholder="Quantity" required></td>
                     </tr>
+                    <tr>
+                        <td>Work Order # : </td>
+                        <td><input type="text" class="form-control pull-right" name="wo" placeholder="Work Order" ></td>
+                    </tr>
                 </table>
                 <br>
                 <p class="text-red text-center"><b>**Please make sure ALL informations are CORRECT before clicking "Start"</b></p>

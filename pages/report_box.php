@@ -23,7 +23,7 @@ elseif(strlen($box_id)>1 && strlen($pallet_id)<=1){
         $check_id=mysqli_fetch_array($query);
         if($check_id['cnt'] > 0){
             $filename = "Box_".$box_id; //File Name
-            $sql ="SELECT cb.carton_id as Pallet_ID, bi.box_id AS BoxNo, bi.qty AS quantity, bi.model as model, bs.sn AS SN, FROM_UNIXTIME(ci.timestamp) AS TIME, u.username AS USER, sm.lockTest AS Functional, sm.durTest AS Durability, sm.rfsTest AS RFS  FROM  box_sn bs LEFT JOIN box_info bi ON bi.box_id = bs.box_id LEFT JOIN USER u ON bi.user_id = u.user_id left join carton_box cb on cb.box_id=bi.box_id LEFT JOIN sn_master sm ON sm.sn = bs.sn LEFT JOIN carton_info ci ON cb.carton_id=ci.carton_id where bs.box_id='$box_id' order by bs.sn asc"; 
+            $sql ="SELECT cb.carton_id as Pallet_ID, bi.box_id AS BoxNo, bi.wo AS work_order,bi.qty AS quantity, bi.model as model, bs.sn AS SN, FROM_UNIXTIME(ci.timestamp) AS TIME, u.username AS USER, sm.lockTest AS Functional, sm.durTest AS Durability, sm.rfsTest AS RFS  FROM  box_sn bs LEFT JOIN box_info bi ON bi.box_id = bs.box_id LEFT JOIN USER u ON bi.user_id = u.user_id left join carton_box cb on cb.box_id=bi.box_id LEFT JOIN sn_master sm ON sm.sn = bs.sn LEFT JOIN carton_info ci ON cb.carton_id=ci.carton_id where bs.box_id='$box_id' order by bs.sn asc"; 
         }
         else{
             echo "<script type='text/javascript'>alert('No such box exist!');</script>";
@@ -39,7 +39,7 @@ elseif(strlen($box_id)<=1 && strlen($pallet_id)>1){
         $check_id=mysqli_fetch_array($query);
         if($check_id['cnt'] > 0){
             $filename = "Pallet_".$pallet_id; //File Name
-            $sql ="SELECT cb.carton_id as Pallet_ID, bi.box_id AS BoxNo, bi.qty AS quantity,bi.model as model,  bs.sn AS SN, FROM_UNIXTIME(ci.timestamp) AS TIME, u.username AS USER, sm.lockTest AS Functional, sm.durTest AS Durability, sm.rfsTest AS RFS FROM  box_sn bs LEFT JOIN box_info bi ON bi.box_id = bs.box_id LEFT JOIN USER u ON bi.user_id = u.user_id left join carton_box cb on cb.box_id=bi.box_id LEFT JOIN sn_master sm ON sm.sn = bs.sn LEFT JOIN carton_info ci ON cb.carton_id=ci.carton_id where cb.carton_id='$pallet_id' order by bi.box_id, bs.sn asc"; 
+            $sql ="SELECT cb.carton_id as Pallet_ID, bi.box_id AS BoxNo, bi.wo AS work_order, bi.qty AS quantity,bi.model as model,  bs.sn AS SN, FROM_UNIXTIME(ci.timestamp) AS TIME, u.username AS USER, sm.lockTest AS Functional, sm.durTest AS Durability, sm.rfsTest AS RFS FROM  box_sn bs LEFT JOIN box_info bi ON bi.box_id = bs.box_id LEFT JOIN USER u ON bi.user_id = u.user_id left join carton_box cb on cb.box_id=bi.box_id LEFT JOIN sn_master sm ON sm.sn = bs.sn LEFT JOIN carton_info ci ON cb.carton_id=ci.carton_id where cb.carton_id='$pallet_id' order by bi.box_id, bs.sn asc"; 
         }
         else{
             echo "<script type='text/javascript'>alert('No such pallet exist!');</script>";

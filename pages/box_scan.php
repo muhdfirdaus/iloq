@@ -81,6 +81,10 @@ endif;
           $qty=$row2['qty'];
           $box_id=$row2['box_id'];
           $line=$row2['line'];
+          $wo=$row2['wo'];
+          if($wo==null){
+            $wo = '-';
+          }
           
           $query3=mysqli_query($con,"select count(*) as tot from box_sn where box_id='$box_id'")or die(mysqli_error($con));
           $row3=mysqli_fetch_array($query3);
@@ -101,6 +105,7 @@ endif;
                 <p>Line: <b><?php echo $line;?></b></p>
                   <p>Product: <b><?php echo $model;?></b></p>
                   <p>Model Number: <b><?php echo $model_no;?></b></p>
+                  <p>Work Order #: <b><?php echo $wo; ?></b></p>
                   <p>Quantity: <b><?php echo $scanned.' / '.$qty;?></b></p>
                   <p>Box ID: <b><?php echo $box_id; ?></b></p><br>
                   <input type="hidden" name="id" id="id" value="<?php echo $id; ?>"></input>

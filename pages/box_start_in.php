@@ -27,6 +27,7 @@ $modelNo = $allModelNo[$modelid];
 $modelName = $allModelName[$modelid];
 $userid = $_SESSION['id'];
 $tmstmp = time();
+$wo = $_POST['wo'];
 $line = $_POST['line'];
 $qty = $_POST['qty'];
 
@@ -48,8 +49,8 @@ if($qtytrigger==1){ //trigger error if quantity is exceed or less then allowed
   echo "<script>window.history.back();</script>";
 }
 else{//proceed to register box into database
-  mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model,line,status)
-  VALUES('$next_box_id','$userid', '$qty', '$tmstmp', '$modelNo', '$modelName','$line',0)")or die(mysqli_error($con));
+  mysqli_query($con,"INSERT INTO box_info(box_id,user_id,qty,timestamp,model_no,model,line,status,wo)
+  VALUES('$next_box_id','$userid', '$qty', '$tmstmp', '$modelNo', '$modelName','$line',0,'$wo')")or die(mysqli_error($con));
   $newid = mysqli_insert_id($con);
   echo "<script>document.location='box_scan.php?id=$newid'</script>";  
 }

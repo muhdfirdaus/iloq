@@ -16,7 +16,7 @@
     //     mysqli_query($con,"update printer_cfg set ip='$ip' where id=1")or die(mysqli_error($con));
     // }
     
-	$query=mysqli_query($con,"select * from box_info where box_id='{$box_id}'")or die(mysqli_error($con));
+	$query=mysqli_query($con,"select * from box_info where box_id='{$box_id}' and status=1")or die(mysqli_error($con));
     $row=mysqli_fetch_array($query);
     if(count($row)>0){
         

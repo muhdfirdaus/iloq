@@ -1230,11 +1230,19 @@ include('product_cfg.php');
 					}
 					elseif(strpos($model_name,"KEY-TUBE")!== false){//For keytube
 						$printlbl = 2;
-						$query=mysqli_query($con,"select durTest, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
+						$query=mysqli_query($con,"select lockTest,rfsTest,durTest, count(*) as cnt from sn_master where sn='$sn'")or die(mysqli_error($con));
 						$row=mysqli_fetch_array($query);
 						if($row['cnt']==0 || ($row['durTest']!="P")){
 							$testfailed = 1;
 							$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+						}
+						if($row['cnt']==0 || ($row['rfsTest']!="P")){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
+						}
+						if($row['cnt']==0 || ($row['lockTest']!="P")){
+							$testfailed = 1;
+							$testmsg.=$sn.' on line '.$i.' not pass FCT test yet!.\n';
 						}
 					
 					}

@@ -196,6 +196,61 @@
 
             ^XZ";
         }
+        elseif((strpos($modelno,"M012005")!== false) ){
+            $query=mysqli_query($con,"select sn from box_sn where box_id='{$box_id}'")or die(mysqli_error($con));
+            $row=mysqli_fetch_array($query);      
+            $sn = $row['sn'];
+            $lbldate = date('j.n.Y',$tmstmp); 
+            $expmoddot = explode(".",$modelno);
+            $expmoddas = explode("-",$expmoddot[1]);
+            $lblmodel= $expmoddas[0];
+            $lblbox="^XA
+    
+            ^CF0,100
+            ^FO180,600^FDD5S.$lblmodel.SB^FS
+
+            ^CF0,70
+            ^FO190,760^FD$lbldate^FS
+
+            ^FO1060,520
+            ^BXN,11,200
+            ^FDD5S.$lblmodel.SB^FS
+
+            ^XZ";
+
+            if(strpos($modelname,"SKOGEN")!==false){
+                if(strpos($modelno,"M010267")!==false){
+                    $swversion = "1.5.10W";
+                }
+                else{
+                    $swversion = "1.5.17W";
+                }            
+            }
+            elseif((strpos($modelno,"M010358")!==false)||(strpos($modelno,"M010349")!==false)||(strpos($modelno,"M010339")!==false)||(strpos($modelno,"M010356")!==false)||(strpos($modelno,"M010308")!==false)){
+                $swversion = "1.5.17W";
+            }
+            else{
+                $swversion = "2.9";
+            }
+            $lblbox2 ="^XA
+            ^CFP,180,120
+            ^FO60,50^FD$modelno^FS
+            
+            ^CFP,190,230
+            ^FO40,280^FD$box_id^FS
+            ^FO38,280^FD$box_id^FS
+            ^FO40,282^FD$box_id^FS
+            
+            ^CFP,180,180
+            ^FO40,510^FD$lbldate^FS
+        
+            ^CFP,150,140
+            ^FO40,720^FDS/W Ver:$swversion^FS
+            
+            ^XZ";
+
+            $secondlbl = 1;
+        }
         else{
 
             $allmodel = get_modelNo2($con);

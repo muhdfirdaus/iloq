@@ -734,6 +734,128 @@ include('product_cfg.php');
 		
 
 		}
+		elseif((strpos($model_no,"IQ-M012005")!== false)){//for D5 Vuolu 
+			//Check if SN is already in the system
+			$sn = $_POST['sn1'];
+			$query=mysqli_query($con,"select count(*) as cnt from box_sn where sn = '$sn'")or die(mysqli_error($con));
+			$row=mysqli_fetch_array($query);
+			if($row['cnt']!=0){
+				echo '<script type="text/javascript">alert("SN already exist in the system!");</script>';
+				echo "<script>window.history.back();</script>";  
+			}
+			else{
+				$testfailed=0;
+				$testmsg='';
+				// $query=mysqli_query($con,"select result,count(*) as cnt from d5_burn where sn='$sn'")or die(mysqli_error($con));
+				// $row=mysqli_fetch_array($query);
+				// if($row['cnt']==0 || ($row['result']!="P")){
+				// 	$testfailed = 1;
+				// 	$testmsg.=$sn.' on line '.$i.' not pass Burn-in test yet!.\n';
+				// }
+				$query=mysqli_query($con,"select result,count(*) as cnt from d5_durability where sn='$sn'")or die(mysqli_error($con));
+				$row=mysqli_fetch_array($query);
+				if($row['cnt']==0 || ($row['result']!="P")){
+					$testfailed = 1;
+					$testmsg.=$sn.' on line '.$i.' not pass Durability test yet!.\n';
+				}
+
+				$query=mysqli_query($con,"select result,count(*) as cnt from d5_rfs where sn='$sn'")or die(mysqli_error($con));
+				$row=mysqli_fetch_array($query);
+				if($row['cnt']==0 || ($row['result']!="P")){
+					$testfailed = 1;
+					$testmsg.=$sn.' on line '.$i.' not pass RFS test yet!.\n';
+				}
+
+				if($tempres = checkTempTest($sn,$con)){
+					if($tempres['result']!="P"){
+						$testfailed = 1;
+						$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+					}
+				}
+				else{
+					$testfailed = 1;
+					$testmsg.=$sn.' on line '.$i.' not pass Temperature test yet.\n';
+				}
+
+				if($testfailed==1){
+					echo '<script type="text/javascript">alert("'.$testmsg.'");</script>';
+					echo "<script>window.history.back();</script>"; 
+				}
+				else{
+					mysqli_query($con,"INSERT INTO box_sn(box_id,sn)VALUES('$box_id','$sn')")or die(mysqli_error($con));
+					
+					if(($scanned+1)==$qty){
+						mysqli_query($con, "UPDATE box_info set status=1 where box_id ='$box_id'")or die(mysqli_error($con));
+						echo "<script type='text/javascript'>alert('Data saved!');</script>";
+
+						$lbldate = date('j.n.Y');
+						$lblbox="^XA
+				
+						^CF0,100
+						^FO180,600^FD$shippn^FS
+
+						^CF0,70
+						^FO190,760^FD$lbldate^FS
+
+						^FO1060,520
+						^BXN,11,200
+						^FD$shippn^FS
+
+						^XZ";
+						printpadlocklabel($lblbox,$line,$con);
+
+						if(strpos($model_name,"SKOGEN")!==false){
+							if(strpos($model_no,"M010267")!==false){
+								$swversion = "1.5.10W";
+							}
+							else{
+								$swversion = "1.5.17W";
+							}    
+						}
+						elseif((strpos($model_no2,"M010358")!==false)||(strpos($model_no2,"M010349")!==false)||(strpos($model_no2,"M010339")!==false)||(strpos($model_no2,"M010308")!==false)||(strpos($model_no2,"M010356")!==false)){
+							$swversion = "1.5.17W";
+						}
+						else{
+							$swversion = "2.9";
+						}
+						$lblbox2 ="^XA
+						^CFP,180,120
+						^FO60,50^FD$model_no2^FS
+						
+						^CFP,190,230
+						^FO40,280^FD$box_id^FS
+						^FO38,280^FD$box_id^FS
+						^FO40,282^FD$box_id^FS
+						
+						^CFP,180,180
+						^FO40,510^FD$lbldate^FS
+					
+						^CFP,150,140
+						^FO40,720^FDS/W Ver:$swversion^FS
+						
+						^XZ";
+
+						//function to print second label
+						$filename = "lbliloq2.txt";
+						$file = fopen($filename, "r+")or die("ERROR: Cannot open the file .")  ;
+						if($file){
+							fwrite($file, $lblbox2);      
+							fclose($file);
+						} 
+
+						//print second label
+						copy($filename, "//BTS-iLOQ-1/iloqpizza"); 
+					}
+					else{
+						echo "<script>document.location='box_scan.php?id=$box_info_id'</script>"; 
+					}
+
+				}
+
+			}
+		
+
+		}
 		// elseif((strpos($model_no,"M011795.1")!== false) ){//for D5 just proceed to print
 		// 	//Check for duplicate SN
 		// 	$dupmsg = 'Duplicate SN detected in: \n';

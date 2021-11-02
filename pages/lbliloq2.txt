@@ -1,18 +1,19 @@
 ^XA
-				^CFP,180,120
-				^FO60,50^FDM005551.10.1.SB.SE_N^FS
-				
-				^CFP,190,230
-				^FO40,280^FDBEY8488^FS
-				^FO38,280^FDBEY8488^FS
-				^FO40,282^FDBEY8488^FS
-				
-				^CFP,180,180
-				^FO40,510^FD04/05/20^FS
-			
-				^CFP,150,140
-				^FO40,720^FDS/W Ver:2.6^FS
-				
-				^XZ        ^FO40,720^FDS/W Ver:2.6^FS
-        
-        ^XZ ^XZ
+						^CFP,180,120
+						^FO60,50^FDM005064.50.2-P^FS
+						
+						^CFP,190,230
+						^FO40,280^FDBEY43462^FS
+						^FO38,280^FDBEY43462^FS
+						^FO40,282^FDBEY43462^FS
+						
+						^CFP,180,180
+						^FO40,510^FD02/11/21^FS
+					
+						^CFP,150,140
+						^FO40,720^FDS/W Ver:2.9^FS
+						
+						^XZ						^XZ,150,140
+            ^FO40,720^FDS/W Ver:2.9^FS
+            
+            ^XZ      ^XZ

@@ -23,6 +23,7 @@
         $modelname=$row['model'];
         $modelno=$row['model_no'];
         $qty=$row['qty'];
+        $line=$row['line'];
         $tmstmp=$row['timestamp'];
         $current_ip=$row['id'];
         $secondlbl = 0;
@@ -337,18 +338,55 @@
             }
             return $toReturn;
         }
+        
+	function printpizzaline2($lblcontent){
+		$ip='10.38.28.30';
+
+		// function to ping ip address
+		function pingAddress($ip1) {
+			$pingresult = exec("ping -n 2 $ip1", $outcome, $status);
+			if (0 == $status) {//status-alive
+				$toReturn = true;
+			} else {//status-dead
+				$toReturn = false;
+			}
+			return $toReturn;
+		}
+
+		$printable = pingAddress($ip);
+		if($printable){
+			try//attempt to print label
+			{
+				// Number of seconds to wait for a response from remote host
+				$timeout = 2;
+				if($fp=@fsockopen($ip,9100, $errNo, $errStr, $timeout)){
+					fputs($fp,$lblcontent);
+					fclose($fp);				
+				}
+			}
+			catch (Exception $e) 
+			{
+				echo 'Caught exception: ',  $e->getMessage(), "\n";
+			}
+		}
+	}
 
         if($modelname != "SKOGEN KEY ASSEMBLY" && $secondlbl==1){
             //function to print second label
-            $filename = "lbliloq2.txt";
-            $file = fopen($filename, "r+")or die("ERROR: Cannot open the file .")  ;
-            if($file){
-                fwrite($file, $lblbox2);      
-                fclose($file);
-            } 
+            // if($line==2){
+            //     printpizzaline2($lblbox2);
+            // }
+            // else{
+                $filename = "lbliloq2.txt";
+                $file = fopen($filename, "r+")or die("ERROR: Cannot open the file .")  ;
+                if($file){
+                    fwrite($file, $lblbox2);      
+                    fclose($file);
+                } 
 
-            //print second label
-            copy($filename, "//BTS-iLOQ-1/iloqpizza"); 
+                //print second label
+                copy($filename, "//BTS-iLOQ-1/iloqpizza"); 
+            // }
         }
 
         $printable = pingAddress($ip);
